@@ -7,22 +7,18 @@ import {
 } from 'react-native';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import Header from './components/Header'
-
+import Header from './components/Header';
+import Routes from './routes';
 const store = configureStore();
 
 export default class App extends Component {
+
   render() {
     return (
       <Provider store={store}>
         <View style={styles.container}>
           <Header />
-          <Text style={styles.welcome}>
-            Welcome to React Native!
-          </Text>
-          <Text style={styles.instructions}>
-            To get started, edit App.js
-          </Text>
+          <Routes />
         </View>
       </Provider>
     );
@@ -30,7 +26,6 @@ export default class App extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white'
+    flex: 0
   }
 })
