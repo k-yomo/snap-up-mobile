@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5'
   },
   headerText: {
+    fontFamily: 'Verdana',
     fontSize: 30,
+    fontWeight: 'bold',
     color: '#FF5252'
   }
 })
