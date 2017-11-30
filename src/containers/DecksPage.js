@@ -7,8 +7,8 @@ import {
   ScrollView,
   RefreshControl
 } from 'react-native';
-import { headerNavConfig } from '../config/navigationOptions';
 import Swipeable from 'react-native-swipeable';
+import { headerNavConfig } from '../config/navigationOptions';
 import DeckListItem from './DeckListItem';
 
 class DecksPage extends Component {
@@ -18,12 +18,16 @@ class DecksPage extends Component {
     super(props);
     this.state = {
       colors: [
+        '#EA3C35',
+        '#ED3E35',
+        '#F04035',
         '#F44336',
         '#F6513F',
         '#F85F48',
         '#FA6D52',
-        '#FC7B5B',
-        '#FF8A65'
+        '#FB7C61',
+        '#FD8B70',
+        '#FF9A80'
       ],
       isSwiping: false,
       isRefreshing: false
@@ -56,7 +60,7 @@ class DecksPage extends Component {
           <DeckListItem
             key={deck.id}
             deck={deck}
-            color={ i < 6 ? this.state.colors[i] : '#FF8A65'}
+            backgroundColor={ i < 11 ? this.state.colors[i] : '#FF9A80'}
             onSwipe={this.onSwipe}
           />
         )) : <Text> Let's create new deck!</Text>

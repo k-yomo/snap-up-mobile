@@ -20,6 +20,8 @@ class DeckListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      leftItemOpacity: 0.4,
+      listItemOpacity: 1.0,
       isAlerting: false
     };
     this.onRightActionRelease = this.onRightActionRelease.bind(this);
@@ -51,7 +53,14 @@ class DeckListItem extends Component {
 
   render() {
     const leftContent = (
-        <View style={styles.leftSwipeItem}>
+        <View style={
+          StyleSheet.flatten([
+            styles.leftSwipeItem,
+            {
+              opacity: this.state.leftItemOpacity
+            }
+          ])}
+        >
           <Text style={{ fontSize: 22, color: '#F44336', fontWeight: 'bold'}}>Start</Text>
         </View>
     )
@@ -68,22 +77,30 @@ class DeckListItem extends Component {
         leftContent={leftContent}
         rightContent={rightContent}
         leftActionActivationDistance={100}
-        rightActionActivationDistance={120}
+        onLeftActionActivate={() => this.setState({ leftItemOpacity: 1.0 })}
+        onLeftActionDeactivate={() => this.setState({ leftItemOpacity: 0.4 })}
         onLeftActionRelease={() => console.log("Left Release")}
+        rightActionActivationDistance={120}
+        onRightActionActivate={() => this.setState({ listItemOpacity: 0.4 })}
+        onRightActionDeactivate={() => this.setState({ listItemOpacity: 1.0 })}
         onRightActionRelease={this.onRightActionRelease}
         onSwipeStart={() => this.props.onSwipe(true)}
         onSwipeRelease={() => this.props.onSwipe(false)}
-        style={
-          StyleSheet.flatten(
-            [styles.listItemContainer, { backgroundColor: this.props.color }]
-          )
-        }
+        style={styles.listItemContainer}
       >
         <ListItem
           hideChevron
           title={this.props.deck.title}
           titleStyle={{ color: 'white', fontSize: 22 }}
-          containerStyle={{ borderBottomWidth: 0 }}
+          containerStyle={
+            StyleSheet.flatten([
+              styles.listItem,
+              {
+                backgroundColor: this.props.backgroundColor,
+                opacity: this.state.listItemOpacity
+              }
+            ])
+          }
           roundAvatar
           avatar={
             <Avatar
@@ -103,15 +120,19 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 85,
     borderTopWidth: 0,
-    shadowColor: '#eee',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
+    backgroundColor: 'white',
+    shadowColor: '#111',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
     shadowRadius: 2,
     justifyContent: 'center',
     alignItems: 'center'
   },
   listItem: {
-    height: 70,
+    flex:1,
+    width: null,
+    height: 85,
+    borderBottomWidth: 0,
     justifyContent: 'center',
     alignItems: 'center'
   },

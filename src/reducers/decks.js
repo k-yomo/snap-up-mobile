@@ -1,5 +1,6 @@
 
-const defaultState = [
+const defaultState =
+[
   {
     id: 1,
     title: 'フレンズ英単語'
