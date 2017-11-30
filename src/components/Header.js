@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Verdana',
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#FF5252'
+    color: '#F44336'
   }
 })
