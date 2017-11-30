@@ -65,21 +65,22 @@ class DeckListItem extends Component {
         </View>
     )
     const rightContent = (
-        <View style={styles.rightSwipeItem}>
-          <Icon size={40} name="delete-forever" color='#757575' />
-        </View>
+      <View style={styles.rightSwipeItem}>
+        <Icon size={40} name="delete-forever" color='#757575' />
+      </View>
     )
+
 
     return (
       <Swipeable
         key={this.props.deck.id}
         swipeStartMinDistance={2}
         leftContent={leftContent}
-        rightContent={rightContent}
-        leftActionActivationDistance={100}
+        leftActionActivationDistance={90}
         onLeftActionActivate={() => this.setState({ leftItemOpacity: 1.0 })}
         onLeftActionDeactivate={() => this.setState({ leftItemOpacity: 0.4 })}
         onLeftActionRelease={() => console.log("Left Release")}
+        rightContent={rightContent}
         rightActionActivationDistance={120}
         onRightActionActivate={() => this.setState({ listItemOpacity: 0.4 })}
         onRightActionDeactivate={() => this.setState({ listItemOpacity: 1.0 })}
@@ -139,16 +140,16 @@ const styles = StyleSheet.create({
   leftSwipeItem: {
     flex: 1,
     paddingRight: 20,
+    paddingLeft: 20,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
   rightSwipeItem: {
     flex: 1,
+    paddingLeft: 20,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    paddingLeft: 20,
-    backgroundColor: 'white'
   },
 
 });
