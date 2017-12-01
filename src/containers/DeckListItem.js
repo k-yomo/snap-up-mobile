@@ -65,7 +65,6 @@ class DeckListItem extends Component {
               Vibration.vibrate(50);
               this.animate();
               setTimeout(() => { this.onDeleteDeckPress(this.props.deck.id); }, 500);
-
             }
           },
           { text: 'Cancel' }
