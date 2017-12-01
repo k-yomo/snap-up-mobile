@@ -39,7 +39,7 @@ class DeckListItem extends Component {
       this.animatedValue,
       {
         toValue: 1,
-        duration: 400,
+        duration: 500,
         easing: Easing.cubic
       }
     ).start((o) => {
@@ -62,9 +62,9 @@ class DeckListItem extends Component {
         [
           { text: 'OK',
             onPress: () => {
-              Vibration.vibrate(100);
+              Vibration.vibrate(50);
               this.animate();
-              setTimeout(() => { this.onDeleteDeckPress(this.props.deck.id); }, 400);
+              setTimeout(() => { this.onDeleteDeckPress(this.props.deck.id); }, 500);
 
             }
           },
@@ -97,53 +97,64 @@ class DeckListItem extends Component {
         <Icon size={40} name="delete-forever" color='#757575' />
       </View>
     );
-
-      const marginLeft = this.animatedValue.interpolate({
+    const marginLeft = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, -700]
+    });
+    const marginRight = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 700]
+    });
+    const marginBottom = this.animatedValue.interpolate({
       inputRange: [0, 1],
       outputRange: [0, -85]
     })
     const { deck, onSwipe, backgroundColor } = this.props;
 
     return (
-      <Animated.View style={{ marginLeft, marginBottom: marginLeft }}>
-      <Swipeable
-        key={deck.id}
-        swipeStartMinDistance={2}
-        leftContent={leftContent}
-        leftActionActivationDistance={90}
-        onLeftActionActivate={() => this.setState({ leftItemOpacity: 1.0 })}
-        onLeftActionDeactivate={() => this.setState({ leftItemOpacity: 0.4 })}
-        onLeftActionRelease={() => this.onLeftActionRelease(deck.id)}
-        rightContent={rightContent}
-        rightActionActivationDistance={120}
-        onRightActionActivate={() => this.setState({ listItemOpacity: 0.4 })}
-        onRightActionDeactivate={() => this.setState({ listItemOpacity: 1.0 })}
-        onRightActionRelease={this.onRightActionRelease}
-        onSwipeStart={() => onSwipe(true)}
-        onSwipeRelease={() => onSwipe(false)}
-        style={styles.listItemContainer}
-      >
-        <ListItem
-          hideChevron
-          title={deck.title}
-          titleStyle={{ color: 'white', fontSize: 22 }}
-          containerStyle={
-            StyleSheet.flatten([
-              styles.listItem,
-              { backgroundColor, opacity: this.state.listItemOpacity }
-            ])
-          }
-          roundAvatar
-          avatar={
-            <Avatar
-              medium
-              rounded
-              title="MT"
-            />
-          }
-        />
-     </Swipeable>
-   </Animated.View>
+      <Animated.View style={{
+        marginLeft,
+        marginRight,
+        marginBottom
+      }}>
+        <Swipeable
+          key={deck.id}
+          swipeStartMinDistance={2}
+          leftContent={leftContent}
+          leftActionActivationDistance={90}
+          onLeftActionActivate={() => this.setState({ leftItemOpacity: 1.0 })}
+          onLeftActionDeactivate={() => this.setState({ leftItemOpacity: 0.4 })}
+          onLeftActionRelease={() => this.onLeftActionRelease(deck.id)}
+          rightContent={rightContent}
+          rightActionActivationDistance={120}
+          onRightActionActivate={() => this.setState({ listItemOpacity: 0.4 })}
+          onRightActionDeactivate={() => this.setState({ listItemOpacity: 1.0 })}
+          onRightActionRelease={this.onRightActionRelease}
+          onSwipeStart={() => onSwipe(true)}
+          onSwipeRelease={() => onSwipe(false)}
+          style={styles.listItemContainer}
+        >
+          <ListItem
+            hideChevron
+            title={deck.title}
+            titleStyle={{ color: 'white', fontSize: 22 }}
+            containerStyle={
+              StyleSheet.flatten([
+                styles.listItem,
+                { backgroundColor, opacity: this.state.listItemOpacity }
+              ])
+            }
+            roundAvatar
+            avatar={
+              <Avatar
+                medium
+                rounded
+                title="MT"
+              />
+            }
+          />
+        </Swipeable>
+      </Animated.View>
    );
   }
 }
