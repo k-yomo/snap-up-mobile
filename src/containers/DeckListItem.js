@@ -5,7 +5,9 @@ import {
   Text,
   View,
   Alert,
-  Vibration
+  Vibration,
+  Animated,
+  Easing
 } from 'react-native';
 import {
   Avatar,
@@ -16,6 +18,7 @@ import {
 import Swipeable from 'react-native-swipeable';
 import { deleteDeck } from '../actions/decks';
 
+
 class DeckListItem extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +27,26 @@ class DeckListItem extends Component {
       listItemOpacity: 1.0,
       isAlerting: false
     };
+    this.animatedValue = new Animated.Value(0);
+    this.animate = this.animate.bind(this);
     this.onRightActionRelease = this.onRightActionRelease.bind(this);
+    this.onLeftActionRelease = this.onLeftActionRelease.bind(this);
+  }
+
+  animate () {
+    this.animatedValue.setValue(0)
+    Animated.timing(
+      this.animatedValue,
+      {
+        toValue: 1,
+        duration: 400,
+        easing: Easing.cubic
+      }
+    ).start((o) => {
+      if(!o.finished) {
+        this.animate();
+      }
+    });
   }
 
   onDeleteDeckPress(deckId) {
@@ -40,8 +62,10 @@ class DeckListItem extends Component {
         [
           { text: 'OK',
             onPress: () => {
-              this.onDeleteDeckPress(this.props.deck.id);
               Vibration.vibrate(100);
+              this.animate();
+              setTimeout(() => { this.onDeleteDeckPress(this.props.deck.id); }, 400);
+
             }
           },
           { text: 'Cancel' }
@@ -49,6 +73,10 @@ class DeckListItem extends Component {
       )
     }
     this.setState({ isAlerting: false });
+  }
+
+  onLeftActionRelease = (id) => {
+    this.props.navigate('Study', { id })
   }
 
   render() {
@@ -63,43 +91,46 @@ class DeckListItem extends Component {
         >
           <Text style={{ fontSize: 22, color: '#F44336', fontWeight: 'bold'}}>Start</Text>
         </View>
-    )
+    );
     const rightContent = (
       <View style={styles.rightSwipeItem}>
         <Icon size={40} name="delete-forever" color='#757575' />
       </View>
-    )
+    );
 
+      const marginLeft = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, -90]
+    })
+    const { deck, onSwipe, backgroundColor } = this.props;
 
     return (
+      <Animated.View style={{ marginLeft, marginBottom: marginLeft }}>
       <Swipeable
-        key={this.props.deck.id}
+        key={deck.id}
         swipeStartMinDistance={2}
         leftContent={leftContent}
         leftActionActivationDistance={90}
         onLeftActionActivate={() => this.setState({ leftItemOpacity: 1.0 })}
         onLeftActionDeactivate={() => this.setState({ leftItemOpacity: 0.4 })}
-        onLeftActionRelease={() => console.log("Left Release")}
+        onLeftActionRelease={() => this.onLeftActionRelease(deck.id)}
         rightContent={rightContent}
         rightActionActivationDistance={120}
         onRightActionActivate={() => this.setState({ listItemOpacity: 0.4 })}
         onRightActionDeactivate={() => this.setState({ listItemOpacity: 1.0 })}
         onRightActionRelease={this.onRightActionRelease}
-        onSwipeStart={() => this.props.onSwipe(true)}
-        onSwipeRelease={() => this.props.onSwipe(false)}
+        onSwipeStart={() => onSwipe(true)}
+        onSwipeRelease={() => onSwipe(false)}
         style={styles.listItemContainer}
       >
         <ListItem
           hideChevron
-          title={this.props.deck.title}
+          title={deck.title}
           titleStyle={{ color: 'white', fontSize: 22 }}
           containerStyle={
             StyleSheet.flatten([
               styles.listItem,
-              {
-                backgroundColor: this.props.backgroundColor,
-                opacity: this.state.listItemOpacity
-              }
+              { backgroundColor, opacity: this.state.listItemOpacity }
             ])
           }
           roundAvatar
@@ -112,6 +143,7 @@ class DeckListItem extends Component {
           }
         />
      </Swipeable>
+   </Animated.View>
    );
   }
 }
@@ -151,7 +183,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-
 });
 
 export default connect()(DeckListItem);
