@@ -100,7 +100,7 @@ class DeckListItem extends Component {
 
       const marginLeft = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, -90]
+      outputRange: [0, -85]
     })
     const { deck, onSwipe, backgroundColor } = this.props;
 
