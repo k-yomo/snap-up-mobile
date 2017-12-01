@@ -11,6 +11,7 @@ import Swipeable from 'react-native-swipeable';
 import { headerNavConfig } from '../config/navigationOptions';
 import DeckListItem from './DeckListItem';
 
+
 class DecksPage extends Component {
   static navigationOptions = headerNavConfig;
 
@@ -62,9 +63,10 @@ class DecksPage extends Component {
             deck={deck}
             backgroundColor={ i < 11 ? this.state.colors[i] : '#FF9A80'}
             onSwipe={this.onSwipe}
+            navigate={this.props.navigation.navigate}
           />
         )) : <Text> Let's create new deck!</Text>
-      }
+        }
       </ScrollView>
     );
   }

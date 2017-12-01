@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import DecksPage from './containers/DecksPage';
+import StudyPage from './containers/StudyPage';
 
 const Routes = StackNavigator(
 
   {
-    Home: {screen: DecksPage}
+    Home: { screen: DecksPage },
+    Study: { screen: StudyPage }
   }
 )
 
