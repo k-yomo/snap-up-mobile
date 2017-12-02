@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {
   Avatar,
-  Card,
   ListItem,
   Icon
 } from 'react-native-elements';
@@ -31,22 +30,6 @@ class DeckListItem extends Component {
     this.animate = this.animate.bind(this);
     this.onRightActionRelease = this.onRightActionRelease.bind(this);
     this.onLeftActionRelease = this.onLeftActionRelease.bind(this);
-  }
-
-  animate () {
-    this.animatedValue.setValue(0)
-    Animated.timing(
-      this.animatedValue,
-      {
-        toValue: 1,
-        duration: 500,
-        easing: Easing.cubic
-      }
-    ).start((o) => {
-      if(!o.finished) {
-        this.animate();
-      }
-    });
   }
 
   onDeleteDeckPress(deckId) {
@@ -69,18 +52,36 @@ class DeckListItem extends Component {
           },
           { text: 'Cancel' }
         ]
-      )
+      );
     }
     this.setState({ isAlerting: false });
   }
 
-  onLeftActionRelease = (id) => {
-    this.props.navigate('Study', { id })
+  onLeftActionRelease(id) {
+    this.props.navigate('Study', { id });
   }
+
+  animate() {
+    this.animatedValue.setValue(0);
+    Animated.timing(
+      this.animatedValue,
+      {
+        toValue: 1,
+        duration: 500,
+        easing: Easing.cubic
+      }
+    ).start((o) => {
+      if (!o.finished) {
+        this.animate();
+      }
+    });
+  }
+
 
   render() {
     const leftContent = (
-        <View style={
+        <View
+          style={
           StyleSheet.flatten([
             styles.leftSwipeItem,
             {
@@ -88,7 +89,7 @@ class DeckListItem extends Component {
             }
           ])}
         >
-          <Text style={{ fontSize: 22, color: '#F44336', fontWeight: 'bold'}}>Start</Text>
+          <Text style={{ fontSize: 22, color: '#F44336', fontWeight: 'bold' }}>Start</Text>
         </View>
     );
     const rightContent = (
@@ -106,16 +107,18 @@ class DeckListItem extends Component {
     });
     const marginBottom = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, -85]
-    })
+      outputRange: [0, -75]
+    });
     const { deck, onSwipe, backgroundColor } = this.props;
 
     return (
-      <Animated.View style={{
-        marginLeft,
-        marginRight,
-        marginBottom
-      }}>
+      <Animated.View
+        style={{
+          marginLeft,
+          marginRight,
+          marginBottom
+        }}
+      >
         <Swipeable
           key={deck.id}
           swipeStartMinDistance={2}
@@ -161,7 +164,7 @@ class DeckListItem extends Component {
 const styles = StyleSheet.create({
   listItemContainer: {
     flex: 1,
-    height: 85,
+    height: 75,
     borderTopWidth: 0,
     backgroundColor: 'white',
     shadowColor: '#111',
@@ -172,9 +175,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   listItem: {
-    flex:1,
+    flex: 1,
     width: null,
-    height: 85,
+    height: 75,
     borderBottomWidth: 0,
     justifyContent: 'center',
     alignItems: 'center'

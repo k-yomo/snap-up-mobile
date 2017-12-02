@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  StyleSheet,
   Text,
-  View,
   ScrollView,
   RefreshControl
 } from 'react-native';
-import Swipeable from 'react-native-swipeable';
-import { headerNavConfig } from '../config/navigationOptions';
+import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from './DeckListItem';
 
 
@@ -42,8 +39,8 @@ class DecksPage extends Component {
   }
 
   onRefresh() {
-    this.setState({isRefreshing: true});
-    setTimeout(() => { this.setState({isRefreshing: false}) }, 1000);
+    this.setState({ isRefreshing: true });
+    setTimeout(() => { this.setState({ isRefreshing: false }); }, 1000);
   }
 
   render() {
@@ -61,7 +58,7 @@ class DecksPage extends Component {
           <DeckListItem
             key={deck.id}
             deck={deck}
-            backgroundColor={ i < 11 ? this.state.colors[i] : '#FF9A80'}
+            backgroundColor={i < 11 ? this.state.colors[i] : '#FF9A80'}
             onSwipe={this.onSwipe}
             navigate={this.props.navigation.navigate}
           />
@@ -71,30 +68,6 @@ class DecksPage extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20
-  },
-  listItem: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  leftSwipeItem: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    paddingRight: 20,
-    backgroundColor: 'white'
-  },
-  rightSwipeItem: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingLeft: 20
-  },
-
-});
 
 const mapStateToProps = (state) => ({
   decks: state.decks

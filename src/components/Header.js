@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
     height: 80,
     width: null,
     flex: 0,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#F5F5F5'
   },
   headerText: {
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#F44336'
   }
-})
+});

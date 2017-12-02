@@ -5,7 +5,7 @@ import {
   Text,
   View
 } from 'react-native';
-import { headerNavConfig } from '../config/navigationOptions';
+import headerNavConfig from '../config/navigationOptions';
 
 
 class StudyPage extends Component {
