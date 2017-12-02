@@ -6,7 +6,6 @@ import {
   Text,
   ImageBackground
 } from 'react-native';
-import firebase from 'react-native-firebase';
 import AuthForm from './AuthForm';
 
 const img = require('../images/background.png');
@@ -25,7 +24,10 @@ class UserAuth extends Component {
       >
         {this.state.haveAccount ? (
           <View style={styles.formContainer}>
-            <AuthForm title='Login' />
+            <AuthForm
+              haveAccount
+              title='Login'
+            />
             <Text style={styles.description}>
               Don't have account?
             </Text>
@@ -38,7 +40,10 @@ class UserAuth extends Component {
           </View>
         ) : (
           <View style={styles.formContainer}>
-            <AuthForm title='Sign up' />
+            <AuthForm
+              haveAccount={false}
+              title='Sign up'
+            />
             <Text style={styles.description}>
               Already have an account?
             </Text>
@@ -73,9 +78,8 @@ const styles = StyleSheet.create({
   },
   description: {
     paddingTop: 30,
-    fontSize: 16,
-    opacity: 0.8,
-    color: '#5D4037'
+    fontSize: 18,
+    color: 'rgba(0, 0, 0, .44)'
   },
   changeAuth: {
     paddingTop: 5,

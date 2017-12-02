@@ -13,6 +13,8 @@ target 'mobile' do
       'DevSupport'
     ]
 
+  pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
+
   target 'mobileTests' do
     inherit! :search_paths
   end
