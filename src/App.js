@@ -9,7 +9,7 @@ import configureStore from './store/configureStore';
 import firebaseConfig from './config/firebaseConfig';
 import Header from './components/Header';
 import Router from './routes';
-import LoginPage from './containers/LoginPage';
+import UserAuth from './containers/UserAuth';
 
 const store = configureStore();
 
@@ -18,14 +18,14 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      loaded: false
+      loggedIn: false
     };
   }
 
   componentWillMount() {
     firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ loaded: true });
+      this.setState({ loggedIn: true });
       if (user) {
         console.log(user);
       }
@@ -37,7 +37,7 @@ export default class App extends Component {
       <Provider store={store}>
         <View style={styles.container}>
           <Header />
-          { this.state.loaded ? <Router /> : <LoginPage /> }
+          { this.state.loggedIn ? <UserAuth /> : <Router /> }
         </View>
       </Provider>
     );
