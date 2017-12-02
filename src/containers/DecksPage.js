@@ -16,16 +16,16 @@ class DecksPage extends Component {
     super(props);
     this.state = {
       colors: [
-        '#EA3C35',
-        '#ED3E35',
-        '#F04035',
         '#F44336',
-        '#F6513F',
-        '#F85F48',
-        '#FA6D52',
-        '#FB7C61',
-        '#FD8B70',
-        '#FF9A80'
+        '#F45138',
+        '#F5603A',
+        '#F66E3C',
+        '#F67D3E',
+        '#F78B41',
+        '#F89A43',
+        '#F8A845',
+        '#F9B747',
+        '#FAC64A',
       ],
       isSwiping: false,
       isRefreshing: false
@@ -58,7 +58,7 @@ class DecksPage extends Component {
           <DeckListItem
             key={deck.id}
             deck={deck}
-            backgroundColor={i < 11 ? this.state.colors[i] : '#FF9A80'}
+            backgroundColor={i < 11 ? this.state.colors[i] : '#FAC64A'}
             onSwipe={this.onSwipe}
             navigate={this.props.navigation.navigate}
           />
