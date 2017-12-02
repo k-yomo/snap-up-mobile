@@ -6,6 +6,7 @@ import {
   Text,
   ImageBackground
 } from 'react-native';
+import firebase from 'react-native-firebase';
 import AuthForm from './AuthForm';
 
 const img = require('../images/background.png');

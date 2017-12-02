@@ -4,9 +4,8 @@ import {
   View
 } from 'react-native';
 import { Provider } from 'react-redux';
-import * as firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import configureStore from './store/configureStore';
-import firebaseConfig from './config/firebaseConfig';
 import Header from './components/Header';
 import Router from './routes';
 import UserAuth from './containers/UserAuth';
@@ -23,21 +22,27 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ loggedIn: true });
       if (user) {
+        this.setState({ loggedIn: true });
         console.log(user);
       }
     });
   }
 
   render() {
+    if (!this.state.loggedIn) {
+     return (
+       <Provider store={store}>
+         <UserAuth />
+       </Provider>
+     );
+    }
     return (
       <Provider store={store}>
         <View style={styles.container}>
           <Header />
-          { this.state.loggedIn ? <UserAuth /> : <Router /> }
+          <Router />
         </View>
       </Provider>
     );

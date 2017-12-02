@@ -34,8 +34,8 @@ class AuthForm extends Component {
         <Button
           disabled={!(this.state.email && this.state.password)}
           buttonStyle={styles.submitButton}
-          textStyle={{ fontWeight: 'bold', fontSize: 24 }}
           disabledStyle={{ backgroundColor: null, opacity: 0.5 }}
+          textStyle={{ fontWeight: 'bold', fontSize: 24 }}
           title={this.props.title}
         />
       </View>
