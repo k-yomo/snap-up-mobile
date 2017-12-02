@@ -1,0 +1,19 @@
+platform :ios, '9.0'
+
+target 'mobile' do
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+
+  target 'mobileTests' do
+    inherit! :search_paths
+  end
+
+end
+
+target 'mobile-tvOS' do
+  target 'mobile-tvOSTests' do
+    inherit! :search_paths
+  end
+
+end
