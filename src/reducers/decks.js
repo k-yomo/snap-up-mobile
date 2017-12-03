@@ -37,7 +37,7 @@ const defaultState =
     id: 9,
     title: '日常会話英単語'
   }
-]
+];
 
 export default (state = defaultState, action) => {
   switch (action.type) {
@@ -46,4 +46,4 @@ export default (state = defaultState, action) => {
     default:
       return state;
   }
-}
+};

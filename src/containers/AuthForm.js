@@ -25,9 +25,6 @@ class AuthForm extends Component {
     this.setState({ loading: true, error: '' });
     if (this.props.haveAccount) {
       firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        console.log(user);
-      })
       .catch((er) => {
         const error = this.props.haveAccount ?
         'Email and/or password are invalid. Please try again.' : er.message;
@@ -38,9 +35,6 @@ class AuthForm extends Component {
       });
     } else {
       firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        console.log(user);
-      })
       .catch((er) => {
         const error = this.props.haveAccount ?
         'Email and/or password are invalid. Please try again.' : er.message;
