@@ -28,9 +28,11 @@ class AuthForm extends Component {
       .then((user) => {
         console.log(user);
       })
-      .catch(() => {
+      .catch((er) => {
+        const error = this.props.haveAccount ?
+        'Email and/or password are invalid. Please try again.' : er.message;
         this.setState({
-          error: 'Email and/or password are invalid. Please try again.',
+          error,
           loading: false
         });
       });
@@ -39,9 +41,11 @@ class AuthForm extends Component {
       .then((user) => {
         console.log(user);
       })
-      .catch(() => {
+      .catch((er) => {
+        const error = this.props.haveAccount ?
+        'Email and/or password are invalid. Please try again.' : er.message;
         this.setState({
-          error: 'Email and/or password are invalid. Please try again.',
+          error,
           loading: false
         });
       });
