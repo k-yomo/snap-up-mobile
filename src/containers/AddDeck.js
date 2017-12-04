@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   formContainer: {
     paddingLeft: 20,
     paddingBottom: 7
-  }
+  },
   button: {
     backgroundColor: '#F44336',
     height: 50
