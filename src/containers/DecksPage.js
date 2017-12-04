@@ -9,6 +9,7 @@ import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from './DeckListItem';
 import AddDeck from './AddDeck';
+import { fetchDecks } from '../actions/decks';
 
 
 class DecksPage extends Component {
@@ -45,7 +46,8 @@ class DecksPage extends Component {
 
   onRefresh() {
     this.setState({ isRefreshing: true });
-    setTimeout(() => { this.setState({ isRefreshing: false }); }, 1000);
+    fetchDecks(this.state.uid);
+    this.setState({ isRefreshing: false });
   }
 
   render() {

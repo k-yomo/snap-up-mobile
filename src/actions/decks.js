@@ -1,4 +1,5 @@
 import firebase from 'react-native-firebase';
+import uuid from 'uuid';
 
 export const fetchDecks = uid => dispatch => {
   const ref = firebase.firestore().collection('users').doc(uid).collection('decks');
@@ -19,8 +20,10 @@ const setDecks = decks => ({
 });
 
 export const postDeck = (uid, title) => dispatch => {
-    const ref = firebase.firestore().collection(`users/${uid}/decks`);
-    ref.add({ title }).then((docRef) => dispatch(addDeck(docRef.id, title)));
+  const deckId = uuid();
+  const ref = firebase.firestore().collection(`users/${uid}/decks`).doc(deckId);
+  ref.set({ title });
+  dispatch(addDeck(deckId, title));
 };
 
 const addDeck = (id, title) => ({
@@ -33,8 +36,8 @@ const addDeck = (id, title) => ({
 });
 
 export const deleteDeck = (uid, deckId) => dispatch => {
-  firebase.firestore().doc(`users/${uid}/decks/${deckId}`).delete()
-  .then(() => dispatch(removeDeck(deckId)));
+  firebase.firestore().doc(`users/${uid}/decks/${deckId}`).delete();
+  dispatch(removeDeck(deckId));
 };
 
 const removeDeck = id => ({
