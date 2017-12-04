@@ -7,7 +7,8 @@ import {
   Alert,
   Vibration,
   Animated,
-  Easing
+  Easing,
+  TouchableHighlight
 } from 'react-native';
 import {
   Avatar,
@@ -136,26 +137,33 @@ class DeckListItem extends Component {
           onSwipeRelease={() => onSwipe(false)}
           style={styles.listItemContainer}
         >
-          <ListItem
-            hideChevron
-            title={deck.title}
-            titleStyle={{ color: 'white', fontSize: 20 }}
-            containerStyle={
-              StyleSheet.flatten([
-                styles.listItem,
-                { backgroundColor, opacity: this.state.listItemOpacity }
-              ])
-            }
-            roundAvatar
-            avatar={
-              <Avatar
-                medium
-                rounded
-                title="MT"
-                titleStyle={{ fontSize: 20 }}
+          <TouchableHighlight
+            onPress={() => this.props.navigate('Study', { id: deck.id })}
+            style={{ flex: 1 }}
+          >
+            <View style={{ flex: 1 }}>
+              <ListItem
+                hideChevron
+                title={deck.title}
+                titleStyle={{ color: 'white', fontSize: 20 }}
+                containerStyle={
+                  StyleSheet.flatten([
+                    styles.listItem,
+                    { backgroundColor, opacity: this.state.listItemOpacity }
+                  ])
+                }
+                roundAvatar
+                avatar={
+                  <Avatar
+                    medium
+                    rounded
+                    title="MT"
+                    titleStyle={{ fontSize: 20 }}
+                  />
+                }
               />
-            }
-          />
+            </View>
+          </TouchableHighlight>
         </Swipeable>
       </Animated.View>
    );
