@@ -43,7 +43,7 @@ class AddDeck extends Component {
           onBackdropPress={() => this.onBackdropPress()}
           style={styles.modal}
         >
-          <View style={{ paddingLeft: 20 }}>
+          <View style={styles.formContainer}>
             <TextField
               label='Deck Title'
               value={this.state.deckTitle}
@@ -63,7 +63,7 @@ class AddDeck extends Component {
           onPress={() => this.setState({ isModalVisible: true, inputFocused: true })}
           title='Add Deck'
           icon={{ name: 'library-add' }}
-          buttonStyle={{ backgroundColor: '#F44336', height: 50 }}
+          buttonStyle={styles.button}
           containerViewStyle={{ margin: 15 }}
           titleStyle={{ fontSize: 22 }}
         />
@@ -81,6 +81,14 @@ const styles = StyleSheet.create({
     right: 0,
     margin: 0,
     backgroundColor: '#F44336'
+  },
+  formContainer: {
+    paddingLeft: 20,
+    paddingBottom: 7
+  }
+  button: {
+    backgroundColor: '#F44336',
+    height: 50
   }
 });
 
