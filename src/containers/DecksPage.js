@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Text,
+  RefreshControl,
   ScrollView,
-  RefreshControl
+  View
 } from 'react-native';
+import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from './DeckListItem';
+import AddDeck from './AddDeck';
 
 
 class DecksPage extends Component {
@@ -27,8 +29,11 @@ class DecksPage extends Component {
         '#F9B747',
         '#FAC64A',
       ],
+      deckTitle: '',
       isSwiping: false,
-      isRefreshing: false
+      isRefreshing: false,
+      isModalVisible: false,
+      uid: firebase.auth().currentUser.uid
     };
     this.onSwipe = this.onSwipe.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
@@ -45,6 +50,9 @@ class DecksPage extends Component {
 
   render() {
     return (
+      <View>
+        {console.log(this.props.decks)}
+        <AddDeck uid={this.state.uid} />
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -54,23 +62,25 @@ class DecksPage extends Component {
         }
         scrollEnabled={!this.state.isSwiping}
       >
-        {this.props.decks.length > 0 ? this.props.decks.map((deck, i) => (
+        {this.props.decks.length > 0 && this.props.decks.map((deck, i) => (
           <DeckListItem
             key={deck.id}
             deck={deck}
-            backgroundColor={i < 11 ? this.state.colors[i] : '#FAC64A'}
+            uid={this.state.uid}
             onSwipe={this.onSwipe}
             navigate={this.props.navigation.navigate}
+            backgroundColor={i < 11 ? this.state.colors[i] : '#FAC64A'}
           />
-        )) : <Text> Let's create new deck!</Text>
-        }
+        ))}
       </ScrollView>
+    </View>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  decks: state.decks
+  decks: state.decks,
+  user: state.user
 });
 
 export default connect(mapStateToProps)(DecksPage);

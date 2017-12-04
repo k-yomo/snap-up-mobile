@@ -32,10 +32,6 @@ class DeckListItem extends Component {
     this.onLeftActionRelease = this.onLeftActionRelease.bind(this);
   }
 
-  onDeleteDeckPress(deckId) {
-    this.props.dispatch(deleteDeck(deckId));
-  }
-
   onRightActionRelease() {
     if (!this.state.isAlerting) {
       this.setState({ isAlerting: true });
@@ -47,7 +43,7 @@ class DeckListItem extends Component {
             onPress: () => {
               Vibration.vibrate(50);
               this.animate();
-              setTimeout(() => { this.onDeleteDeckPress(this.props.deck.id); }, 500);
+              setTimeout(() => { this.deleteDeck(); }, 500);
             }
           },
           { text: 'Cancel' }
@@ -59,6 +55,10 @@ class DeckListItem extends Component {
 
   onLeftActionRelease(id) {
     this.props.navigate('Study', { id });
+  }
+
+  deleteDeck() {
+    this.props.dispatch(deleteDeck(this.props.uid, this.props.deck.id));
   }
 
   animate() {
@@ -89,12 +89,12 @@ class DeckListItem extends Component {
             }
           ])}
         >
-          <Text style={{ fontSize: 22, color: '#F44336', fontWeight: 'bold' }}>Start</Text>
+          <Text style={{ fontSize: 20, color: '#F44336', fontWeight: 'bold' }}>Start</Text>
         </View>
     );
     const rightContent = (
       <View style={styles.rightSwipeItem}>
-        <Icon size={40} name="delete-forever" color='#757575' />
+        <Icon size={35} name="delete-forever" color='#757575' />
       </View>
     );
     const marginLeft = this.animatedValue.interpolate({
@@ -139,7 +139,7 @@ class DeckListItem extends Component {
           <ListItem
             hideChevron
             title={deck.title}
-            titleStyle={{ color: 'white', fontSize: 22 }}
+            titleStyle={{ color: 'white', fontSize: 20 }}
             containerStyle={
               StyleSheet.flatten([
                 styles.listItem,
@@ -152,6 +152,7 @@ class DeckListItem extends Component {
                 medium
                 rounded
                 title="MT"
+                titleStyle={{ fontSize: 20 }}
               />
             }
           />
