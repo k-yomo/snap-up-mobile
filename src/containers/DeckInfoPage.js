@@ -1,23 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  StyleSheet,
   Text,
   View
 } from 'react-native';
 import headerNavConfig from '../config/navigationOptions';
-
+import CreateCard from '../components/CreateCard';
 
 class DeckInfoPage extends Component {
-  static navigationOptions = headerNavConfig;
+  static navigationOptions = ({ navigation }) => ({ ...headerNavConfig, title: navigation.state.params.deck.title });
 
   render() {
     return (
       <View>
-        <Text>DeckInfoPage</Text>
+        <CreateCard
+          uid={this.props.uid}
+          deckId={this.props.deck.id}
+          dispatch={this.props.dispatch}
+        />
+        {this.props.deck.cards.map(card => <Text>{card.english} {card.meaning}</Text>)}
       </View>
     );
   }
 }
 
-export default connect()(DeckInfoPage);
+const mapStateToProps = (state, props) => ({
+  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deck.id),
+  uid: state.user.uid
+});
+
+export default connect(mapStateToProps)(DeckInfoPage);

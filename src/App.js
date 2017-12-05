@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import Router from './routes';
-import UserAuth from './containers/UserAuth';
+import UserAuth from './components/UserAuth';
 import { setUser } from './actions/user';
 import { fetchDecks } from './actions/decks';
 

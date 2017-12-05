@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   StyleSheet,
   View
@@ -7,10 +6,10 @@ import {
 import { Button } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { TextField } from 'react-native-material-textfield';
-import { postDeck } from '../actions/decks';
+import { createDeck } from '../actions/decks';
 
 
-class AddDeck extends Component {
+export default class CreateDeck extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +26,7 @@ class AddDeck extends Component {
 
   onSubmitDeck() {
     if (this.state.deckTitle) {
-      this.props.dispatch(postDeck(this.props.uid, this.state.deckTitle));
+      this.props.dispatch(createDeck(this.props.uid, this.state.deckTitle));
       this.setState({ deckTitle: '', animationOut: 'fadeOutDown', isModalVisible: false });
     }
   }
@@ -61,11 +60,11 @@ class AddDeck extends Component {
         <Button
           raised
           onPress={() => this.setState({ isModalVisible: true, inputFocused: true })}
-          title='Add Deck'
+          title='Create New Deck'
           icon={{ name: 'library-add' }}
           buttonStyle={styles.button}
           containerViewStyle={{ margin: 15 }}
-          titleStyle={{ fontSize: 22 }}
+          textStyle={{ fontSize: 20 }}
         />
       </View>
     );
@@ -75,7 +74,7 @@ class AddDeck extends Component {
 const styles = StyleSheet.create({
   modal: {
     position: 'absolute',
-    top: 98,
+    top: 70,
     height: 75,
     left: 0,
     right: 0,
@@ -91,5 +90,3 @@ const styles = StyleSheet.create({
     height: 50
   }
 });
-
-export default connect()(AddDeck);

@@ -2,12 +2,25 @@ import firebase from 'react-native-firebase';
 import uuid from 'uuid';
 
 export const fetchDecks = uid => dispatch => {
-  const ref = firebase.firestore().collection('users').doc(uid).collection('decks');
-  ref.get().then(querySnapShot => {
+  const deckRef = firebase.firestore().collection(`users/${uid}/decks`);
+  deckRef.get().then(decksSnapShot => {
     const decks = [];
-    querySnapShot.forEach((doc) => {
-      const deck = doc.data();
-      deck.id = doc.id;
+    decksSnapShot.forEach(deckDoc => {
+      const deck = deckDoc.data();
+      deck.id = deckDoc.id;
+
+      const cardRef = firebase.firestore().collection(`users/${uid}/decks/${deck.id}/cards`);
+      cardRef.get().then(cardsSnapShot => {
+        const cards = [];
+        if (cardsSnapShot.docs) {
+          cardsSnapShot.docs.forEach(cardDoc => {
+            const card = cardDoc.data();
+            card.id = cardDoc.id;
+            cards.push(card);
+          });
+        }
+        deck.cards = cards;
+      });
       decks.push(deck);
     });
     dispatch(setDecks(decks));
@@ -19,9 +32,9 @@ const setDecks = decks => ({
   decks
 });
 
-export const postDeck = (uid, title) => dispatch => {
+export const createDeck = (uid, title) => dispatch => {
   const deckId = uuid();
-  const ref = firebase.firestore().collection(`users/${uid}/decks`).doc(deckId);
+  const ref = firebase.firestore().doc(`users/${uid}/decks/${deckId}`);
   ref.set({ title });
   dispatch(addDeck(deckId, title));
 };

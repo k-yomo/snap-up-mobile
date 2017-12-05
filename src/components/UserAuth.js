@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -10,7 +9,7 @@ import AuthForm from './AuthForm';
 
 const img = require('../images/background.png');
 
-class UserAuth extends Component {
+export default class UserAuth extends Component {
   constructor(props) {
     super(props);
     this.state = { haveAccount: true };
@@ -88,5 +87,3 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
-
-export default connect()(UserAuth);

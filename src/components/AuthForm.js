@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -10,7 +9,7 @@ import { Button } from 'react-native-elements';
 import { TextField } from 'react-native-material-textfield';
 import Spinner from 'react-native-spinkit';
 
-class AuthForm extends Component {
+export default class AuthForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -120,5 +119,3 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, .70)'
   }
 });
-
-export default connect()(AuthForm);

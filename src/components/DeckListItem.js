@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -19,7 +18,7 @@ import Swipeable from 'react-native-swipeable';
 import { deleteDeck } from '../actions/decks';
 
 
-class DeckListItem extends Component {
+export default class DeckListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -138,7 +137,7 @@ class DeckListItem extends Component {
           style={styles.listItemContainer}
         >
           <TouchableHighlight
-            onPress={() => this.props.navigate('DeckInfo', { id: deck.id })}
+            onPress={() => this.props.navigate('DeckInfo', { deck })}
             style={{ flex: 1 }}
           >
             <View style={{ flex: 1 }}>
@@ -206,5 +205,3 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
 });
-
-export default connect()(DeckListItem);

@@ -7,12 +7,12 @@ import {
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
-import DeckListItem from './DeckListItem';
-import AddDeck from './AddDeck';
+import DeckListItem from '../components/DeckListItem';
+import CreateDeck from '../components/CreateDeck';
 import { fetchDecks } from '../actions/decks';
 
 class DecksPage extends Component {
-  static navigationOptions = headerNavConfig;
+  static navigationOptions = { ...headerNavConfig, title: 'Decks' };
 
   constructor(props) {
     super(props);
@@ -52,8 +52,10 @@ class DecksPage extends Component {
   render() {
     return (
       <View>
-        {console.log(this.props.decks)}
-        <AddDeck uid={this.state.uid} />
+        <CreateDeck
+          uid={this.state.uid}
+          dispatch={this.props.dispatch}
+        />
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -69,8 +71,9 @@ class DecksPage extends Component {
               deck={deck}
               uid={this.state.uid}
               onSwipe={this.onSwipe}
+              dispatch={this.props.dispatch}
               navigate={this.props.navigation.navigate}
-              backgroundColor={i < 11 ? this.state.colors[i] : '#FAC64A'}
+              backgroundColor={i < 10 ? this.state.colors[i] : '#FAC64A'}
             />
           ))}
       </ScrollView>
