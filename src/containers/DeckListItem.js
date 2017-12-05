@@ -138,7 +138,7 @@ class DeckListItem extends Component {
           style={styles.listItemContainer}
         >
           <TouchableHighlight
-            onPress={() => this.props.navigate('Study', { id: deck.id })}
+            onPress={() => this.props.navigate('DeckInfo', { id: deck.id })}
             style={{ flex: 1 }}
           >
             <View style={{ flex: 1 }}>

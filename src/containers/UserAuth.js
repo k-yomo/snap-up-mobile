@@ -29,7 +29,7 @@ class UserAuth extends Component {
               title='Login'
             />
             <Text style={styles.description}>
-              Don't have account?
+              Don't have an account?
             </Text>
             <Text
               style={styles.changeAuth}

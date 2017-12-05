@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
 import firebase from 'react-native-firebase';
-import Header from './components/Header';
 import Router from './routes';
 import UserAuth from './containers/UserAuth';
 import { setUser } from './actions/user';
@@ -30,21 +25,8 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.loggedIn) {
-     return <UserAuth />;
-    }
-    return (
-        <View style={styles.container}>
-          <Header />
-          <Router />
-        </View>
-    );
+    return !this.state.loggedIn ? <UserAuth /> : <Router />;
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
 export default connect()(App);

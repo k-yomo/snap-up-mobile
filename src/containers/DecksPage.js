@@ -11,7 +11,6 @@ import DeckListItem from './DeckListItem';
 import AddDeck from './AddDeck';
 import { fetchDecks } from '../actions/decks';
 
-
 class DecksPage extends Component {
   static navigationOptions = headerNavConfig;
 
@@ -55,25 +54,25 @@ class DecksPage extends Component {
       <View>
         {console.log(this.props.decks)}
         <AddDeck uid={this.state.uid} />
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.isRefreshing}
-            onRefresh={this.onRefresh}
-          />
-        }
-        scrollEnabled={!this.state.isSwiping}
-      >
-        {this.props.decks.length > 0 && this.props.decks.map((deck, i) => (
-          <DeckListItem
-            key={deck.id}
-            deck={deck}
-            uid={this.state.uid}
-            onSwipe={this.onSwipe}
-            navigate={this.props.navigation.navigate}
-            backgroundColor={i < 11 ? this.state.colors[i] : '#FAC64A'}
-          />
-        ))}
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+          scrollEnabled={!this.state.isSwiping}
+        >
+          {this.props.decks.length > 0 && this.props.decks.map((deck, i) => (
+            <DeckListItem
+              key={deck.id}
+              deck={deck}
+              uid={this.state.uid}
+              onSwipe={this.onSwipe}
+              navigate={this.props.navigation.navigate}
+              backgroundColor={i < 11 ? this.state.colors[i] : '#FAC64A'}
+            />
+          ))}
       </ScrollView>
     </View>
     );

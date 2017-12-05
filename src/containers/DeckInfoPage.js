@@ -8,14 +8,16 @@ import {
 import headerNavConfig from '../config/navigationOptions';
 
 
-class StudyPage extends Component {
+class DeckInfoPage extends Component {
   static navigationOptions = headerNavConfig;
 
   render() {
     return (
-      <View><Text>StudyPage</Text></View>
+      <View>
+        <Text>DeckInfoPage</Text>
+      </View>
     );
   }
 }
 
-export default connect()(StudyPage);
+export default connect()(DeckInfoPage);

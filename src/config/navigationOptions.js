@@ -1,13 +1,25 @@
 
 
 export default {
+  title: 'Snap Up',
+  headerBackTitle: null,
   headerStyle: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
+    flex: 0,
+    width: null,
+    height: 50,
+    paddingRight: 15,
+    paddingBottom: 25,
+    paddingLeft: 15,
+    backgroundColor: '#F5F5F5'
+  },
+  headerTitleStyle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    fontFamily: 'Verdana',
+    color: '#F44336'
   },
   headerBackTitleStyle: {
-    opacity: 0,
+    paddingLeft: 10,
   },
-  headerTintColor: '#fff',
+  headerTintColor: '#F44336',
 };

@@ -75,8 +75,8 @@ class AddDeck extends Component {
 const styles = StyleSheet.create({
   modal: {
     position: 'absolute',
-    top: 80,
-    height: 80,
+    top: 98,
+    height: 75,
     left: 0,
     right: 0,
     margin: 0,
