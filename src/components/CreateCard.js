@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import {
+  TouchableHighlight,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 import {
   Card,
-  Button
+  Button,
+  Avatar,
+  ListItem,
+  Icon
 } from 'react-native-elements';
+import Modal from 'react-native-modal';
 import axios from 'axios';
 import { TextField } from 'react-native-material-textfield';
 import { createCard } from '../actions/cards';
@@ -19,9 +24,13 @@ export default class CreateCard extends Component {
     this.state = {
       english: '',
       meaning: '',
-      isModalOpen: true,
+      part: 'N/A',
       meanings: [],
-      noSuggestedMeanings: false
+      parts: ['N', 'V', 'Adj', 'Adv', 'N/A'],
+      partsColors: ['#F44336', '#F66E3C', '#F89A43', '#FAC64A', '#888'],
+      isModalVisible: false,
+      noSuggestedMeanings: false,
+      animationOut: 'fadeOutUp'
     };
   }
 
@@ -32,40 +41,54 @@ export default class CreateCard extends Component {
     .then((response) => {
       const tuc = response.data.tuc;
       if (tuc) {
-        for (let i = 0; i < 5; i++) {
-          if (!tuc[i]) {
-            this.setState({ noSuggestedMeanings: true });
+        for (let i = 0; i < 4; i++) {
+          if (!(tuc[i] && tuc[i].phrase)) {
             break;
           }
           this.setState({ noSuggestedMeanings: false });
           meanings.push(tuc[i].phrase.text);
         }
+      } else {
+        this.setState({ noSuggestedMeanings: true });
       }
       this.setState({ meanings });
     });
   }
 
+  onBackdropPress() {
+    this.setState({ animationOut: 'fadeOutUp', isModalVisible: false });
+  }
+
   onSubmitCard() {
-    const newCard = { english: this.state.english, meaning: this.state.meaning };
-    this.props.dispatch(createCard(this.props.uid, this.props.deckId, newCard));
+    const newCard = {
+      english: this.state.english,
+      meaning: this.state.meaning,
+      part: this.state.part
+    };
+
     this.setState({
+      animationOut: 'flipOutX',
       english: '',
       meaning: '',
-      meanings: []
+      part: 'N/A',
+      meanings: [],
+      isModalVisible: false
     });
+    this.props.dispatch(createCard(this.props.uid, this.props.deckId, newCard));
   }
 
   render() {
     return (
       <View>
-          <Button
-            title={this.state.isModalOpen ? 'Close' : 'Add New Card'}
-            buttonStyle={{ backgroundColor: '#F44336', paddingTop: 5, paddingBottom: 5 , marginTop: 15 }}
-            onPress={() => this.setState((state) => ({ isModalOpen: !state.isModalOpen }))}
-            textStyle={{ fontWeight: 'bold'}}
-          />
-          {this.state.isModalOpen &&
-            <Card containerStyle={{ marginTop: 0, paddingTop: 5, paddingBottom: 5 }}>
+        <Modal
+          animationIn='fadeInDown'
+          animationOut={this.state.animationOut}
+          animationOutTiming={400}
+          isVisible={this.state.isModalVisible}
+          onBackdropPress={() => this.onBackdropPress()}
+          style={styles.modal}
+        >
+            <Card containerStyle={styles.formContainer}>
               <TextField
                 label='English Word'
                 value={this.state.english}
@@ -80,19 +103,6 @@ export default class CreateCard extends Component {
                 labelHeight={20}
                 returnKeyType="next"
               />
-              <TextField
-                label='Meaning'
-                value={this.state.meaning}
-                autoCapitalize='none'
-                focus={this.state.inputFocused}
-                onChangeText={(meaning) => this.setState({ meaning })}
-                textColor='rgba(0, 0, 0, .7)'
-                tintColor='rgba(0, 0, 0, .38)'
-                fontSize={20}
-                labelFontSize={14}
-                labelHeight={20}
-
-              />
               <View
                 style={{
                 width: null,
@@ -106,9 +116,41 @@ export default class CreateCard extends Component {
                 <Button
                   key={i}
                   onPress={() => this.setState({ meaning })}
-                  containerViewStyle={{ marginLeft: 0, marginBottom: 10 }}
+                  containerViewStyle={styles.meaning}
                   title={meaning}
-                  buttonStyle={{ backgroundColor: meaning === this.state.meaning ? '#F44336' : '#bbb', borderRadius: 3 }}
+                  buttonStyle={{ backgroundColor: meaning === this.state.meaning ? '#F44336' : '#BDBDBD', borderRadius: 3 }}
+                />
+              )}
+            </View>
+              <TextField
+                label='Meaning'
+                value={this.state.meaning}
+                autoCapitalize='none'
+                focus={this.state.inputFocused}
+                onChangeText={(meaning) => this.setState({ meaning })}
+                textColor='rgba(0, 0, 0, .7)'
+                tintColor='rgba(0, 0, 0, .38)'
+                fontSize={20}
+                labelFontSize={14}
+                labelHeight={20}
+
+              />
+            <View
+              style={{
+              width: null,
+              marginTop: 5,
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center'
+             }}
+            >
+              {this.state.parts.map((part, i) =>
+                <Button
+                  onPress={() => this.setState({ part })}
+                  containerViewStyle={styles.meaning}
+                  title={part}
+                  buttonStyle={{ backgroundColor: this.state.part === part ? this.state.partsColors[i] :'#BDBDBD', borderRadius: 3 }}
                 />
               )}
             </View>
@@ -118,10 +160,43 @@ export default class CreateCard extends Component {
               title='Save'
               onPress={() => this.onSubmitCard()}
               buttonStyle={{ backgroundColor: '#F44336', marginBottom: 10 }}
+              disabledStyle={{ backgroundColor: '#BDBDBD' }}
             />
             </Card>
-          }
+          </Modal>
+          <Button
+            raised
+            onPress={() => this.setState({ isModalVisible: true })}
+            title='Create a New Card'
+            icon={{ name: 'add' }}
+            buttonStyle={styles.button}
+            containerViewStyle={{ marginTop: 15, marginBottom: 5 }}
+            textStyle={{ fontSize: 20 }}
+          />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  modal: {
+    position: 'absolute',
+    top: 70,
+    left: 0,
+    right: 0,
+    margin: 0
+  },
+  formContainer: {
+    marginTop: 0,
+    paddingTop: 5,
+    paddingBottom: 5
+  },
+  meaning: {
+    marginLeft: 0,
+    marginBottom: 10
+  },
+  button: {
+    backgroundColor: '#F44336',
+    height: 50
+  }
+});
