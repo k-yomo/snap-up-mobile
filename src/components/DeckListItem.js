@@ -151,15 +151,6 @@ export default class DeckListItem extends Component {
                     { backgroundColor, opacity: this.state.listItemOpacity }
                   ])
                 }
-                roundAvatar
-                avatar={
-                  <Avatar
-                    medium
-                    rounded
-                    title="MT"
-                    titleStyle={{ fontSize: 20 }}
-                  />
-                }
               />
             </View>
           </TouchableHighlight>
