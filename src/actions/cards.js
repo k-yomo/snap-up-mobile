@@ -23,11 +23,14 @@ export const createCard = (uid, deckId, card) => dispatch => {
   const cardId = uuid();
   const ref = firebase.firestore().doc(`users/${uid}/decks/${deckId}/cards/${cardId}`);
   ref.set(card);
-  dispatch(addCard(deckId, card));
+  dispatch(addCard(deckId, cardId, card));
 };
 
-const addCard = (deckId, card) => ({
+const addCard = (deckId, cardId, card) => ({
   type: 'ADD_NEW_CARD',
   deckId,
-  card
+  card: {
+    ...card,
+    id: cardId
+  }
 });
