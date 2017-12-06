@@ -45,6 +45,7 @@ export default class CreateDeck extends Component {
           <View style={styles.formContainer}>
             <TextField
               label='Deck Title'
+              returnKeyType='done'
               value={this.state.deckTitle}
               autoCapitalize='none'
               focus={this.state.inputFocused}
@@ -60,8 +61,8 @@ export default class CreateDeck extends Component {
         <Button
           raised
           onPress={() => this.setState({ isModalVisible: true, inputFocused: true })}
-          title='Create New Deck'
-          icon={{ name: 'library-add' }}
+          title='New Deck'
+          icon={{ name: 'library-add', size: 22 }}
           buttonStyle={styles.button}
           containerViewStyle={{ margin: 15 }}
           textStyle={{ fontSize: 20 }}
@@ -74,7 +75,7 @@ export default class CreateDeck extends Component {
 const styles = StyleSheet.create({
   modal: {
     position: 'absolute',
-    top: 70,
+    top: 90,
     height: 75,
     left: 0,
     right: 0,
