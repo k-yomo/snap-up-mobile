@@ -21,8 +21,7 @@ export default class CreateCard extends Component {
       meaning: '',
       isModalOpen: true,
       meanings: [],
-      noSuggestedMeanings: false,
-      setMeaning: null
+      noSuggestedMeanings: false
     };
   }
 
@@ -52,8 +51,7 @@ export default class CreateCard extends Component {
     this.setState({
       english: '',
       meaning: '',
-      meanings: [],
-      setMeaning: null
+      meanings: []
     });
   }
 
@@ -106,12 +104,11 @@ export default class CreateCard extends Component {
               {this.state.noSuggestedMeanings && <Text>There is no suggested meaning</Text>}
               {this.state.meanings.map((meaning, i) =>
                 <Button
-                  raised={i === this.state.setMeaning}
                   key={i}
-                  onPress={() => this.setState({ meaning, setMeaning: i })}
+                  onPress={() => this.setState({ meaning })}
                   containerViewStyle={{ marginLeft: 0, marginBottom: 10 }}
                   title={meaning}
-                  buttonStyle={{ backgroundColor: '#F44336', borderRadius: 3 }}
+                  buttonStyle={{ backgroundColor: meaning === this.state.meaning ? '#F44336' : '#bbb', borderRadius: 3 }}
                 />
               )}
             </View>
