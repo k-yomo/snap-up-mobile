@@ -129,9 +129,8 @@ export default class CreateCard extends Component {
       };
       const examples = [];
       const slicedResults = response.data.results.slice(0, 3);
-      console.log(response.data.frequency);
 
-      wordInfo.frequency = response.data.frequency;
+      wordInfo.frequency = Math.round(response.data.frequency);
       wordInfo.definitions = slicedResults.map(result => result.definition);
 
       slicedResults.forEach(result =>
