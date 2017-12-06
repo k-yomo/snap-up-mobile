@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  RefreshControl,
   ScrollView,
   View
 } from 'react-native';
@@ -9,7 +8,6 @@ import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from '../components/DeckListItem';
 import CreateDeck from '../components/CreateDeck';
-import { fetchDecks } from '../actions/decks';
 
 class DecksPage extends Component {
   static navigationOptions = { ...headerNavConfig, title: 'Decks' };
@@ -36,17 +34,10 @@ class DecksPage extends Component {
       uid: firebase.auth().currentUser.uid
     };
     this.onSwipe = this.onSwipe.bind(this);
-    this.onRefresh = this.onRefresh.bind(this);
   }
 
   onSwipe(isSwiping) {
     this.setState({ isSwiping });
-  }
-
-  onRefresh() {
-    this.setState({ isRefreshing: true });
-    fetchDecks(this.state.uid);
-    this.setState({ isRefreshing: false });
   }
 
   render() {
@@ -57,12 +48,6 @@ class DecksPage extends Component {
           dispatch={this.props.dispatch}
         />
         <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.isRefreshing}
-              onRefresh={this.onRefresh}
-            />
-          }
           scrollEnabled={!this.state.isSwiping}
         >
           {this.props.decks.length > 0 && this.props.decks.map((deck, i) => (
@@ -84,7 +69,6 @@ class DecksPage extends Component {
 
 const mapStateToProps = (state) => ({
   decks: state.decks,
-  user: state.user
 });
 
 export default connect(mapStateToProps)(DecksPage);
