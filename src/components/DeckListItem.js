@@ -163,7 +163,7 @@ export default class DeckListItem extends Component {
 const styles = StyleSheet.create({
   listItemContainer: {
     flex: 1,
-    height: 75,
+    height: 65,
     borderTopWidth: 0,
     backgroundColor: 'white',
     shadowColor: '#111',
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   listItem: {
     flex: 1,
     width: null,
-    height: 75,
+    height: 65,
     borderBottomWidth: 0,
     justifyContent: 'center',
     alignItems: 'center'
