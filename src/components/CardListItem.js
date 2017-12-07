@@ -14,6 +14,7 @@ import {
   Icon
 } from 'react-native-elements';
 import Swipeable from 'react-native-swipeable';
+import Tts from 'react-native-tts';
 import { deleteCard } from '../actions/cards';
 
 
@@ -52,7 +53,7 @@ export default class DeckListItem extends Component {
   }
 
   onLeftActionRelease() {
-    console.log('Left action released!');
+    Tts.speak('Hello, world!');
   }
 
   animate() {
@@ -148,7 +149,18 @@ export default class DeckListItem extends Component {
                       buttonStyle={styles.rightButton}
                       disabledStyle={{ backgroundColor: this.state.partsColors[part] }}
                     />)}
-
+                  <Button
+                    icon={{ name: 'volume-up', color: '#888' }}
+                    raised
+                    containerViewStyle={styles.rightButtonContainer}
+                    buttonStyle={
+                      StyleSheet.flatten([
+                        styles.rightButton,
+                        { minWidth: 41, backgroundColor: null, marginRight: -5 }
+                      ])
+                    }
+                    onPress={() => Tts.speak(card.english)}
+                  />
                 </View>}
                 titleStyle={{ color: 'rgba(0, 0, 0, .7)', fontSize: 22 }}
                 subtitleContainerStyle={{ paddingTop: 3 }}
@@ -213,7 +225,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     minWidth: 38,
-    borderRadius: 3,
+    borderRadius: 3
   },
   leftSwipeItem: {
     flex: 1,
