@@ -3,8 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Alert,
-  Vibration,
   Animated,
   Easing,
   TouchableHighlight
@@ -97,6 +95,7 @@ export default class DeckListItem extends Component {
           marginBottom
         }}
       >
+          {console.log(this.props.card)}
         <Swipeable
           key={card.id}
           swipeStartMinDistance={2}
@@ -115,7 +114,7 @@ export default class DeckListItem extends Component {
           style={styles.listItemContainer}
         >
           <TouchableHighlight
-            onPress={() => this.props.navigate('DeckInfo', { card })}
+            onPress={() => console.log('Card is pressed!')}
             style={{ flex: 1 }}
           >
             <View style={{ flex: 1 }}>
@@ -137,7 +136,7 @@ export default class DeckListItem extends Component {
                   <Avatar
                     medium
                     rounded
-                    title="N"
+                    title={card.frequency.toString()}
                     titleStyle={{ fontSize: 20 }}
                   />
                 }
