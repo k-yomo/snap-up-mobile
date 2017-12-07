@@ -93,7 +93,7 @@ export default class DeckListItem extends Component {
     );
     const rightContent = (
       <View style={styles.rightSwipeItem}>
-        <Icon size={35} name="delete-forever" color='#757575' />
+        <Icon size={35} name="delete-forever" color='#F44336' />
       </View>
     );
     const marginLeft = this.animatedValue.interpolate({
@@ -219,13 +219,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 20,
     paddingLeft: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#E9E8EE',
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
   rightSwipeItem: {
     flex: 1,
     paddingLeft: 20,
+    backgroundColor: '#E9E8EE',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
