@@ -33,7 +33,7 @@ export default class CreateCard extends Component {
         unapprecable: 'N/A'
       },
       parts: ['N', 'V', 'Adj', 'Adv', 'N/A'],
-      partsColors: ['#F44336', '#F66E3C', '#F89A43', '#FAC64A', '#888'],
+      partsColors: ['#F44336', '#3F51B5', '#F89A43', '#009688', '#888'],
       isModalVisible: false,
       noSuggestedMeaning: false,
       animationOut: 'fadeOutUp'
@@ -236,7 +236,11 @@ export default class CreateCard extends Component {
                   title={part}
                   buttonStyle={{
                     backgroundColor: this.state.wordInfo.parts && this.state.wordInfo.parts.includes(part) ? this.state.partsColors[i] : '#BDBDBD',
-                    borderRadius: 3
+                    borderRadius: 3,
+                    padding: 3,
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    minWidth: 42
                   }}
                 />
               )}

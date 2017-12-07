@@ -10,7 +10,6 @@ import {
   TouchableHighlight
 } from 'react-native';
 import {
-  Avatar,
   ListItem,
   Icon
 } from 'react-native-elements';

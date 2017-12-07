@@ -10,6 +10,7 @@ import {
 import {
   Avatar,
   ListItem,
+  Button,
   Icon
 } from 'react-native-elements';
 import Swipeable from 'react-native-swipeable';
@@ -20,7 +21,14 @@ export default class DeckListItem extends Component {
     super(props);
     this.state = {
       leftItemOpacity: 0.4,
-      listItemOpacity: 1.0
+      listItemOpacity: 1.0,
+      partsColors: {
+        N: '#F44336',
+        V: '#3F51B5',
+        Adj: '#F89A43',
+        Adv: '#009688',
+        'N/A': '#888'
+      }
     };
     this.animatedValue = new Animated.Value(0);
     this.animate = this.animate.bind(this);
@@ -51,6 +59,11 @@ export default class DeckListItem extends Component {
         this.animate();
       }
     });
+  }
+
+  partsSort(obj) {
+    const orderedArr = ['N', 'V', 'Adj', 'Adv', 'N/A'];
+    return Object.keys(obj).sort((a, b) => orderedArr.indexOf(a) - orderedArr.indexOf(b));
   }
 
 
@@ -119,12 +132,23 @@ export default class DeckListItem extends Component {
           >
             <View style={{ flex: 1 }}>
               <ListItem
-                hideChevron
                 title={card.english}
                 subtitle={card.meaning}
-                titleStyle={{ color: 'rgba(0, 0, 0, .65)', fontSize: 22 }}
+                rightIcon={<View style={styles.rightAreaContainer}>
+                  {this.partsSort(card.parts).map(part =>
+                    <Button
+                      key={part}
+                      title={part}
+                      disabled
+                      containerViewStyle={styles.rightButtonContainer}
+                      buttonStyle={styles.rightButton}
+                      disabledStyle={{ backgroundColor: this.state.partsColors[part] }}
+                    />)}
+
+                </View>}
+                titleStyle={{ color: 'rgba(0, 0, 0, .7)', fontSize: 22 }}
                 subtitleContainerStyle={{ paddingTop: 3 }}
-                subtitleStyle={{ color: 'rgba(0, 0, 0, .40)', fontSize: 14 }}
+                subtitleStyle={{ color: 'rgba(0, 0, 0, .35)', fontSize: 14 }}
                 containerStyle={
                   StyleSheet.flatten([
                     styles.listItem,
@@ -170,6 +194,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  rightAreaContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  rightButtonContainer: {
+    marginLeft: 8,
+    marginRight: 0
+  },
+  rightButton: {
+    padding: 3,
+    paddingTop: 8,
+    paddingBottom: 8,
+    minWidth: 38,
+    borderRadius: 3,
   },
   leftSwipeItem: {
     flex: 1,
