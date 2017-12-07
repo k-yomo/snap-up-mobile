@@ -41,7 +41,8 @@ export default class CreateCard extends Component {
   }
 
   onSubmitEnglish() {
-    const english = this.state.english.toLowerCase();
+    let english = this.state.english.toLowerCase();
+    english = english.endsWith(' ') ? english.slice(0, -1) : english;
     this.fetchMeanings(english);
     this.fetchWordInfo(english);
   }

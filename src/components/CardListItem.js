@@ -98,11 +98,11 @@ export default class DeckListItem extends Component {
     );
     const marginLeft = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [180, -700]
+      outputRange: [0, -700]
     });
     const marginRight = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [180, 700]
+      outputRange: [0, 700]
     });
     const { card, onSwipe, backgroundColor } = this.props;
 
