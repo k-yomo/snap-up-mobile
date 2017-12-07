@@ -14,6 +14,7 @@ import {
   Icon
 } from 'react-native-elements';
 import Swipeable from 'react-native-swipeable';
+import { deleteCard } from '../actions/cards';
 
 
 export default class DeckListItem extends Component {
@@ -28,7 +29,8 @@ export default class DeckListItem extends Component {
         Adj: '#F89A43',
         Adv: '#009688',
         'N/A': '#888'
-      }
+      },
+      isDeleting: false
     };
     this.animatedValue = new Animated.Value(0);
     this.animate = this.animate.bind(this);
@@ -36,12 +38,20 @@ export default class DeckListItem extends Component {
     this.onLeftActionRelease = this.onLeftActionRelease.bind(this);
   }
 
-  onRightActionRelease(cardId) {
-    // this.props.dispatch(deleteCard(this.props.uid, this.props.card.id, cardId));
-  console.log('Right action released!');
+  onRightActionRelease() {
+    this.setState({ isDeleting: true });
+    this.animate();
+    setTimeout(() => {
+      this.deleteCard();
+    }, 400);
+
   }
 
-  onLeftActionRelease(id) {
+  deleteCard() {
+    this.props.dispatch(deleteCard(this.props.uid, this.props.deckId, this.props.card.id));
+  }
+
+  onLeftActionRelease() {
     console.log('Left action released!');
   }
 
@@ -51,7 +61,7 @@ export default class DeckListItem extends Component {
       this.animatedValue,
       {
         toValue: 1,
-        duration: 500,
+        duration: 300,
         easing: Easing.cubic
       }
     ).start((o) => {
@@ -88,27 +98,21 @@ export default class DeckListItem extends Component {
     );
     const marginLeft = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, -700]
+      outputRange: [180, -700]
     });
     const marginRight = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, 700]
-    });
-    const marginBottom = this.animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, -75]
+      outputRange: [180, 700]
     });
     const { card, onSwipe, backgroundColor } = this.props;
 
     return (
       <Animated.View
         style={{
-          marginLeft,
-          marginRight,
-          marginBottom
+          marginLeft: this.state.isDeleting ? marginLeft : 0,
+          marginRight: this.state.isDeleting ? marginRight : 0
         }}
       >
-          {console.log(this.props.card)}
         <Swipeable
           key={card.id}
           swipeStartMinDistance={2}
@@ -116,7 +120,7 @@ export default class DeckListItem extends Component {
           leftActionActivationDistance={90}
           onLeftActionActivate={() => this.setState({ leftItemOpacity: 1.0 })}
           onLeftActionDeactivate={() => this.setState({ leftItemOpacity: 0.4 })}
-          onLeftActionRelease={() => this.onLeftActionRelease(card.id)}
+          onLeftActionRelease={this.onLeftActionRelease}
           rightContent={rightContent}
           rightActionActivationDistance={120}
           onRightActionActivate={() => this.setState({ listItemOpacity: 0.4 })}

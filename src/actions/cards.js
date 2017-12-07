@@ -34,3 +34,14 @@ const addCard = (deckId, cardId, card) => ({
     id: cardId
   }
 });
+
+export const deleteCard = (uid, deckId, cardId) => dispatch => {
+  dispatch(removeCard(deckId, cardId));
+  firebase.firestore().doc(`users/${uid}/decks/${deckId}/cards/${cardId}`).delete();
+};
+
+const removeCard = (deckId, cardId) => ({
+  type: 'REMOVE_CARD',
+  deckId,
+  cardId
+});

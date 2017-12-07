@@ -44,7 +44,8 @@ class DeckInfoPage extends Component {
             <CardListItem
               key={card.id}
               card={card}
-              uid={this.props.uid}
+              deckId={this.props.deck.id}
+              uid={this.state.uid}
               onSwipe={this.onSwipe}
               dispatch={this.props.dispatch}
               navigate={this.props.navigation.navigate}

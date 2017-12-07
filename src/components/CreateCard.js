@@ -61,9 +61,10 @@ export default class CreateCard extends Component {
 
   onSubmitCard() {
     const wordInfoCopy = this.state.wordInfo;
-    wordInfoCopy.definitions = this.convertArrayToObj(wordInfoCopy.definitions);
-    wordInfoCopy.examples = this.convertArrayToObj(wordInfoCopy.examples);
-    if (wordInfoCopy.parts.length) {
+    wordInfoCopy.definitions = wordInfoCopy.definitions ? this.convertArrayToObj(wordInfoCopy.definitions) : null;
+    wordInfoCopy.examples = wordInfoCopy.examples ? this.convertArrayToObj(wordInfoCopy.examples) : null;
+    wordInfoCopy.frequency = wordInfoCopy.frequency ? wordInfoCopy.frequency : 'N/A'
+    if (wordInfoCopy.parts.length > 0) {
       wordInfoCopy.parts = this.convertArrayBoolObj(wordInfoCopy.parts);
     } else {
       wordInfoCopy.parts = { 'N/A': true };
@@ -179,6 +180,7 @@ export default class CreateCard extends Component {
                 focus={this.state.inputFocused}
                 onChangeText={(english) => this.setState({ english })}
                 onSubmitEditing={() => this.state.english && this.onSubmitEnglish()}
+                containerStyle={styles.textField}
                 textColor='rgba(0, 0, 0, .7)'
                 tintColor='rgba(0, 0, 0, .38)'
                 fontSize={20}
@@ -189,6 +191,7 @@ export default class CreateCard extends Component {
                 style={{
                 width: null,
                 marginTop: 5,
+                marginLeft: 8,
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 justifyContent: 'flex-start' }}
@@ -214,10 +217,12 @@ export default class CreateCard extends Component {
               <TextField
                 label='Meaning'
                 keyboardType='default'
+                returnKeyType="done"
                 value={this.state.meaning}
                 autoCapitalize='none'
                 focus={this.state.inputFocused}
                 onChangeText={(meaning) => this.setState({ meaning })}
+                containerStyle={styles.textField}
                 textColor='rgba(0, 0, 0, .7)'
                 tintColor='rgba(0, 0, 0, .38)'
                 fontSize={20}
@@ -280,22 +285,30 @@ const styles = StyleSheet.create({
   formContainer: {
     marginTop: 0,
     paddingTop: 5,
+    paddingRight: 0,
+    paddingLeft: 0,
     paddingBottom: 5
   },
+  textField: {
+    marginLeft: 16,
+    marginRight: 16
+  },
   meaning: {
-    marginBottom: 10,
-    marginLeft: 0
+    marginLeft: 8,
+    marginRight: 4,
+    marginBottom: 8,
   },
   createCardButton: {
     height: 50,
     backgroundColor: '#F44336'
   },
   partOfSpeech: {
-  width: null,
-  marginTop: 5,
+  marginTop: 2,
+  marginLeft: 8,
+  marginRight: 8,
+  marginBottom: 6,
   flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
   alignItems: 'center'
 },
 noSuggestedMeaning: {
