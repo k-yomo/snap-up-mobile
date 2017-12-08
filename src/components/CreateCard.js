@@ -205,7 +205,7 @@ export default class CreateCard extends Component {
         }
         <View style={styles.englishInputContainer}>
           <TextField
-            label='English Word'
+            label='New English Word'
             value={english}
             keyboardType='email-address'
             returnKeyType="search"
@@ -254,7 +254,7 @@ export default class CreateCard extends Component {
               )}
             </View>
               <TextField
-                label='Meaning'
+                label='The Meaning'
                 value={meaning}
                 keyboardType='default'
                 returnKeyType="done"
