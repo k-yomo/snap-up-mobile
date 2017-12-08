@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import {
+  NativeModules,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 import {
   Card,
-  Button
+  Button,
+  Icon
 } from 'react-native-elements';
-import Modal from 'react-native-modal';
 import axios from 'axios';
 import { TextField } from 'react-native-material-textfield';
 import { createCard } from '../actions/cards';
 import { X_MASHAPE_KEY } from '../../env';
-
 
 export default class CreateCard extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ export default class CreateCard extends Component {
       wordInfo: {
         parts: []
       },
-      meanings: [],
+      suggestedMeanings: [],
       partConverter: {
         noun: 'N',
         verb: 'V',
@@ -34,13 +34,15 @@ export default class CreateCard extends Component {
       },
       parts: ['N', 'V', 'Adj', 'Adv', 'N/A'],
       partsColors: ['#F44336', '#3F51B5', '#F89A43', '#009688', '#888'],
-      isModalVisible: false,
       noSuggestedMeaning: false,
-      animationOut: 'fadeOutUp'
+      noDefinition: false,
+      isEnglishEntered: false
     };
   }
 
   onSubmitEnglish() {
+    this.setState({ isEnglishEntered: true, noDefinition: false });
+
     let english = this.state.english.toLowerCase();
     english = english.endsWith(' ') ? english.slice(0, -1) : english;
     this.fetchMeanings(english);
@@ -49,45 +51,61 @@ export default class CreateCard extends Component {
 
   onBackdropPress() {
     this.setState({
-      animationOut: 'fadeOutUp',
       english: '',
       meaning: '',
       wordInfo: {
         parts: []
       },
-      meanings: [],
-      isModalVisible: false
+      suggestedMeanings: [],
+      isEnglishEntered: false,
+      noSuggestedMeaning: false,
+      noDefinition: false
     });
   }
 
   onSubmitCard() {
-    const wordInfoCopy = this.state.wordInfo;
-    wordInfoCopy.definitions = wordInfoCopy.definitions ? this.convertArrayToObj(wordInfoCopy.definitions) : null;
-    wordInfoCopy.examples = wordInfoCopy.examples ? this.convertArrayToObj(wordInfoCopy.examples) : null;
-    wordInfoCopy.frequency = wordInfoCopy.frequency ? wordInfoCopy.frequency : 'N/A'
-    if (wordInfoCopy.parts.length > 0) {
-      wordInfoCopy.parts = this.convertArrayBoolObj(wordInfoCopy.parts);
+    const wordInfo = this.state.wordInfo;
+    wordInfo.definitions = wordInfo.definitions ? this.convertArrayToObj(wordInfo.definitions) : null;
+    wordInfo.examples = wordInfo.examples ? this.convertArrayToObj(wordInfo.examples) : null;
+    wordInfo.frequency = wordInfo.frequency ? wordInfo.frequency : 'N/A';
+    if (wordInfo.parts.length > 0) {
+      wordInfo.parts = this.convertArrayBoolObj(wordInfo.parts);
     } else {
-      wordInfoCopy.parts = { 'N/A': true };
+      wordInfo.parts = { 'N/A': true };
     }
 
     const newCard = {
       english: this.state.english,
       meaning: this.state.meaning,
-      ...wordInfoCopy
+      ...wordInfo
     };
 
     this.setState({
-      animationOut: 'flipOutX',
       english: '',
       meaning: '',
       wordInfo: {
         parts: []
       },
-      meanings: [],
-      isModalVisible: false
+      suggestedMeanings: [],
+      isEnglishEntered: false,
+      noSuggestedMeaning: false,
+      noDefinition: false,
     });
     this.props.dispatch(createCard(this.props.uid, this.props.deckId, newCard));
+  }
+
+  onCancelCreateCard() {
+    this.setState({
+      english: '',
+      meaning: '',
+      wordInfo: {
+        parts: []
+      },
+      suggestedMeanings: [],
+      isEnglishEntered: false,
+      noSuggestedMeaning: false,
+      noDefinition: false
+    });
   }
 
   onPartOfSpeechPress(pressedPart) {
@@ -103,9 +121,18 @@ export default class CreateCard extends Component {
     this.setState({ wordInfo });
   }
 
+  onDictionaryPress() {
+    const term = this.state.english;
+    NativeModules.ReferenceLibraryManager.showDefinitionForTerm(term, (hasDefinition) => {
+      if (!hasDefinition) {
+        this.setState({ noDefinition: true });
+      }
+    });
+  }
+
 
   fetchMeanings(english) {
-    const meanings = [];
+    const suggestedMeanings = [];
     axios.get(`https://glosbe.com/gapi/translate?from=en&dest=ja&format=json&phrase=${english}`)
     .then((response) => {
       const tuc = response.data.tuc;
@@ -113,12 +140,12 @@ export default class CreateCard extends Component {
         for (let i = 0; i < 4; i++) {
           if (!(tuc[i] && tuc[i].phrase)) { break; }
           this.setState({ noSuggestedMeaning: false });
-          meanings.push(tuc[i].phrase.text);
+          suggestedMeanings.push(tuc[i].phrase.text);
         }
       } else {
         this.setState({ noSuggestedMeaning: true });
       }
-      this.setState({ meanings });
+      this.setState({ suggestedMeanings });
     });
   }
 
@@ -161,55 +188,66 @@ export default class CreateCard extends Component {
   }
 
   render() {
+    const {
+      english,
+      meaning,
+      suggestedMeanings,
+      wordInfo,
+      isEnglishEntered,
+      partsColors
+    } = this.state;
     return (
-      <View>
-        <Modal
-          animationIn='fadeInDown'
-          animationOut={this.state.animationOut}
-          animationOutTiming={400}
-          isVisible={this.state.isModalVisible}
-          onBackdropPress={() => this.onBackdropPress()}
-          style={styles.modal}
-        >
-            <Card containerStyle={styles.formContainer}>
-              <TextField
-                label='English Word'
-                keyboardType='email-address'
-                returnKeyType="search"
-                value={this.state.english}
-                autoCapitalize='none'
-                focus={this.state.inputFocused}
-                onChangeText={(english) => this.setState({ english })}
-                onSubmitEditing={() => this.state.english && this.onSubmitEnglish()}
-                containerStyle={styles.textField}
-                textColor='rgba(0, 0, 0, .7)'
-                tintColor='rgba(0, 0, 0, .38)'
-                fontSize={20}
-                labelFontSize={14}
-                labelHeight={20}
-              />
-              <View
-                style={{
-                width: null,
-                marginTop: 5,
-                marginLeft: 8,
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'flex-start' }}
-              >
+      <Card containerStyle={styles.Container}>
+        {this.state.noDefinition &&
+          <Text style={styles.warning}>
+            definition not found or dictionary is not installed
+          </Text>
+        }
+        <View style={styles.englishInputContainer}>
+          <TextField
+            label='English Word'
+            value={english}
+            keyboardType='email-address'
+            returnKeyType="search"
+            autoCapitalize='none'
+            focus={this.state.inputFocused}
+            onChangeText={(eng) => this.setState({ english: eng })}
+            onSubmitEditing={() => english && this.onSubmitEnglish()}
+            containerStyle={styles.textField}
+            textColor='rgba(0, 0, 0, .7)'
+            tintColor='rgba(0, 0, 0, .38)'
+            fontSize={20}
+            labelFontSize={14}
+            labelHeight={20}
+          />
+          { isEnglishEntered &&
+            <Icon
+              raised
+              name='book-open-page-variant'
+              type='material-community'
+              onPress={() => this.onDictionaryPress()}
+              containerStyle={styles.dictionaryIcon}
+            />
+          }
+        </View>
+        { isEnglishEntered &&
+          <View>
+            <View
+              style={styles.suggestedMeaningContainer}
+            >
               {this.state.noSuggestedMeaning &&
-                <Text style={styles.noSuggestedMeaning}>
+                <Text style={styles.warning}>
                   There is no suggested meaning
                 </Text>
               }
-              {this.state.meanings.map((meaning, i) =>
+              {suggestedMeanings.map((suggestedM, i) =>
                 <Button
                   key={i}
-                  onPress={() => this.setState({ meaning })}
-                  containerViewStyle={styles.meaning}
-                  title={meaning}
+                  onPress={() => this.setState({ meaning: suggestedM })}
+                  containerViewStyle={styles.smallButtonContainer}
+                  title={suggestedM}
                   buttonStyle={{
-                    backgroundColor: meaning === this.state.meaning ? '#F44336' : '#BDBDBD',
+                    backgroundColor: suggestedM === meaning ? '#F44336' : '#BDBDBD',
                     borderRadius: 3
                   }}
                 />
@@ -217,12 +255,12 @@ export default class CreateCard extends Component {
             </View>
               <TextField
                 label='Meaning'
+                value={meaning}
                 keyboardType='default'
                 returnKeyType="done"
-                value={this.state.meaning}
                 autoCapitalize='none'
                 focus={this.state.inputFocused}
-                onChangeText={(meaning) => this.setState({ meaning })}
+                onChangeText={(m) => this.setState({ meaning: m })}
                 containerStyle={styles.textField}
                 textColor='rgba(0, 0, 0, .7)'
                 tintColor='rgba(0, 0, 0, .38)'
@@ -232,87 +270,119 @@ export default class CreateCard extends Component {
 
               />
             <View
-              style={styles.partOfSpeech}
+              style={styles.partOfSpeechContainer}
             >
               {this.state.parts.map((part, i) =>
                 <Button
                   key={i}
                   onPress={() => this.onPartOfSpeechPress(part)}
-                  containerViewStyle={styles.meaning}
+                  containerViewStyle={styles.smallButtonContainer}
                   title={part}
-                  buttonStyle={{
-                    backgroundColor: this.state.wordInfo.parts && this.state.wordInfo.parts.includes(part) ? this.state.partsColors[i] : '#BDBDBD',
-                    borderRadius: 3,
-                    padding: 3,
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    minWidth: 42
-                  }}
+                  buttonStyle={
+                    StyleSheet.flatten([
+                      styles.posButton,
+                      {
+                        backgroundColor: wordInfo.parts && wordInfo.parts.includes(part) ?
+                        partsColors[i] : '#BDBDBD'
+                      }
+                    ])
+                  }
                 />
               )}
             </View>
-            <Button
-              raised
-              disabled={!(this.state.english && this.state.meaning)}
-              title='Save'
-              onPress={() => this.onSubmitCard()}
-              buttonStyle={{ backgroundColor: '#F44336', marginBottom: 10 }}
-              disabledStyle={{ backgroundColor: '#BDBDBD' }}
-            />
-            </Card>
-          </Modal>
-          <Button
-            raised
-            onPress={() => this.setState({ isModalVisible: true })}
-            title='New Card'
-            icon={{ name: 'note-add', size: 22 }}
-            buttonStyle={styles.createCardButton}
-            containerViewStyle={{ marginTop: 15, marginBottom: 5 }}
-            textStyle={{ fontSize: 20 }}
-          />
-      </View>
+            <View style={styles.submitButtonsContainer}>
+              <Button
+                raised
+                title='Cancel'
+                onPress={() => this.onCancelCreateCard()}
+                containerViewStyle={{ margin: 0 }}
+                buttonStyle={styles.cancelButton}
+              />
+              <Button
+                raised
+                disabled={!(english && meaning)}
+                title='Save'
+                onPress={() => this.onSubmitCard()}
+                containerViewStyle={{ marginLeft: 0, marginRight: 0 }}
+                buttonStyle={styles.saveButton}
+                disabledStyle={{ backgroundColor: '#BDBDBD' }}
+              />
+            </View>
+          </View>
+        }
+      </Card>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  modal: {
-    position: 'absolute',
-    top: 70,
-    right: 0,
-    left: 0,
-    margin: 0
-  },
-  formContainer: {
-    marginTop: 0,
+  Container: {
     paddingTop: 5,
-    paddingRight: 0,
-    paddingLeft: 0,
-    paddingBottom: 5
+    paddingRight: 10,
+    paddingLeft: 10,
+    paddingBottom: 0
+  },
+  englishInputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
   textField: {
+    minWidth: '70%',
     marginLeft: 16,
     marginRight: 16
   },
-  meaning: {
+  dictionaryIcon: {
+    marginLeft: 0,
+    marginRight: 30
+  },
+  suggestedMeaningContainer: {
+    marginLeft: 8,
+    marginBottom: -5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start'
+  },
+  smallButtonContainer: {
     marginLeft: 8,
     marginRight: 4,
     marginBottom: 8,
   },
-  createCardButton: {
-    height: 50,
-    backgroundColor: '#F44336'
+  partOfSpeechContainer: {
+    marginTop: 1,
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
-  partOfSpeech: {
-  marginTop: 2,
-  marginLeft: 8,
-  marginRight: 8,
-  marginBottom: 6,
-  flexDirection: 'row',
-  justifyContent: 'flex-start',
-  alignItems: 'center'
-},
-noSuggestedMeaning: {
-  color: '#F44336'
-}
+  posButton: {
+    borderRadius: 3,
+    padding: 3,
+    paddingTop: 10,
+    paddingBottom: 10,
+    minWidth: 42
+  },
+  warning: {
+    color: '#F44336'
+  },
+  submitButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 15
+  },
+  cancelButton: {
+    backgroundColor: 'rgba(0, 0, 0, .38)',
+    paddingLeft: 30,
+    paddingRight: 30,
+    margin: 0
+  },
+  saveButton: {
+    paddingLeft: 60,
+    paddingRight: 60,
+    backgroundColor: '#F44336',
+    margin: 0
+  }
 });

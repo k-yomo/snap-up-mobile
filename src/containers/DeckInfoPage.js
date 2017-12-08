@@ -29,13 +29,12 @@ class DeckInfoPage extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1}}>
         <CreateCard
           uid={this.state.uid}
           deckId={this.props.deck.id}
           dispatch={this.props.dispatch}
         />
-
         <ScrollView
           scrollEnabled={!this.state.isSwiping}
           style={{ marginTop: 15 }}

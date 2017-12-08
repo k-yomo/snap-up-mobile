@@ -40,6 +40,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mobileTests.m */; };
 		396B2C3759704F6A8C5E5047 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9DCFC5E0450F49169EBE272F /* Ionicons.ttf */; };
 		39CC9AD0A2B74182BF6934BD /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B0D1160B45943CBAC593395 /* Zocial.ttf */; };
+		3A881E8F1FD9E4870080278C /* ReferenceLibraryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A881E8E1FD9E4870080278C /* ReferenceLibraryManager.m */; };
 		3A923ADE1FD2AF1700F2E901 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A923AB81FD2AF1700F2E901 /* GoogleService-Info.plist */; };
 		3C3D127593474E3C9588DD6E /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60CA93FEC68B4FCAADE079FF /* EvilIcons.ttf */; };
 		51D95FAE4C0897AF1218BA43 /* libPods-mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C147F488173FBC317EDE9562 /* libPods-mobileTests.a */; };
@@ -361,6 +362,8 @@
 		2876678F1CBEAEE91F7A8CB3 /* Pods-mobile-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mobile-tvOSTests/Pods-mobile-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* mobile-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mobile-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* mobile-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mobile-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A881E8D1FD9E4870080278C /* ReferenceLibraryManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReferenceLibraryManager.h; path = mobile/ReferenceLibraryManager.h; sourceTree = "<group>"; };
+		3A881E8E1FD9E4870080278C /* ReferenceLibraryManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ReferenceLibraryManager.m; path = mobile/ReferenceLibraryManager.m; sourceTree = "<group>"; };
 		3A923AB81FD2AF1700F2E901 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		404B8A1CF4EF92A2FB9017A1 /* Pods-mobile-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mobile-tvOSTests/Pods-mobile-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		42E7D072AFBF4EB6BEB73521 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -538,6 +541,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				3A881E8D1FD9E4870080278C /* ReferenceLibraryManager.h */,
+				3A881E8E1FD9E4870080278C /* ReferenceLibraryManager.m */,
 			);
 			name = mobile;
 			sourceTree = "<group>";
@@ -1333,7 +1338,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mobile/Pods-mobile-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/gRPC/gRPCCertificates.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/gRPC/gRPCCertificates.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -1458,6 +1463,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A881E8F1FD9E4870080278C /* ReferenceLibraryManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
