@@ -21,7 +21,7 @@ export default class DeckListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      leftItemOpacity: 0.4,
+      leftItemColor: 'rgba(244, 67, 54, 0.5)',
       listItemOpacity: 1.0,
       isAlerting: false
     };
@@ -79,16 +79,12 @@ export default class DeckListItem extends Component {
 
   render() {
     const leftContent = (
-        <View
-          style={
-          StyleSheet.flatten([
-            styles.leftSwipeItem,
-            {
-              opacity: this.state.leftItemOpacity
-            }
-          ])}
-        >
-          <Text style={{ fontSize: 20, color: '#F44336', fontWeight: 'bold' }}>Start</Text>
+        <View style={styles.leftSwipeItem}>
+          <Text
+            style={{ fontSize: 20, fontWeight: 'bold', color: this.state.leftItemColor, }}
+          >
+            Start
+          </Text>
         </View>
     );
     const rightContent = (
@@ -98,11 +94,11 @@ export default class DeckListItem extends Component {
     );
     const marginLeft = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, -700]
+      outputRange: [15, -700]
     });
     const marginRight = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, 700]
+      outputRange: [15, 700]
     });
     const marginBottom = this.animatedValue.interpolate({
       inputRange: [0, 1],
@@ -123,8 +119,8 @@ export default class DeckListItem extends Component {
           swipeStartMinDistance={2}
           leftContent={leftContent}
           leftActionActivationDistance={90}
-          onLeftActionActivate={() => this.setState({ leftItemOpacity: 1.0 })}
-          onLeftActionDeactivate={() => this.setState({ leftItemOpacity: 0.4 })}
+          onLeftActionActivate={() => this.setState({ leftItemColor: 'rgba(244, 67, 54, 1.0)' })}
+          onLeftActionDeactivate={() => this.setState({ leftItemColor: 'rgba(244, 67, 54, 0.5)' })}
           onLeftActionRelease={() => this.onLeftActionRelease(deck.id)}
           rightContent={rightContent}
           rightActionActivationDistance={120}
@@ -184,13 +180,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 20,
     paddingLeft: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#E9E8EE',
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
   rightSwipeItem: {
     flex: 1,
     paddingLeft: 20,
+    backgroundColor: '#E9E8EE',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },

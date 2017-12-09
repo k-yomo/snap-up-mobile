@@ -8,7 +8,6 @@ import {
   TouchableHighlight
 } from 'react-native';
 import {
-  Avatar,
   ListItem,
   Button,
   Icon
@@ -35,11 +34,11 @@ export default class DeckListItem extends Component {
     };
     this.animatedValue = new Animated.Value(0);
     this.animate = this.animate.bind(this);
-    this.onRightActionRelease = this.onRightActionRelease.bind(this);
+    this.onDeleteCardPress = this.onDeleteCardPress.bind(this);
     this.onLeftActionRelease = this.onLeftActionRelease.bind(this);
   }
 
-  onRightActionRelease() {
+  onDeleteCardPress() {
     this.setState({ isDeleting: true });
     this.animate();
     setTimeout(() => {
@@ -79,24 +78,18 @@ export default class DeckListItem extends Component {
 
 
   render() {
-    const leftContent = (
-        <View
-          style={
-          StyleSheet.flatten([
-            styles.leftSwipeItem,
-            {
-              opacity: this.state.leftItemOpacity
-            }
-          ])}
-        >
-          <Text style={{ fontSize: 20, color: '#F44336', fontWeight: 'bold' }}>Start</Text>
+    const rightButton = [
+      <TouchableHighlight onPress={this.onDeleteCardPress}>
+        <View style={styles.rightSwipeItem}>
+          <Icon
+            size={35}
+            name="delete-forever"
+            color='#757575'
+            containerStyle={{ marginLeft: -3 }}
+          />
         </View>
-    );
-    const rightContent = (
-      <View style={styles.rightSwipeItem}>
-        <Icon size={35} name="delete-forever" color='#F44336' />
-      </View>
-    );
+      </TouchableHighlight>
+    ];
     const marginLeft = this.animatedValue.interpolate({
       inputRange: [0, 1],
       outputRange: [0, -700]
@@ -105,28 +98,20 @@ export default class DeckListItem extends Component {
       inputRange: [0, 1],
       outputRange: [0, 700]
     });
-    const { card, onSwipe, backgroundColor } = this.props;
+    const { card, onSwipe } = this.props;
 
     return (
       <Animated.View
         style={{
-          marginLeft: this.state.isDeleting ? marginLeft : 0,
-          marginRight: this.state.isDeleting ? marginRight : 0
+          marginLeft: this.state.isDeleting ? marginLeft : 15,
+          marginRight: this.state.isDeleting ? marginRight : 15
         }}
       >
         <Swipeable
           key={card.id}
           swipeStartMinDistance={2}
-          leftContent={leftContent}
-          leftActionActivationDistance={90}
-          onLeftActionActivate={() => this.setState({ leftItemOpacity: 1.0 })}
-          onLeftActionDeactivate={() => this.setState({ leftItemOpacity: 0.4 })}
-          onLeftActionRelease={this.onLeftActionRelease}
-          rightContent={rightContent}
-          rightActionActivationDistance={120}
-          onRightActionActivate={() => this.setState({ listItemOpacity: 0.4 })}
-          onRightActionDeactivate={() => this.setState({ listItemOpacity: 1.0 })}
-          onRightActionRelease={this.onRightActionRelease}
+          rightButtons={rightButton}
+          rightButtonWidth={60}
           onSwipeStart={() => onSwipe(true)}
           onSwipeRelease={() => onSwipe(false)}
           style={styles.listItemContainer}
@@ -152,7 +137,7 @@ export default class DeckListItem extends Component {
                   <Button
                     icon={{ name: 'volume-up', color: '#888' }}
                     raised
-                    containerViewStyle={styles.rightButtonContainer}
+                    containerViewStyle={styles.voiceButtonContainer}
                     buttonStyle={
                       StyleSheet.flatten([
                         styles.rightButton,
@@ -162,23 +147,14 @@ export default class DeckListItem extends Component {
                     onPress={() => Tts.speak(card.english)}
                   />
                 </View>}
-                titleStyle={{ color: 'rgba(0, 0, 0, .7)', fontSize: 22 }}
+                titleStyle={{ marginLeft: 7, color: 'rgba(0, 0, 0, .7)', fontSize: 22 }}
                 subtitleContainerStyle={{ paddingTop: 3 }}
-                subtitleStyle={{ color: 'rgba(0, 0, 0, .35)', fontSize: 14 }}
+                subtitleStyle={{ marginLeft: 7, color: 'rgba(0, 0, 0, .35)', fontSize: 14 }}
                 containerStyle={
                   StyleSheet.flatten([
                     styles.listItem,
                     { opacity: this.state.listItemOpacity }
                   ])
-                }
-                roundAvatar
-                avatar={
-                  <Avatar
-                    medium
-                    rounded
-                    title={card.frequency.toString()}
-                    titleStyle={{ fontSize: 20 }}
-                  />
                 }
               />
             </View>
@@ -206,38 +182,36 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: 65,
+    marginLeft: 0,
     borderBottomWidth: 0,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center'
   },
   rightAreaContainer: {
+    maxWidth: 100,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     alignItems: 'center'
   },
   rightButtonContainer: {
-    marginLeft: 8,
+    marginLeft: 0,
+    marginRight: 5
+  },
+  voiceButtonContainer: {
+    marginLeft: 0,
     marginRight: 0
   },
   rightButton: {
-    padding: 3,
+    padding: 1,
     paddingTop: 8,
     paddingBottom: 8,
-    minWidth: 38,
+    minWidth: 35,
     borderRadius: 3
-  },
-  leftSwipeItem: {
-    flex: 1,
-    paddingRight: 20,
-    paddingLeft: 20,
-    backgroundColor: '#E9E8EE',
-    justifyContent: 'center',
-    alignItems: 'flex-end'
   },
   rightSwipeItem: {
     flex: 1,
-    paddingLeft: 20,
+    paddingLeft: 10,
     backgroundColor: '#E9E8EE',
     justifyContent: 'center',
     alignItems: 'flex-start',

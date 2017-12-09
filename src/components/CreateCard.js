@@ -318,8 +318,8 @@ export default class CreateCard extends Component {
 const styles = StyleSheet.create({
   Container: {
     paddingTop: 5,
-    paddingRight: 10,
-    paddingLeft: 10,
+    paddingRight: 0,
+    paddingLeft: 0,
     paddingBottom: 0
   },
   englishInputContainer: {
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textField: {
-    minWidth: '70%',
+    minWidth: '68%',
     marginLeft: 16,
     marginRight: 16
   },
@@ -359,10 +359,10 @@ const styles = StyleSheet.create({
   },
   posButton: {
     borderRadius: 3,
-    padding: 3,
+    padding: '1%',
     paddingTop: 10,
     paddingBottom: 10,
-    minWidth: 42
+    minWidth: '15.85%'
   },
   warning: {
     color: '#F44336'
@@ -374,14 +374,14 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   cancelButton: {
+    margin: 0,
+    paddingLeft: '10%',
+    paddingRight: '10%',
     backgroundColor: 'rgba(0, 0, 0, .38)',
-    paddingLeft: 30,
-    paddingRight: 30,
-    margin: 0
   },
   saveButton: {
-    paddingLeft: 60,
-    paddingRight: 60,
+    paddingLeft: '20%',
+    paddingRight: '20%',
     backgroundColor: '#F44336',
     margin: 0
   }
