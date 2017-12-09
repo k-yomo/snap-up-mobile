@@ -21,7 +21,7 @@ export default class DeckListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      leftItemColor: 'rgba(244, 67, 54, 0.5)',
+      leftItemColor: 'rgba(244, 67, 54, 0.4)',
       listItemOpacity: 1.0,
       isAlerting: false
     };
@@ -120,7 +120,7 @@ export default class DeckListItem extends Component {
           leftContent={leftContent}
           leftActionActivationDistance={90}
           onLeftActionActivate={() => this.setState({ leftItemColor: 'rgba(244, 67, 54, 1.0)' })}
-          onLeftActionDeactivate={() => this.setState({ leftItemColor: 'rgba(244, 67, 54, 0.5)' })}
+          onLeftActionDeactivate={() => this.setState({ leftItemColor: 'rgba(244, 67, 54, 0.4)' })}
           onLeftActionRelease={() => this.onLeftActionRelease(deck.id)}
           rightContent={rightContent}
           rightActionActivationDistance={120}

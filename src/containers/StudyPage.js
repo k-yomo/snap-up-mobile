@@ -9,7 +9,10 @@ import headerNavConfig from '../config/navigationOptions';
 
 
 class StudyPage extends Component {
-  static navigationOptions = headerNavConfig;
+  static navigationOptions = {
+    ...headerNavConfig,
+    gesturesEnabled: false
+  };
 
   render() {
     return (

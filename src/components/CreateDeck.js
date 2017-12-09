@@ -75,7 +75,7 @@ export default class CreateDeck extends Component {
 const styles = StyleSheet.create({
   modal: {
     position: 'absolute',
-    top: 90,
+    top: '10.5%',
     height: 75,
     left: 0,
     right: 0,
