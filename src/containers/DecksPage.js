@@ -42,7 +42,7 @@ class DecksPage extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <CreateDeck
           uid={this.state.uid}
           dispatch={this.props.dispatch}

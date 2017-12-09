@@ -29,7 +29,7 @@ class DeckInfoPage extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1}}>
+      <View style={{ flex: 1 }}>
         <CreateCard
           uid={this.state.uid}
           deckId={this.props.deck.id}
