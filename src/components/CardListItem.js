@@ -140,9 +140,9 @@ export default class DeckListItem extends Component {
                     onPress={() => Tts.speak(card.english)}
                   />
                 </View>}
-                titleStyle={{ marginLeft: 7, color: 'rgba(0, 0, 0, .7)', fontSize: 22 }}
+                titleStyle={{ marginLeft: 7, color: '#263238', fontSize: 22 }}
                 subtitleContainerStyle={{ paddingTop: 3 }}
-                subtitleStyle={{ marginLeft: 7, color: 'rgba(0, 0, 0, .35)', fontSize: 14 }}
+                subtitleStyle={{ marginLeft: 7, color: 'rgba(38, 50, 56, 0.5)', fontSize: 14 }}
                 containerStyle={
                   StyleSheet.flatten([
                     styles.listItem,

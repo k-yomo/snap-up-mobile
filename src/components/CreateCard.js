@@ -213,8 +213,8 @@ export default class CreateCard extends Component {
             onChangeText={(eng) => this.setState({ english: eng })}
             onSubmitEditing={() => english && this.onSubmitEnglish()}
             containerStyle={styles.textField}
-            textColor='rgba(0, 0, 0, .7)'
-            tintColor='rgba(0, 0, 0, .38)'
+            textColor='rgb(38, 50, 56)'
+            tintColor='rgba(38, 50, 56, 0.7)'
             fontSize={20}
             labelFontSize={14}
             labelHeight={20}
@@ -261,8 +261,8 @@ export default class CreateCard extends Component {
                 focus={this.state.inputFocused}
                 onChangeText={(m) => this.setState({ meaning: m })}
                 containerStyle={styles.textField}
-                textColor='rgba(0, 0, 0, .7)'
-                tintColor='rgba(0, 0, 0, .38)'
+                textColor='rgb(38, 50, 56)'
+                tintColor='rgba(38, 50, 56, 0.7)'
                 fontSize={20}
                 labelFontSize={14}
                 labelHeight={20}

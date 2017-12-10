@@ -161,10 +161,6 @@ const styles = StyleSheet.create({
     height: 65,
     borderTopWidth: 0,
     backgroundColor: 'white',
-    shadowColor: '#111',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -180,14 +176,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 20,
     paddingLeft: 20,
-    backgroundColor: '#E9E8EE',
+    backgroundColor: '#F5F5F5',
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
   rightSwipeItem: {
     flex: 1,
     paddingLeft: 20,
-    backgroundColor: '#E9E8EE',
+    backgroundColor: '#F5F5F5',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },

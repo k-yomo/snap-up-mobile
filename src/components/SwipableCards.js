@@ -38,7 +38,7 @@ class FlashCard extends Component {
   }
 
   render() {
-    const { index, total, english, examples, definitions } = this.props;
+    const { index, total, english, meaning, examples, definitions } = this.props;
     return (
       <Card containerStyle={styles.card}>
         <Text>{index + 1} / {total}</Text>
@@ -63,6 +63,9 @@ class FlashCard extends Component {
         </View>
         <Text style={styles.english}>
           {english}
+        </Text>
+        <Text style={styles.meaning}>
+          {meaning}
         </Text>
         {definitions && Object.values(definitions).map((def, i) => <Text key={i}>{def}</Text>)}
           {examples && Object.values(examples).map((ex, i) => <Text key={i}>{ex}</Text>)}
@@ -113,15 +116,22 @@ const styles = StyleSheet.create({
     marginTop: 80,
     marginLeft: -15,
     overflow: 'hidden',
-    borderColor: 'grey',
-    backgroundColor: 'white',
-    borderWidth: 1,
-    elevation: 1,
+    shadowColor: '#000000',
+    shadowOffset: { width: 15, height: 15 },
+    shadowRadius: 5,
+    shadowOpacity: 1.0,
+    backgroundColor: 'rgba(255,255,255, 0.99)',
   },
   english: {
     fontSize: 40,
     paddingTop: 10,
-    paddingBottom: 10
+    color: 'rgb(38, 50, 56)'
+  },
+  meaning: {
+    fontSize: 25,
+    paddingTop: 10,
+    paddingBottom: 10,
+    color: 'rgba(38, 50, 56, 0.7)'
   },
   noMoreCards: {
     flex: 1,
