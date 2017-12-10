@@ -99,7 +99,6 @@ export default class DeckListItem extends Component {
       outputRange: [0, 700]
     });
     const { card, onSwipe } = this.props;
-
     return (
       <Animated.View
         style={{

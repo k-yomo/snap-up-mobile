@@ -121,8 +121,7 @@ export default class CreateCard extends Component {
     this.setState({ wordInfo });
   }
 
-  onDictionaryPress() {
-    const term = this.state.english;
+  onDictionaryPress(term) {
     NativeModules.ReferenceLibraryManager.showDefinitionForTerm(term, (hasDefinition) => {
       if (!hasDefinition) {
         this.setState({ noDefinition: true });
@@ -207,7 +206,7 @@ export default class CreateCard extends Component {
           <TextField
             label='New English Word'
             value={english}
-            keyboardType='email-address'
+            keyboardType='default'
             returnKeyType="search"
             autoCapitalize='none'
             focus={this.state.inputFocused}
@@ -225,7 +224,7 @@ export default class CreateCard extends Component {
               raised
               name='book-open-page-variant'
               type='material-community'
-              onPress={() => this.onDictionaryPress()}
+              onPress={() => this.onDictionaryPress(english)}
               containerStyle={styles.dictionaryIcon}
             />
           }

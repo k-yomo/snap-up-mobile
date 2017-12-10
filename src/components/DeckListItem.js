@@ -52,8 +52,8 @@ export default class DeckListItem extends Component {
     this.setState({ isAlerting: false });
   }
 
-  onLeftActionRelease(id) {
-    this.props.navigate('Study', { id });
+  onLeftActionRelease(deckId) {
+    this.props.navigate('Study', { deckId });
   }
 
   deleteDeck() {
