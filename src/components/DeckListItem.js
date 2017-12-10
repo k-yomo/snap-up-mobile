@@ -42,7 +42,7 @@ export default class DeckListItem extends Component {
             onPress: () => {
               Vibration.vibrate(50);
               this.animate();
-              setTimeout(() => { this.deleteDeck(); }, 500);
+              setTimeout(() => { this.deleteDeck(); }, 300);
             }
           },
           { text: 'Cancel' }
@@ -66,7 +66,7 @@ export default class DeckListItem extends Component {
       this.animatedValue,
       {
         toValue: 1,
-        duration: 500,
+        duration: 300,
         easing: Easing.cubic
       }
     ).start((o) => {
