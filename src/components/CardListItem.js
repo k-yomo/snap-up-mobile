@@ -24,7 +24,7 @@ export default class DeckListItem extends Component {
       leftItemOpacity: 0.4,
       listItemOpacity: 1.0,
       partsColors: {
-        N: '#F44336',
+        N: '#EF5350',
         V: '#3F51B5',
         Adj: '#F89A43',
         Adv: '#009688',

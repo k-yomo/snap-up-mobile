@@ -80,14 +80,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     margin: 0,
-    backgroundColor: '#F44336'
+    backgroundColor: '#EF5350'
   },
   formContainer: {
     paddingLeft: 20,
     paddingBottom: 7
   },
   button: {
-    backgroundColor: '#F44336',
+    backgroundColor: '#EF5350',
     height: 50
   }
 });

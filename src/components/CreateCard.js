@@ -33,7 +33,7 @@ export default class CreateCard extends Component {
         unapprecable: 'N/A'
       },
       parts: ['N', 'V', 'Adj', 'Adv', 'N/A'],
-      partsColors: ['#F44336', '#3F51B5', '#F89A43', '#009688', '#888'],
+      partsColors: ['#EF5350', '#3F51B5', '#F89A43', '#009688', '#888'],
       noSuggestedMeaning: false,
       noDefinition: false,
       isEnglishEntered: false

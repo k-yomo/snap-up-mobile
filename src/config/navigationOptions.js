@@ -7,10 +7,10 @@ export default {
     fontSize: 30,
     fontWeight: 'bold',
     fontFamily: 'Verdana',
-    color: '#F44336'
+    color: '#EF5350'
   },
   headerBackTitleStyle: {
     paddingLeft: 10,
   },
-  headerTintColor: '#F44336',
+  headerTintColor: '#EF5350',
 };
