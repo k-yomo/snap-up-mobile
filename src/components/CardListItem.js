@@ -15,7 +15,7 @@ import {
 import Swipeable from 'react-native-swipeable';
 import Tts from 'react-native-tts';
 import { deleteCard } from '../actions/cards';
-
+import { partsColorsPair } from '../config/colors';
 
 export default class DeckListItem extends Component {
   constructor(props) {
@@ -23,13 +23,7 @@ export default class DeckListItem extends Component {
     this.state = {
       leftItemOpacity: 0.4,
       listItemOpacity: 1.0,
-      partsColors: {
-        N: '#EF5350',
-        V: '#3F51B5',
-        Adj: '#F89A43',
-        Adv: '#009688',
-        'N/A': '#888'
-      },
+      partsColorsPair,
       isDeleting: false
     };
     this.animatedValue = new Animated.Value(0);
@@ -131,7 +125,7 @@ export default class DeckListItem extends Component {
                       disabled
                       containerViewStyle={styles.rightButtonContainer}
                       buttonStyle={styles.rightButton}
-                      disabledStyle={{ backgroundColor: this.state.partsColors[part] }}
+                      disabledStyle={{ backgroundColor: this.state.partsColorsPair[part] }}
                     />)}
                   <Button
                     icon={{ name: 'volume-up', color: '#888' }}

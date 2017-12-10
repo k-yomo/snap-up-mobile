@@ -6,6 +6,7 @@ import {
   View
 } from 'react-native';
 import headerNavConfig from '../config/navigationOptions';
+import SwipableCards from '../components/SwipableCards';
 
 
 class StudyPage extends Component {
@@ -16,9 +17,23 @@ class StudyPage extends Component {
 
   render() {
     return (
-      <View><Text>StudyPage</Text></View>
+      <View>
+        <SwipableCards
+          containerStyle={{ flex: 1, position: 'relative' }}
+          cards={this.props.deck.cards.map((card, i) => ({
+            ...card,
+            index: i,
+            total: this.props.deck.cards.length
+          }))}
+        />
+        <Text>Some butoons</Text>
+      </View>
     );
   }
 }
 
-export default connect()(StudyPage);
+const mapStateToProps = (state, props) => ({
+  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deckId)
+});
+
+export default connect(mapStateToProps)(StudyPage);

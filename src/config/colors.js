@@ -1,6 +1,14 @@
 
 
-export default [
+export const partsColorsPair = {
+  N: '#F44336',
+  V: '#3F51B5',
+  Adj: '#F89A43',
+  Adv: '#009688',
+  'N/A': '#888'
+};
+
+export const deckColors = [
   '#EF5350',
   '#EF584F',
   '#F05D4E',

@@ -8,7 +8,7 @@ import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from '../components/DeckListItem';
 import CreateDeck from '../components/CreateDeck';
-import deckColors from '../config/deckColors';
+import { deckColors } from '../config/colors';
 
 class DecksPage extends Component {
   static navigationOptions = { ...headerNavConfig, title: 'Decks' };
