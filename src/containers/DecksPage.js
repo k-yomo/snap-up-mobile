@@ -8,6 +8,7 @@ import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from '../components/DeckListItem';
 import CreateDeck from '../components/CreateDeck';
+import deckColors from '../config/deckColors';
 
 class DecksPage extends Component {
   static navigationOptions = { ...headerNavConfig, title: 'Decks' };
@@ -15,18 +16,7 @@ class DecksPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colors: [
-        '#F44336',
-        '#F45138',
-        '#F5603A',
-        '#F66E3C',
-        '#F67D3E',
-        '#F78B41',
-        '#F89A43',
-        '#F8A845',
-        '#F9B747',
-        '#FAC64A',
-      ],
+      colors: deckColors,
       deckTitle: '',
       isSwiping: false,
       isRefreshing: false,
@@ -38,6 +28,17 @@ class DecksPage extends Component {
 
   onSwipe(isSwiping) {
     this.setState({ isSwiping });
+  }
+
+  setColor(total, i) {
+    if (total < 5) {
+      return this.state.colors[i * 4];
+    } else if (total < 10) {
+        return this.state.colors[i * 3];
+    } else if (total < 20) {
+      return this.state.colors[Math.floor(i * 1.5)];
+    }
+    return this.state.colors[i];
   }
 
   render() {
@@ -58,7 +59,7 @@ class DecksPage extends Component {
               onSwipe={this.onSwipe}
               dispatch={this.props.dispatch}
               navigate={this.props.navigation.navigate}
-              backgroundColor={i < 10 ? this.state.colors[i] : '#FAC64A'}
+              backgroundColor={this.setColor(this.props.decks.length, i)}
             />
           ))}
       </ScrollView>
