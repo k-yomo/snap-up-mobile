@@ -12,6 +12,7 @@ import {
   Icon
 } from 'react-native-elements';
 import axios from 'axios';
+import Spinner from 'react-native-spinkit';
 import { TextField } from 'react-native-material-textfield';
 import { createCard } from '../actions/cards';
 import { X_MASHAPE_KEY } from '../../env';
@@ -38,7 +39,8 @@ export default class CreateCard extends Component {
       partsColors: ['#EF5350', '#3F51B5', '#F89A43', '#009688', '#888'],
       noSuggestedMeaning: false,
       noDefinition: false,
-      isEnglishEntered: false
+      isEnglishEntered: false,
+      loadingGif: false
     };
   }
 
@@ -177,12 +179,13 @@ export default class CreateCard extends Component {
   }
 
   fetchGif(english) {
+    this.setState({ loadingGif: true });
     axios.get(`https://api.giphy.com/v1/gifs/translate?api_key=0YlwqVMmfk1MgyH4gzG9W4EWi3meWomG&s=${english}`)
     .then(response => {
       if (response.data.data.images.fixed_height.url) {
-        this.setState({ gifUrl: response.data.data.images.fixed_height.url });
+        this.setState({ gifUrl: response.data.data.images.fixed_height.url, loadingGif: false });
       }
-    });
+    })
   }
 
   convertArrayToObj(arr) {
@@ -211,7 +214,14 @@ export default class CreateCard extends Component {
     } = this.state;
     return (
       <Card containerStyle={styles.Container}>
-        {this.state.gifUrl ?
+        {this.state.loadingGif ?
+          <Spinner
+           style={styles.spinner}
+           isVisible
+           size={50}
+           type='WanderingCubes'
+           color='#F44336'
+          /> :
           <View>
             <Icon
               name='cached'
@@ -237,8 +247,7 @@ export default class CreateCard extends Component {
              }}
             source={{ uri: this.state.gifUrl }}
             />
-          </View> : null
-
+          </View>
         }
         {this.state.noDefinition &&
           <Text style={styles.warning}>
@@ -427,5 +436,10 @@ const styles = StyleSheet.create({
     paddingRight: '20%',
     backgroundColor: '#F44336',
     margin: 0
-  }
+  },
+  spinner: {
+    alignSelf: 'center',
+    marginTop: 73,
+    marginBottom: 73
+  },
 });
