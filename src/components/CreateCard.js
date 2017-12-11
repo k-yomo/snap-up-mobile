@@ -202,11 +202,54 @@ export default class CreateCard extends Component {
     }, {});
   }
 
+  renderGif() {
+    if (this.state.loadingGif) {
+      return (
+        <Spinner
+           style={styles.spinner}
+           isVisible
+           size={50}
+           type='WanderingCubes'
+           color='#F44336'
+        />
+      );
+    }
+    const eng = this.state.english.endsWith(' ') ?
+    this.state.english.slice(0, -1) : this.state.english;
+
+    return (
+      <View>
+        <Icon
+          name='cached'
+          size={20}
+          raised
+          onPress={() => {
+            this.fetchGif(eng);
+          }}
+          containerStyle={{
+            zIndex: 10,
+            position: 'absolute',
+            top: 0,
+            right: 0
+          }}
+        />
+        <Image
+        style={{
+          width: null,
+          height: 200,
+          borderRadius: 5,
+          marginTop: -5
+         }}
+        source={{ uri: this.state.gifUrl }}
+        />
+      </View>
+    );
+  }
+
   render() {
     const {
       english,
       meaning,
-      gifUrl,
       suggestedMeanings,
       wordInfo,
       isEnglishEntered,
@@ -214,41 +257,7 @@ export default class CreateCard extends Component {
     } = this.state;
     return (
       <Card containerStyle={styles.Container}>
-        {this.state.loadingGif ?
-          <Spinner
-           style={styles.spinner}
-           isVisible
-           size={50}
-           type='WanderingCubes'
-           color='#F44336'
-          /> :
-          <View>
-            <Icon
-              name='cached'
-              size={20}
-              raised
-              onPress={() => {
-                const eng = english.endsWith(' ') ? english.slice(0, -1) : english;
-                this.fetchGif(eng);
-              }}
-              containerStyle={{
-                zIndex: 10,
-                position: 'absolute',
-                top: 0,
-                right: 0
-              }}
-            />
-            <Image
-            style={{
-              width: null,
-              height: 200,
-              borderRadius: 5,
-              marginTop: -5
-             }}
-            source={{ uri: this.state.gifUrl }}
-            />
-          </View>
-        }
+        { isEnglishEntered ? this.renderGif() : null }
         {this.state.noDefinition &&
           <Text style={styles.warning}>
             definition not found or dictionary is not installed
