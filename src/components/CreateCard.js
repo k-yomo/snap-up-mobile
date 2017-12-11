@@ -233,15 +233,17 @@ export default class CreateCard extends Component {
             right: 0
           }}
         />
-        <Image
-        style={{
-          width: null,
-          height: 200,
-          borderRadius: 5,
-          marginTop: -5
-         }}
-        source={{ uri: this.state.gifUrl }}
-        />
+        {this.state.gifUrl &&
+          <Image
+            style={{
+              width: null,
+              height: 200,
+              borderRadius: 5,
+              marginTop: -5
+             }}
+            source={{ uri: this.state.gifUrl }}
+          />
+        }
       </View>
     );
   }
@@ -257,7 +259,7 @@ export default class CreateCard extends Component {
     } = this.state;
     return (
       <Card containerStyle={styles.Container}>
-        { isEnglishEntered ? this.renderGif() : null }
+        { isEnglishEntered && this.renderGif() }
         {this.state.noDefinition &&
           <Text style={styles.warning}>
             definition not found or dictionary is not installed
