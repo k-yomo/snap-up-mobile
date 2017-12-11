@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   NativeModules,
   StyleSheet,
+  Image,
   Text,
   View
 } from 'react-native';
@@ -21,6 +22,7 @@ export default class CreateCard extends Component {
     this.state = {
       english: '',
       meaning: '',
+      gifUrl: '',
       wordInfo: {
         parts: []
       },
@@ -47,12 +49,14 @@ export default class CreateCard extends Component {
     english = english.endsWith(' ') ? english.slice(0, -1) : english;
     this.fetchMeanings(english);
     this.fetchWordInfo(english);
+    this.fetchGif(english);
   }
 
   onBackdropPress() {
     this.setState({
       english: '',
       meaning: '',
+      gifUrl: '',
       wordInfo: {
         parts: []
       },
@@ -77,12 +81,14 @@ export default class CreateCard extends Component {
     const newCard = {
       english: this.state.english,
       meaning: this.state.meaning,
+      gifUrl: this.state.gifUrl,
       ...wordInfo
     };
 
     this.setState({
       english: '',
       meaning: '',
+      gifUrl: '',
       wordInfo: {
         parts: []
       },
@@ -98,6 +104,7 @@ export default class CreateCard extends Component {
     this.setState({
       english: '',
       meaning: '',
+      gifUrl: '',
       wordInfo: {
         parts: []
       },
@@ -158,9 +165,6 @@ export default class CreateCard extends Component {
       const examples = [];
       const slicedResults = response.data.results.slice(0, 3);
 
-      wordInfo.frequency = Math.round(response.data.frequency);
-      wordInfo.definitions = slicedResults.map(result => result.definition);
-
       slicedResults.forEach(result =>
       !wordInfo.parts.includes(this.state.partConverter[result.partOfSpeech]) &&
       wordInfo.parts.push(this.state.partConverter[result.partOfSpeech]));
@@ -169,6 +173,15 @@ export default class CreateCard extends Component {
       wordInfo.examples = [].concat.apply([], examples);
 
       this.setState({ wordInfo });
+    });
+  }
+
+  fetchGif(english) {
+    axios.get(`https://api.giphy.com/v1/gifs/translate?api_key=0YlwqVMmfk1MgyH4gzG9W4EWi3meWomG&s=${english}`)
+    .then(response => {
+      if (response.data.data.images.fixed_height.url) {
+        this.setState({ gifUrl: response.data.data.images.fixed_height.url });
+      }
     });
   }
 
@@ -190,6 +203,7 @@ export default class CreateCard extends Component {
     const {
       english,
       meaning,
+      gifUrl,
       suggestedMeanings,
       wordInfo,
       isEnglishEntered,
@@ -197,6 +211,35 @@ export default class CreateCard extends Component {
     } = this.state;
     return (
       <Card containerStyle={styles.Container}>
+        {this.state.gifUrl ?
+          <View>
+            <Icon
+              name='cached'
+              size={20}
+              raised
+              onPress={() => {
+                const eng = english.endsWith(' ') ? english.slice(0, -1) : english;
+                this.fetchGif(eng);
+              }}
+              containerStyle={{
+                zIndex: 10,
+                position: 'absolute',
+                top: 0,
+                right: 0
+              }}
+            />
+            <Image
+            style={{
+              width: null,
+              height: 200,
+              borderRadius: 5,
+              marginTop: -5
+             }}
+            source={{ uri: this.state.gifUrl }}
+            />
+          </View> : null
+
+        }
         {this.state.noDefinition &&
           <Text style={styles.warning}>
             definition not found or dictionary is not installed
@@ -223,6 +266,7 @@ export default class CreateCard extends Component {
             <Icon
               raised
               name='book-open-page-variant'
+              size={20}
               type='material-community'
               onPress={() => this.onDictionaryPress(english)}
               containerStyle={styles.dictionaryIcon}
