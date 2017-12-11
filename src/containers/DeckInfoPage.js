@@ -30,15 +30,15 @@ class DeckInfoPage extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
-        <CreateCard
-          uid={this.state.uid}
-          deckId={this.props.deck.id}
-          dispatch={this.props.dispatch}
-        />
         <ScrollView
           scrollEnabled={!this.state.isSwiping}
           style={{ marginTop: 15 }}
         >
+          <CreateCard
+            uid={this.state.uid}
+            deckId={this.props.deck.id}
+            dispatch={this.props.dispatch}
+          />
           {this.props.deck.cards && this.props.deck.cards.map((card) => (
             <CardListItem
               key={card.id}
