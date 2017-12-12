@@ -289,24 +289,20 @@ export default class CardCreator extends Component {
                 labelHeight={20}
 
               />
-            <View
-              style={styles.partOfSpeechContainer}
-            >
+            <View style={styles.partOfSpeechContainer}>
               {this.state.parts.map((part, i) =>
                 <Button
                   key={i}
                   onPress={() => this.onPartOfSpeechPress(part)}
                   containerViewStyle={styles.smallButtonContainer}
                   title={part}
-                  buttonStyle={
-                    StyleSheet.flatten([
+                  buttonStyle={[
                       styles.posButton,
                       {
                         backgroundColor: wordInfo.parts && wordInfo.parts.includes(part) ?
                         partsColors[i] : '#BDBDBD'
                       }
-                    ])
-                  }
+                    ]}
                 />
               )}
             </View>

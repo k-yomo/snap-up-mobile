@@ -140,12 +140,10 @@ export default class DeckListItem extends Component {
                 hideChevron
                 title={deck.title}
                 titleStyle={{ color: 'white', fontSize: 20 }}
-                containerStyle={
-                  StyleSheet.flatten([
-                    styles.listItem,
-                    { backgroundColor, opacity: this.state.listItemOpacity }
-                  ])
-                }
+                containerStyle={[
+                  styles.listItem,
+                  { backgroundColor, opacity: this.state.listItemOpacity }
+                ]}
               />
             </View>
           </TouchableHighlight>

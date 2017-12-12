@@ -131,24 +131,20 @@ export default class DeckListItem extends Component {
                     icon={{ name: 'volume-up', color: '#888' }}
                     raised
                     containerViewStyle={styles.voiceButtonContainer}
-                    buttonStyle={
-                      StyleSheet.flatten([
-                        styles.rightButton,
-                        { minWidth: 41, backgroundColor: null, marginRight: -5 }
-                      ])
-                    }
+                    buttonStyle={[
+                      styles.rightButton,
+                      { minWidth: 41, backgroundColor: null, marginRight: -5 }
+                    ]}
                     onPress={() => Tts.speak(card.english)}
                   />
                 </View>}
                 titleStyle={{ marginLeft: 7, color: '#263238', fontSize: 22 }}
                 subtitleContainerStyle={{ paddingTop: 3 }}
                 subtitleStyle={{ marginLeft: 7, color: 'rgba(38, 50, 56, 0.5)', fontSize: 14 }}
-                containerStyle={
-                  StyleSheet.flatten([
-                    styles.listItem,
-                    { opacity: this.state.listItemOpacity }
-                  ])
-                }
+                containerStyle={[
+                  styles.listItem,
+                  { opacity: this.state.listItemOpacity }
+                ]}
               />
             </View>
           </TouchableHighlight>
