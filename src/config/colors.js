@@ -1,9 +1,9 @@
 
 export const partsColorsPair = {
   N: '#EF5350',
-  V: '#F2724B',
-  Adj: '#F58C48',
-  Adv: '#F8B142',
+  V: '#F37C4A',
+  Adj: '#F7A644',
+  Adv: '#FCD63D',
   'N/A': '#888'
 };
 
