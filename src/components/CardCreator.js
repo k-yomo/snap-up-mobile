@@ -47,18 +47,16 @@ export default class CardCreator extends Component {
 
     let english = this.state.english.toLowerCase();
     english = english.endsWith(' ') ? english.slice(0, -1) : english;
+
     this.fetchMeanings(english);
     this.fetchWordInfo(english);
     this.fetchGif(english);
   }
 
-  onBackdropPress() {
-    this.clearState();
-  }
-
   onSubmitCard() {
     const wordInfo = this.state.wordInfo;
     wordInfo.examples = wordInfo.examples ? this.convertArrayToObj(wordInfo.examples) : null;
+
     if (wordInfo.parts.length > 0) {
       wordInfo.parts = this.convertArrayBoolObj(wordInfo.parts);
     } else {
@@ -134,9 +132,7 @@ export default class CardCreator extends Component {
     axios.get(`https://wordsapiv1.p.mashape.com/words/${english}`,
     { headers: { 'X-Mashape-Key': X_MASHAPE_KEY } })
     .then(response => {
-      const wordInfo = {
-        parts: []
-      };
+      const wordInfo = { parts: [] };
       const examples = [];
       const slicedResults = response.data.results.slice(0, 2);
 
@@ -165,16 +161,16 @@ export default class CardCreator extends Component {
   }
 
   convertArrayToObj(arr) {
-    return arr.reduce((result, el, index) => {
-      result[index] = el;
-      return result;
+    return arr.reduce((obj, el, index) => {
+      obj[index] = el;
+      return obj;
     }, {});
   }
 
   convertArrayBoolObj(arr) {
-    return arr.reduce((result, el) => {
-      result[el] = true;
-      return result;
+    return arr.reduce((obj, el) => {
+      obj[el] = true;
+      return obj;
     }, {});
   }
 
@@ -218,7 +214,9 @@ export default class CardCreator extends Component {
             tintColor='rgba(38, 50, 56, 0.7)'
             fontSize={20}
             labelFontSize={14}
-            labelHeight={20}
+            labelHeight={15}
+            labelPadding={-3}
+            inputContainerPadding={4}
           />
           { isEnglishEntered &&
             <DictionaryIcon
@@ -266,8 +264,9 @@ export default class CardCreator extends Component {
                 tintColor='rgba(38, 50, 56, 0.7)'
                 fontSize={20}
                 labelFontSize={14}
-                labelHeight={20}
-
+                labelHeight={15}
+                labelPadding={-3}
+                inputContainerPadding={4}
               />
             <View style={styles.partOfSpeechContainer}>
               {this.state.parts.map((part, i) =>
