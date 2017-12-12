@@ -71,9 +71,7 @@ export default class CreateCard extends Component {
 
   onSubmitCard() {
     const wordInfo = this.state.wordInfo;
-    wordInfo.definitions = wordInfo.definitions ? this.convertArrayToObj(wordInfo.definitions) : null;
     wordInfo.examples = wordInfo.examples ? this.convertArrayToObj(wordInfo.examples) : null;
-    wordInfo.frequency = wordInfo.frequency ? wordInfo.frequency : 'N/A';
     if (wordInfo.parts.length > 0) {
       wordInfo.parts = this.convertArrayBoolObj(wordInfo.parts);
     } else {
@@ -165,7 +163,7 @@ export default class CreateCard extends Component {
         parts: []
       };
       const examples = [];
-      const slicedResults = response.data.results.slice(0, 3);
+      const slicedResults = response.data.results.slice(0, 2);
 
       slicedResults.forEach(result =>
       !wordInfo.parts.includes(this.state.partConverter[result.partOfSpeech]) &&
@@ -182,10 +180,10 @@ export default class CreateCard extends Component {
     this.setState({ loadingGif: true });
     axios.get(`https://api.giphy.com/v1/gifs/translate?api_key=0YlwqVMmfk1MgyH4gzG9W4EWi3meWomG&s=${english}`)
     .then(response => {
-      if (response.data.data.images.fixed_height.url) {
-        this.setState({ gifUrl: response.data.data.images.fixed_height.url, loadingGif: false });
+      if (response.data.data.images.fixed_height_downsampled.url) {
+        this.setState({ gifUrl: response.data.data.images.fixed_height_downsampled.url, loadingGif: false });
       }
-    })
+    });
   }
 
   convertArrayToObj(arr) {

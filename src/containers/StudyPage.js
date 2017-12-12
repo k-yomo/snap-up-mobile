@@ -26,7 +26,6 @@ class StudyPage extends Component {
             total: this.props.deck.cards.length
           }))}
         />
-        <Text>Some butoons</Text>
       </View>
     );
   }
