@@ -11,10 +11,10 @@ import {
   Icon
 } from 'react-native-elements';
 import axios from 'axios';
-import Spinner from 'react-native-spinkit';
 import { TextField } from 'react-native-material-textfield';
 import { createCard } from '../actions/cards';
 import DictionaryIcon from './DictionaryIcon';
+import GifGenerator from './GifGenerator';
 import { X_MASHAPE_KEY } from '../../env';
 
 export default class CardCreator extends Component {
@@ -198,52 +198,6 @@ export default class CardCreator extends Component {
     }, {});
   }
 
-  renderGif() {
-    if (this.state.loadingGif) {
-      return (
-        <Spinner
-           style={styles.spinner}
-           isVisible
-           size={50}
-           type='WanderingCubes'
-           color='#F44336'
-        />
-      );
-    }
-    const eng = this.state.english.endsWith(' ') ?
-    this.state.english.slice(0, -1) : this.state.english;
-
-    return (
-      <View>
-        <Icon
-          name='cached'
-          size={20}
-          raised
-          onPress={() => {
-            this.fetchGif(eng);
-          }}
-          containerStyle={{
-            zIndex: 10,
-            position: 'absolute',
-            top: 0,
-            right: 0
-          }}
-        />
-        {this.state.gifUrl &&
-          <Image
-            style={{
-              width: null,
-              height: 200,
-              borderRadius: 5,
-              marginTop: -5
-             }}
-            source={{ uri: this.state.gifUrl }}
-          />
-        }
-      </View>
-    );
-  }
-
   render() {
     const {
       english,
@@ -253,9 +207,17 @@ export default class CardCreator extends Component {
       isEnglishEntered,
       partsColors
     } = this.state;
+
     return (
       <Card containerStyle={styles.Container}>
-        { isEnglishEntered && this.renderGif() }
+        { isEnglishEntered &&
+          <GifGenerator
+            english={english}
+            gifUrl={this.state.gifUrl}
+            loadingGif={this.state.loadingGif}
+            fetchGif={this.fetchGif}
+          />
+        }
         {this.state.noDefinition &&
           <Text style={styles.warning}>
             definition not found or dictionary is not installed
@@ -442,10 +404,5 @@ const styles = StyleSheet.create({
     paddingRight: '20%',
     backgroundColor: '#F44336',
     margin: 0
-  },
-  spinner: {
-    alignSelf: 'center',
-    marginTop: 73,
-    marginBottom: 73
-  },
+  }
 });
