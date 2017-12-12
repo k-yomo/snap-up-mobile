@@ -14,6 +14,7 @@ import {
 } from 'react-native-elements';
 import SwipeCards from 'react-native-swipe-cards';
 import FlipCard from 'react-native-flip-card'
+import DictionaryIcon from './DictionaryIcon';
 import { partsColorsPair } from '../config/colors';
 
 
@@ -54,11 +55,8 @@ class FlashCard extends Component {
           /> : null
         }
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-          <Icon
-            raised
-            name='book-open-page-variant'
-            type='material-community'
-            onPress={() => this.onDictionaryPress(english)}
+          <DictionaryIcon
+            english={english}
             containerStyle={styles.dictionaryIcon}
           />
           <Icon

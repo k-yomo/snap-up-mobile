@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  NativeModules,
   StyleSheet,
   Image,
   Text,
@@ -15,6 +14,7 @@ import axios from 'axios';
 import Spinner from 'react-native-spinkit';
 import { TextField } from 'react-native-material-textfield';
 import { createCard } from '../actions/cards';
+import DictionaryIcon from './DictionaryIcon';
 import { X_MASHAPE_KEY } from '../../env';
 
 export default class CreateCard extends Component {
@@ -128,14 +128,9 @@ export default class CreateCard extends Component {
     this.setState({ wordInfo });
   }
 
-  onDictionaryPress(term) {
-    NativeModules.ReferenceLibraryManager.showDefinitionForTerm(term, (hasDefinition) => {
-      if (!hasDefinition) {
-        this.setState({ noDefinition: true });
-      }
-    });
+  noDefFound() {
+    this.setState({ noDefinition: true });
   }
-
 
   fetchMeanings(english) {
     const suggestedMeanings = [];
@@ -181,7 +176,10 @@ export default class CreateCard extends Component {
     axios.get(`https://api.giphy.com/v1/gifs/translate?api_key=0YlwqVMmfk1MgyH4gzG9W4EWi3meWomG&s=${english}`)
     .then(response => {
       if (response.data.data.images.fixed_height_downsampled.url) {
-        this.setState({ gifUrl: response.data.data.images.fixed_height_downsampled.url, loadingGif: false });
+        this.setState({
+          gifUrl: response.data.data.images.fixed_height_downsampled.url,
+          loadingGif: false
+         });
       }
     });
   }
@@ -281,13 +279,12 @@ export default class CreateCard extends Component {
             labelHeight={20}
           />
           { isEnglishEntered &&
-            <Icon
-              raised
-              name='book-open-page-variant'
+            <DictionaryIcon
               size={20}
-              type='material-community'
-              onPress={() => this.onDictionaryPress(english)}
-              containerStyle={styles.dictionaryIcon}
+              onPress={this.onDictionaryPress}
+              english={this.state.english}
+              containerStyle={styles.containerStyle}
+              noDefFound={this.noDefFound.bind(this)}
             />
           }
         </View>
