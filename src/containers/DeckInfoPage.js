@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView,
+  FlatList,
   View
 } from 'react-native';
 import firebase from 'react-native-firebase';
@@ -30,27 +30,30 @@ class DeckInfoPage extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
-        <ScrollView
+        <FlatList
           scrollEnabled={!this.state.isSwiping}
-          style={{ marginTop: 15 }}
-        >
-          <CardCreator
-            uid={this.state.uid}
-            deckId={this.props.deck.id}
-            dispatch={this.props.dispatch}
-          />
-          {this.props.deck.cards && this.props.deck.cards.map((card) => (
+          data={this.props.deck.cards}
+          ListHeaderComponent={() => (
+            <CardCreator
+              uid={this.state.uid}
+              deckId={this.props.deck.id}
+              dispatch={this.props.dispatch}
+            />
+          )}
+          renderItem={({ item }) => (
             <CardListItem
-              key={card.id}
-              card={card}
+              key={item.id}
+              card={item}
               deckId={this.props.deck.id}
               uid={this.state.uid}
               onSwipe={this.onSwipe}
               dispatch={this.props.dispatch}
               navigate={this.props.navigation.navigate}
             />
-          ))}
-      </ScrollView>
+          )}
+          keyExtractor={item => item.id}
+          style={{ marginTop: 15 }}
+        />
       </View>
     );
   }
