@@ -9,7 +9,7 @@ import {
   Button
 } from 'react-native-elements';
 import axios from 'axios';
-import { TextField } from 'react-native-material-textfield';
+import TextField from './TextField';
 import { createCard } from '../actions/cards';
 import DictionaryIcon from './DictionaryIcon';
 import GifGenerator from './GifGenerator';
@@ -74,10 +74,6 @@ export default class CardCreator extends Component {
     this.props.dispatch(createCard(this.props.uid, this.props.deckId, newCard));
   }
 
-  onCancelCreateCard() {
-    this.clearState();
-  }
-
   onPartOfSpeechPress(pressedPart) {
     let wordInfo = Object.assign(this.state.wordInfo);
     if (wordInfo.parts.includes(pressedPart)) {
@@ -89,21 +85,6 @@ export default class CardCreator extends Component {
       wordInfo.parts.push(pressedPart);
     }
     this.setState({ wordInfo });
-  }
-
-  clearState() {
-    this.setState({
-      english: '',
-      meaning: '',
-      gifUrl: '',
-      wordInfo: {
-        parts: []
-      },
-      suggestedMeanings: [],
-      isEnglishEntered: false,
-      noSuggestedMeaning: false,
-      noDefinition: false
-    });
   }
 
   noDefFound() {
@@ -174,6 +155,29 @@ export default class CardCreator extends Component {
     }, {});
   }
 
+  onChangeEnglish(text) {
+    this.setState({ english: text });
+  }
+
+  onChangeMeaning(text) {
+    this.setState({ meaning: text });
+  }
+
+  clearState() {
+    this.setState({
+      english: '',
+      meaning: '',
+      gifUrl: '',
+      wordInfo: {
+        parts: []
+      },
+      suggestedMeanings: [],
+      isEnglishEntered: false,
+      noSuggestedMeaning: false,
+      noDefinition: false
+    });
+  }
+
   render() {
     const {
       english,
@@ -202,21 +206,10 @@ export default class CardCreator extends Component {
         <View style={styles.englishInputContainer}>
           <TextField
             label='New English Word'
-            value={english}
-            keyboardType='default'
-            returnKeyType="search"
-            autoCapitalize='none'
-            focus={this.state.inputFocused}
-            onChangeText={(eng) => this.setState({ english: eng })}
-            onSubmitEditing={() => english && this.onSubmitEnglish()}
-            containerStyle={styles.textField}
-            textColor='rgb(38, 50, 56)'
-            tintColor='rgba(38, 50, 56, 0.7)'
-            fontSize={20}
-            labelFontSize={14}
-            labelHeight={15}
-            labelPadding={-3}
-            inputContainerPadding={4}
+            text={english}
+            returnKeyType='search'
+            onChangeText={this.onChangeEnglish.bind(this)}
+            onSubmitEditing={this.onSubmitEnglish.bind(this)}
           />
           { isEnglishEntered &&
             <DictionaryIcon
@@ -230,9 +223,7 @@ export default class CardCreator extends Component {
         </View>
         { isEnglishEntered &&
           <View>
-            <View
-              style={styles.suggestedMeaningContainer}
-            >
+            <View style={styles.suggestedMeaningContainer}>
               {this.state.noSuggestedMeaning &&
                 <Text style={styles.warning}>
                   There is no suggested meaning
@@ -251,23 +242,11 @@ export default class CardCreator extends Component {
                 />
               )}
             </View>
-              <TextField
-                label='The Meaning'
-                value={meaning}
-                keyboardType='default'
-                returnKeyType="done"
-                autoCapitalize='none'
-                focus={this.state.inputFocused}
-                onChangeText={(m) => this.setState({ meaning: m })}
-                containerStyle={styles.textField}
-                textColor='rgb(38, 50, 56)'
-                tintColor='rgba(38, 50, 56, 0.7)'
-                fontSize={20}
-                labelFontSize={14}
-                labelHeight={15}
-                labelPadding={-3}
-                inputContainerPadding={4}
-              />
+            <TextField
+              label='The Meaning'
+              text={meaning}
+              onChangeText={this.onChangeMeaning.bind(this)}
+            />
             <View style={styles.partOfSpeechContainer}>
               {this.state.parts.map((part, i) =>
                 <Button
@@ -289,7 +268,7 @@ export default class CardCreator extends Component {
               <Button
                 raised
                 title='Cancel'
-                onPress={() => this.onCancelCreateCard()}
+                onPress={() => this.clearState()}
                 containerViewStyle={{ margin: 0 }}
                 buttonStyle={styles.cancelButton}
               />
