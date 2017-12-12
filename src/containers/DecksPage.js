@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import {
-  ScrollView,
+  FlatList,
   View
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from '../components/DeckListItem';
 import DeckCreator from '../components/DeckCreator';
-import { deckColors } from '../config/colors'
+import { deckColors } from '../config/colors';
 
 class DecksPage extends Component {
   static navigationOptions = { ...headerNavConfig, title: 'Decks' };
@@ -48,21 +48,23 @@ class DecksPage extends Component {
           uid={this.state.uid}
           dispatch={this.props.dispatch}
         />
-        <ScrollView
+        {this.props.decks.length > 0 &&
+        <FlatList
           scrollEnabled={!this.state.isSwiping}
-        >
-          {this.props.decks.length > 0 && this.props.decks.map((deck, i) => (
+          data={this.props.decks}
+          renderItem={({ item, index }) => (
             <DeckListItem
-              key={deck.id}
-              deck={deck}
+              deck={item}
               uid={this.state.uid}
               onSwipe={this.onSwipe}
               dispatch={this.props.dispatch}
               navigate={this.props.navigation.navigate}
-              backgroundColor={this.setColor(this.props.decks.length, i)}
+              backgroundColor={this.setColor(this.props.decks.length, index)}
             />
-          ))}
-      </ScrollView>
+          )}
+          keyExtractor={item => item.id}
+        />
+      }
     </View>
     );
   }

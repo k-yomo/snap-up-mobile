@@ -13,7 +13,7 @@ import {
   Icon
 } from 'react-native-elements';
 import SwipeCards from 'react-native-swipe-cards';
-import FlipCard from 'react-native-flip-card'
+import FlipCard from 'react-native-flip-card';
 import DictionaryIcon from './DictionaryIcon';
 import { partsColorsPair } from '../config/colors';
 

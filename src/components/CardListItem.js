@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Animated,
   Easing,
@@ -38,15 +37,14 @@ export default class DeckListItem extends Component {
     setTimeout(() => {
       this.deleteCard();
     }, 400);
-
-  }
-
-  deleteCard() {
-    this.props.dispatch(deleteCard(this.props.uid, this.props.deckId, this.props.card.id));
   }
 
   onLeftActionRelease() {
     Tts.speak('Hello, world!');
+  }
+
+  deleteCard() {
+    this.props.dispatch(deleteCard(this.props.uid, this.props.deckId, this.props.card.id));
   }
 
   animate() {
@@ -93,6 +91,7 @@ export default class DeckListItem extends Component {
       outputRange: [0, 700]
     });
     const { card, onSwipe } = this.props;
+
     return (
       <Animated.View
         style={{
@@ -102,7 +101,7 @@ export default class DeckListItem extends Component {
       >
         <Swipeable
           key={card.id}
-          swipeStartMinDistance={2}
+          swipeStartMinDistance={0}
           rightButtons={rightButton}
           rightButtonWidth={60}
           onSwipeStart={() => onSwipe(true)}
