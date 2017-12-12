@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Image,
   Text,
   View
 } from 'react-native';
 import {
   Card,
-  Button,
-  Icon
+  Button
 } from 'react-native-elements';
 import axios from 'axios';
 import { TextField } from 'react-native-material-textfield';
@@ -55,18 +53,7 @@ export default class CardCreator extends Component {
   }
 
   onBackdropPress() {
-    this.setState({
-      english: '',
-      meaning: '',
-      gifUrl: '',
-      wordInfo: {
-        parts: []
-      },
-      suggestedMeanings: [],
-      isEnglishEntered: false,
-      noSuggestedMeaning: false,
-      noDefinition: false
-    });
+    this.clearState();
   }
 
   onSubmitCard() {
@@ -85,34 +72,12 @@ export default class CardCreator extends Component {
       ...wordInfo
     };
 
-    this.setState({
-      english: '',
-      meaning: '',
-      gifUrl: '',
-      wordInfo: {
-        parts: []
-      },
-      suggestedMeanings: [],
-      isEnglishEntered: false,
-      noSuggestedMeaning: false,
-      noDefinition: false,
-    });
+    this.clearState();
     this.props.dispatch(createCard(this.props.uid, this.props.deckId, newCard));
   }
 
   onCancelCreateCard() {
-    this.setState({
-      english: '',
-      meaning: '',
-      gifUrl: '',
-      wordInfo: {
-        parts: []
-      },
-      suggestedMeanings: [],
-      isEnglishEntered: false,
-      noSuggestedMeaning: false,
-      noDefinition: false
-    });
+    this.clearState();
   }
 
   onPartOfSpeechPress(pressedPart) {
@@ -126,6 +91,21 @@ export default class CardCreator extends Component {
       wordInfo.parts.push(pressedPart);
     }
     this.setState({ wordInfo });
+  }
+
+  clearState() {
+    this.setState({
+      english: '',
+      meaning: '',
+      gifUrl: '',
+      wordInfo: {
+        parts: []
+      },
+      suggestedMeanings: [],
+      isEnglishEntered: false,
+      noSuggestedMeaning: false,
+      noDefinition: false
+    });
   }
 
   noDefFound() {
