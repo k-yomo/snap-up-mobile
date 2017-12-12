@@ -9,7 +9,7 @@ import { TextField } from 'react-native-material-textfield';
 import { createDeck } from '../actions/decks';
 
 
-export default class CreateDeck extends Component {
+export default class DeckCreater extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -7,7 +7,7 @@ import {
 import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from '../components/DeckListItem';
-import CreateDeck from '../components/CreateDeck';
+import DeckCreator from '../components/DeckCreator';
 import { deckColors } from '../config/colors'
 
 class DecksPage extends Component {
@@ -44,7 +44,7 @@ class DecksPage extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
-        <CreateDeck
+        <DeckCreator
           uid={this.state.uid}
           dispatch={this.props.dispatch}
         />

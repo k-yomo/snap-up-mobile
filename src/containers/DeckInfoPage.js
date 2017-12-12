@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
-import CreateCard from '../components/CreateCard';
+import CardCreator from '../components/CardCreator';
 import CardListItem from '../components/CardListItem';
 
 class DeckInfoPage extends Component {
@@ -34,7 +34,7 @@ class DeckInfoPage extends Component {
           scrollEnabled={!this.state.isSwiping}
           style={{ marginTop: 15 }}
         >
-          <CreateCard
+          <CardCreator
             uid={this.state.uid}
             deckId={this.props.deck.id}
             dispatch={this.props.dispatch}

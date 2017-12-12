@@ -17,7 +17,7 @@ import { createCard } from '../actions/cards';
 import DictionaryIcon from './DictionaryIcon';
 import { X_MASHAPE_KEY } from '../../env';
 
-export default class CreateCard extends Component {
+export default class CardCreator extends Component {
   constructor(props) {
     super(props);
     this.state = {
