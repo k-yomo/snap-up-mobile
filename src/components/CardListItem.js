@@ -127,7 +127,7 @@ export default class DeckListItem extends Component {
                       disabledStyle={{ backgroundColor: this.state.partsColorsPair[part] }}
                     />)}
                   <Button
-                    icon={{ name: 'volume-up', color: '#888' }}
+                    icon={{ name: 'volume-up', color: '#757575' }}
                     raised
                     containerViewStyle={styles.voiceButtonContainer}
                     buttonStyle={[
@@ -137,9 +137,9 @@ export default class DeckListItem extends Component {
                     onPress={() => Tts.speak(card.english)}
                   />
                 </View>}
-                titleStyle={{ marginLeft: 7, color: '#263238', fontSize: 22 }}
+                titleStyle={{ marginLeft: 7, color: '#212121', fontSize: 22 }}
                 subtitleContainerStyle={{ paddingTop: 3 }}
-                subtitleStyle={{ marginLeft: 7, color: 'rgba(38, 50, 56, 0.5)', fontSize: 14 }}
+                subtitleStyle={{ marginLeft: 7, color: '#757575', fontSize: 14 }}
                 containerStyle={[
                   styles.listItem,
                   { opacity: this.state.listItemOpacity }
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     shadowColor: '#111',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
-    shadowRadius: 2,
+    shadowRadius: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -171,7 +171,8 @@ const styles = StyleSheet.create({
     width: null,
     height: 65,
     marginLeft: 0,
-    borderBottomWidth: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: '#EEE',
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center'
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
   rightSwipeItem: {
     flex: 1,
     paddingLeft: 10,
-    backgroundColor: '#E9E8EE',
+    backgroundColor: '#F5F5F9',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },

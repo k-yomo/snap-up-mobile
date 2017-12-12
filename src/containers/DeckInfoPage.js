@@ -29,7 +29,7 @@ class DeckInfoPage extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
+      <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
         <FlatList
           scrollEnabled={!this.state.isSwiping}
           data={this.props.deck.cards}

@@ -43,7 +43,7 @@ class DecksPage extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
+      <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
         <DeckCreator
           uid={this.state.uid}
           dispatch={this.props.dispatch}

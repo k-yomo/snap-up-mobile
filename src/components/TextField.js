@@ -11,8 +11,8 @@ export default (props) => (
     onChangeText={(text) => props.onChangeText(text)}
     onSubmitEditing={() => props.text && props.onSubmitEditing && props.onSubmitEditing()}
     containerStyle={styles.textField}
-    textColor='rgb(38, 50, 56)'
-    tintColor='rgba(38, 50, 56, 0.7)'
+    textColor='#212121'
+    tintColor='#757575'
     fontSize={20}
     labelFontSize={14}
     labelHeight={15}
@@ -23,7 +23,7 @@ export default (props) => (
 
 const styles = StyleSheet.create({
   textField: {
-    minWidth: '68%',
+    minWidth: '78%',
     marginLeft: 16,
     marginRight: 16
   }

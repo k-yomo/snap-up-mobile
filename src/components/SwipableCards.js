@@ -61,6 +61,7 @@ class FlashCard extends Component {
           />
           <Icon
             raised
+            size={20}
             name='volume-up'
             onPress={() => this.onDictionaryPress(english)}
             containerStyle={styles.dictionaryIcon}
@@ -84,7 +85,7 @@ class FlashCard extends Component {
             <FlipCard
               style={{ flex: 1, borderWidth: 0, justifyContent: 'center' }}
             >
-              <View style={{ flex: 1, borderWidth: 1, borderColor: 'rgba(38, 50, 56, 0.5)' }}>
+              <View style={{ flex: 1, borderWidth: 1, borderColor: '#757575' }}>
                 <Text style={[styles.meaning, { opacity: 0 }]}>{meaning}</Text>
               </View>
               <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -94,7 +95,7 @@ class FlashCard extends Component {
           </View>
         </View>
         <View style={{ flex: 1, width: null }}>
-          <Text style={{ color: '#FFC107', fontSize: 20, fontWeight: 'bold' }}>Examples</Text>
+          <Text style={{ color: '#EF5350', fontSize: 20, fontWeight: 'bold' }}>Examples</Text>
           {examples && Object.values(examples).map((ex, i) =>
             <Text
               key={i}
@@ -164,17 +165,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 8,
     fontSize: 20,
-    color: 'rgba(38, 50, 56, 0.7)'
+    color: '#757575'
 
   },
   english: {
     marginBottom: 5,
     fontSize: 40,
-    color: 'rgb(38, 50, 56)'
+    color: '#212121'
   },
   meaning: {
     fontSize: 25,
-    color: 'rgba(38, 50, 56, 0.7)'
+    color: '#757575'
   },
   noMoreCards: {
     flex: 1,

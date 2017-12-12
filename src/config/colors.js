@@ -1,11 +1,11 @@
 
 
 export const partsColorsPair = {
-  N: '#F44336',
-  V: '#3F51B5',
-  Adj: '#F89A43',
-  Adv: '#009688',
-  'N/A': '#888'
+  N: '#EF5350',
+  V: '#F2724B',
+  Adj: '#F58C48',
+  Adv: '#F8B142',
+  'N/A': '#FBC640'
 };
 
 export const deckColors = [

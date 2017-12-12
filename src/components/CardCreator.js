@@ -13,6 +13,7 @@ import TextField from './TextField';
 import { createCard } from '../actions/cards';
 import DictionaryIcon from './DictionaryIcon';
 import GifGenerator from './GifGenerator';
+import { partsColorsPair } from '../config/colors';
 import { X_MASHAPE_KEY } from '../../env';
 
 export default class CardCreator extends Component {
@@ -34,7 +35,7 @@ export default class CardCreator extends Component {
         unapprecable: 'N/A'
       },
       parts: ['N', 'V', 'Adj', 'Adv', 'N/A'],
-      partsColors: ['#EF5350', '#3F51B5', '#F89A43', '#009688', '#888'],
+      partsColors: Object.values(partsColorsPair),
       noSuggestedMeaning: false,
       noDefinition: false,
       isEnglishEntered: false,
@@ -216,7 +217,7 @@ export default class CardCreator extends Component {
               size={20}
               onPress={this.onDictionaryPress}
               english={this.state.english}
-              containerStyle={styles.containerStyle}
+              containerStyle={styles.dictionaryIcon}
               noDefFound={this.noDefFound.bind(this)}
             />
           }
@@ -236,7 +237,7 @@ export default class CardCreator extends Component {
                   containerViewStyle={styles.smallButtonContainer}
                   title={suggestedM}
                   buttonStyle={{
-                    backgroundColor: suggestedM === meaning ? '#F44336' : '#BDBDBD',
+                    backgroundColor: suggestedM === meaning ? '#EF5350' : '#BDBDBD',
                     borderRadius: 3
                   }}
                 />
@@ -266,14 +267,12 @@ export default class CardCreator extends Component {
             </View>
             <View style={styles.submitButtonsContainer}>
               <Button
-                raised
                 title='Cancel'
                 onPress={() => this.clearState()}
                 containerViewStyle={{ margin: 0 }}
                 buttonStyle={styles.cancelButton}
               />
               <Button
-                raised
                 disabled={!(english && meaning)}
                 title='Save'
                 onPress={() => this.onSubmitCard()}
@@ -302,13 +301,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textField: {
-    minWidth: '68%',
+    minWidth: '90%',
     marginLeft: 16,
     marginRight: 16
   },
   dictionaryIcon: {
-    marginLeft: 0,
-    marginRight: 30
+    position: 'absolute',
+    top: 2,
+    right: 0
   },
   suggestedMeaningContainer: {
     marginLeft: 8,
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     minWidth: '15.85%'
   },
   warning: {
-    color: '#F44336'
+    color: '#EF5350'
   },
   submitButtonsContainer: {
     flexDirection: 'row',
@@ -351,12 +351,12 @@ const styles = StyleSheet.create({
     margin: 0,
     paddingLeft: '10%',
     paddingRight: '10%',
-    backgroundColor: 'rgba(0, 0, 0, .38)',
+    backgroundColor: '#757575',
   },
   saveButton: {
     paddingLeft: '20%',
     paddingRight: '20%',
-    backgroundColor: '#F44336',
+    backgroundColor: '#EF5350',
     margin: 0
   }
 });

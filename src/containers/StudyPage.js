@@ -17,7 +17,7 @@ class StudyPage extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
+      <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
         <SwipableCards
           containerStyle={{ flex: 1, position: 'relative' }}
           cards={this.props.deck.cards.map((card, i) => ({
