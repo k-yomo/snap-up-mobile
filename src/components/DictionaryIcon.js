@@ -11,12 +11,12 @@ export default (props) => (
     onPress={() => onDictionaryPress(props.english, props.noDefFound)}
     containerStyle={props.containerStyle}
   />
-  );
+);
 
-  const onDictionaryPress = (term, noDefFound = null) => {
-    NativeModules.ReferenceLibraryManager.showDefinitionForTerm(term, (hasDefinition) => {
-      if (!hasDefinition && noDefFound) {
-        noDefFound();
-      }
-    });
-  };
+const onDictionaryPress = (term, noDefFound = null) => {
+  NativeModules.ReferenceLibraryManager.showDefinitionForTerm(term, (hasDefinition) => {
+    if (!hasDefinition && noDefFound) {
+      noDefFound();
+    }
+  });
+};

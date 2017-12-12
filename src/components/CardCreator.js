@@ -195,7 +195,7 @@ export default class CardCreator extends Component {
             english={english}
             gifUrl={this.state.gifUrl}
             loadingGif={this.state.loadingGif}
-            fetchGif={this.fetchGif}
+            fetchGif={this.fetchGif.bind(this)}
           />
         }
         {this.state.noDefinition &&
