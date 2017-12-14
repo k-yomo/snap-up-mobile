@@ -14,7 +14,7 @@ import { createCard } from '../actions/cards';
 import DictionaryIcon from './DictionaryIcon';
 import GifGenerator from './GifGenerator';
 import { partsColorsPair } from '../config/colors';
-import { X_MASHAPE_KEY } from '../../env';
+import { X_MASHAPE_KEY, GIPHY_KEY } from '../../env';
 
 export default class CardCreator extends Component {
   constructor(props) {
@@ -131,7 +131,7 @@ export default class CardCreator extends Component {
 
   fetchGif(english) {
     this.setState({ loadingGif: true });
-    axios.get(`https://api.giphy.com/v1/gifs/translate?api_key=0YlwqVMmfk1MgyH4gzG9W4EWi3meWomG&s=${english}`)
+    axios.get(`https://api.giphy.com/v1/gifs/translate?api_key=${GIPHY_KEY}&s=${english}`)
     .then(response => {
       if (response.data.data.images.fixed_height_downsampled.url) {
         this.setState({

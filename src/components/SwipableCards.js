@@ -85,7 +85,7 @@ class FlashCard extends Component {
             <FlipCard
               style={{ flex: 1, borderWidth: 0, justifyContent: 'center' }}
             >
-              <View style={{ flex: 1, borderWidth: 1, borderColor: '#757575' }}>
+              <View style={{ flex: 1, borderWidth: 1, borderColor: '#CDCDCD' }}>
                 <Text style={[styles.meaning, { opacity: 0 }]}>{meaning}</Text>
               </View>
               <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   card: {
     minHeight: Dimensions.get('screen').height / 2,
     width: Dimensions.get('screen').width - 30,
-    marginTop: 20,
+    marginTop: 50,
     marginLeft: -10,
     paddingTop: 0,
     borderWidth: null,
@@ -200,6 +200,6 @@ const styles = StyleSheet.create({
   },
   example: {
     fontSize: 18,
-    color: 'rgba(38, 50, 56, 0.7)'
+    color: '#757575'
   }
 });

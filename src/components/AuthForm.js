@@ -45,14 +45,6 @@ export default class AuthForm extends Component {
     }
   }
 
-  password() {
-    let pw = '';
-      for (let i = 0; i < this.state.password.length; i++) {
-        pw += '*';
-      }
-      return pw;
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -76,7 +68,8 @@ export default class AuthForm extends Component {
         />
         <TextField
           label='Password'
-          value={this.password()}
+          value={this.state.password}
+          secureTextEntry
           autoCapitalize='none'
           onChangeText={(password) => this.setState({ password })}
           textColor='white'
