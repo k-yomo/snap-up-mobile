@@ -17,13 +17,28 @@ class DeckInfoPage extends Component {
     this.state = {
       isSwiping: false,
       isRefreshing: false,
-      isModalVisible: false
+      isModalVisible: false,
+      viewableItemIndices: []
     };
     this.onSwipe = this.onSwipe.bind(this);
+    this.onViewableItemsChanged = this.onViewableItemsChanged.bind(this);
   }
 
   onSwipe(isSwiping) {
     this.setState({ isSwiping });
+  }
+
+  onViewableItemsChanged(info) {
+    let viewableItemIndices = info.viewableItems.map(item => item.index);
+    const topIndex = viewableItemIndices[0];
+    const bottomIndex = viewableItemIndices[viewableItemIndices.length - 1];
+    if (topIndex > 5) {
+      viewableItemIndices = [...[1, 2, 3, 4, 5].map(num => topIndex - num), ...viewableItemIndices];
+    }
+    if (bottomIndex < 195) {
+      viewableItemIndices = [...viewableItemIndices, ...[1, 2, 3, 4, 5].map(num => num + bottomIndex)];
+    }
+    this.setState({ viewableItemIndices });
   }
 
   render() {
@@ -39,17 +54,26 @@ class DeckInfoPage extends Component {
               dispatch={this.props.dispatch}
             />
           )}
-          renderItem={({ item }) => (
-            <CardListItem
-              key={item.id}
-              card={item}
-              deckId={this.props.deck.id}
-              uid={this.props.uid}
-              onSwipe={this.onSwipe}
-              dispatch={this.props.dispatch}
-              navigate={this.props.navigation.navigate}
-            />
-          )}
+          renderItem={({ item, index }) => {
+            if (this.state.viewableItemIndices.indexOf(index) < 0) {
+                return <View style={{ height: 65 }}/>;
+            }
+            return (
+              <CardListItem
+                key={item.id}
+                card={item}
+                deckId={this.props.deck.id}
+                uid={this.props.uid}
+                onSwipe={this.onSwipe}
+                dispatch={this.props.dispatch}
+                navigate={this.props.navigation.navigate}
+              />
+            );
+          }
+
+          }
+          onEndReachedThreshold={50}
+          onViewableItemsChanged={this.onViewableItemsChanged}
           keyExtractor={item => item.id}
           style={{ marginTop: 15 }}
         />
