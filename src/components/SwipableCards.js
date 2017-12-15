@@ -1,26 +1,8 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { View } from 'react-native';
 import SwipeCards from 'react-native-swipe-cards';
 import FlashCard from './FlashCard';
-
-
-class NoMoreCards extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <View style={styles.noMoreCards}>
-        <Text>No more cards</Text>
-      </View>
-    );
-  }
-}
+import NoMoreCards from './NoMoreCards';
 
 export default class SwipableCards extends Component {
 
@@ -38,11 +20,3 @@ export default class SwipableCards extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  noMoreCards: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-});
