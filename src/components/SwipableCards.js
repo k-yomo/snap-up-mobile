@@ -97,7 +97,7 @@ class FlashCard extends Component {
             </FlipCard>
           </View>
         </View>
-        {examples && examples.length > 0 &&
+        {examples &&
           <View style={{ flex: 1, width: null }}>
             <Text style={{ color: '#EF5350', fontSize: 20, fontWeight: 'bold' }}>Examples</Text>
             {Object.values(examples).map((ex, i) =>
