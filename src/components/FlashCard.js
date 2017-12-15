@@ -17,14 +17,7 @@ import DictionaryIcon from './DictionaryIcon';
 import { partsColorsPair } from '../config/colors';
 
 export default class FlashCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      partsColorsPair,
-      gifUrl: '',
-    };
-  }
-
+  
   partsSort(obj) {
     const orderedArr = ['N', 'V', 'Adj', 'Adv', 'N/A'];
     return Object.keys(obj).sort((a, b) => orderedArr.indexOf(a) - orderedArr.indexOf(b));
@@ -70,7 +63,7 @@ export default class FlashCard extends Component {
                 disabled
                 containerViewStyle={styles.partsOfSpeechContainer}
                 buttonStyle={styles.partOfSpeech}
-                disabledStyle={{ backgroundColor: this.state.partsColorsPair[part] }}
+                disabledStyle={{ backgroundColor: partsColorsPair[part] }}
               />
             )}
             <FlipCard

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  ScrollView,
   FlatList,
   View
 } from 'react-native';
@@ -43,20 +44,18 @@ class DeckInfoPage extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
+        <ScrollView scrollEnabled={false} stlye={{ flex: 1, backgroundColor: '#F9FAFC'}}>
+          <CardCreator
+            uid={this.props.uid}
+            deckId={this.props.deck.id}
+            dispatch={this.props.dispatch}
+          />
         <FlatList
           scrollEnabled={!this.state.isSwiping}
           data={this.props.deck.cards}
-          ListHeaderComponent={() => (
-            <CardCreator
-              uid={this.props.uid}
-              deckId={this.props.deck.id}
-              dispatch={this.props.dispatch}
-            />
-          )}
           renderItem={({ item, index }) => {
             if (this.state.viewableItemIndices.indexOf(index) < 0) {
-                return <View style={{ height: 65 }}/>;
+                return <View style={{ height: 65 }} />;
             }
             return (
               <CardListItem
@@ -77,7 +76,7 @@ class DeckInfoPage extends Component {
           keyExtractor={item => item.id}
           style={{ marginTop: 15 }}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

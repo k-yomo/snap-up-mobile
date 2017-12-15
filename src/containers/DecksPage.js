@@ -4,7 +4,6 @@ import {
   FlatList,
   View
 } from 'react-native';
-import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from '../components/DeckListItem';
 import DeckCreator from '../components/DeckCreator';
@@ -16,12 +15,9 @@ class DecksPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colors: deckColors,
-      deckTitle: '',
       isSwiping: false,
       isRefreshing: false,
-      isModalVisible: false,
-      uid: firebase.auth().currentUser.uid
+      isModalVisible: false
     };
     this.onSwipe = this.onSwipe.bind(this);
   }
@@ -32,20 +28,20 @@ class DecksPage extends Component {
 
   setColor(total, i) {
     if (total < 5) {
-      return this.state.colors[i * 4];
+      return deckColors[i * 4];
     } else if (total < 10) {
-        return this.state.colors[i * 3];
+        return deckColors[i * 3];
     } else if (total < 20) {
-      return this.state.colors[Math.floor(i * 1.5)];
+      return deckColors[Math.floor(i * 1.5)];
     }
-    return this.state.colors[i];
+    return deckColors[i];
   }
 
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
         <DeckCreator
-          uid={this.state.uid}
+          uid={this.props.uid}
           dispatch={this.props.dispatch}
         />
         {this.props.decks.length > 0 &&
@@ -55,7 +51,7 @@ class DecksPage extends Component {
           renderItem={({ item, index }) => (
             <DeckListItem
               deck={item}
-              uid={this.state.uid}
+              uid={this.props.uid}
               onSwipe={this.onSwipe}
               dispatch={this.props.dispatch}
               navigate={this.props.navigation.navigate}
@@ -72,6 +68,7 @@ class DecksPage extends Component {
 
 const mapStateToProps = (state) => ({
   decks: state.decks,
+  uid: state.uid
 });
 
 export default connect(mapStateToProps)(DecksPage);

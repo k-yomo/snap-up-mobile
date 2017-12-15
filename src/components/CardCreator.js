@@ -16,37 +16,46 @@ import GifGenerator from './GifGenerator';
 import { partsColorsPair } from '../config/colors';
 import { X_MASHAPE_KEY, GIPHY_KEY } from '../../env';
 
+const partConverter = {
+  noun: 'N',
+  verb: 'V',
+  adjective: 'Adj',
+  adverb: 'Adv',
+  unapprecable: 'N/A'
+};
+
+const parts = ['N', 'V', 'Adj', 'Adv', 'N/A'];
+const partsColors = Object.values(partsColorsPair);
+
 export default class CardCreator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      english: '',
-      meaning: '',
-      gifUrl: '',
       wordInfo: {
+        english: '',
+        meaning: '',
+        gifUrl: '',
         parts: []
       },
       suggestedMeanings: [],
-      partConverter: {
-        noun: 'N',
-        verb: 'V',
-        adjective: 'Adj',
-        adverb: 'Adv',
-        unapprecable: 'N/A'
-      },
-      parts: ['N', 'V', 'Adj', 'Adv', 'N/A'],
-      partsColors: Object.values(partsColorsPair),
       noSuggestedMeaning: false,
       noDefinition: false,
       isEnglishEntered: false,
       loadingGif: false
     };
+    this.onSubmitEnglish = this.onSubmitEnglish.bind(this);
+    this.onSubmitCard = this.onSubmitCard.bind(this);
+    this.onPartOfSpeechPress = this.onPartOfSpeechPress.bind(this);
+    this.onChangeEnglish = this.onChangeEnglish.bind(this);
+    this.onChangeMeaning = this.onChangeMeaning.bind(this);
+    this.onChangeEnglish = this.onChangeEnglish.bind(this);
+    this.fetchGif = this.fetchGif.bind(this);
+    this.noDefFound = this.noDefFound.bind(this);
   }
 
   onSubmitEnglish() {
     this.setState({ isEnglishEntered: true, noDefinition: false });
-
-    let english = this.state.english.toLowerCase();
+    let english = this.state.wordInfo.english.slice(0).toLowerCase();
     english = english.endsWith(' ') ? english.slice(0, -1) : english;
 
     this.fetchMeanings(english);
@@ -55,7 +64,7 @@ export default class CardCreator extends Component {
   }
 
   onSubmitCard() {
-    const wordInfo = this.state.wordInfo;
+    const wordInfo = Object.assign(this.state.wordInfo);
     wordInfo.examples = wordInfo.examples ? this.convertArrayToObj(wordInfo.examples) : null;
 
     if (wordInfo.parts.length > 0) {
@@ -65,10 +74,8 @@ export default class CardCreator extends Component {
     }
 
     const newCard = {
-      english: this.state.english,
-      meaning: this.state.meaning,
-      gifUrl: this.state.gifUrl,
-      ...wordInfo
+      ...wordInfo,
+      proficiency: 0
     };
 
     this.clearState();
@@ -88,8 +95,30 @@ export default class CardCreator extends Component {
     this.setState({ wordInfo });
   }
 
-  noDefFound() {
-    this.setState({ noDefinition: true });
+  onChangeEnglish(text) {
+    const wordInfo = Object.assign(this.state.wordInfo);
+    wordInfo.english = text;
+    this.setState({ wordInfo });
+  }
+
+  onChangeMeaning(text) {
+    const wordInfo = Object.assign(this.state.wordInfo);
+    wordInfo.meaning = text;
+    this.setState({ wordInfo });
+  }
+
+  convertArrayToObj(arr) {
+    return arr.reduce((obj, el, index) => {
+      obj[index] = el;
+      return obj;
+    }, {});
+  }
+
+  convertArrayBoolObj(arr) {
+    return arr.reduce((obj, el) => {
+      obj[el] = true;
+      return obj;
+    }, {});
   }
 
   fetchMeanings(english) {
@@ -114,13 +143,13 @@ export default class CardCreator extends Component {
     axios.get(`https://wordsapiv1.p.mashape.com/words/${english}`,
     { headers: { 'X-Mashape-Key': X_MASHAPE_KEY } })
     .then(response => {
-      const wordInfo = { parts: [] };
+      const wordInfo = Object.assign(this.state.wordInfo);
       const examples = [];
       const slicedResults = response.data.results.slice(0, 2);
 
       slicedResults.forEach(result =>
-      !wordInfo.parts.includes(this.state.partConverter[result.partOfSpeech]) &&
-      wordInfo.parts.push(this.state.partConverter[result.partOfSpeech]));
+      !wordInfo.parts.includes(partConverter[result.partOfSpeech]) &&
+      wordInfo.parts.push(partConverter[result.partOfSpeech]));
 
       slicedResults.forEach(result => result.examples && examples.push(result.examples));
       wordInfo.examples = [].concat.apply([], examples);
@@ -134,44 +163,30 @@ export default class CardCreator extends Component {
     axios.get(`https://api.giphy.com/v1/gifs/translate?api_key=${GIPHY_KEY}&s=${english}`)
     .then(response => {
       if (response.data.data.images.fixed_height_downsampled.url) {
+        const wordInfo = Object.assign(this.state.wordInfo);
+        wordInfo.gifUrl = response.data.data.images.fixed_height_downsampled.url;
         this.setState({
-          gifUrl: response.data.data.images.fixed_height_downsampled.url,
+          wordInfo,
           loadingGif: false
          });
       }
     });
   }
 
-  convertArrayToObj(arr) {
-    return arr.reduce((obj, el, index) => {
-      obj[index] = el;
-      return obj;
-    }, {});
-  }
-
-  convertArrayBoolObj(arr) {
-    return arr.reduce((obj, el) => {
-      obj[el] = true;
-      return obj;
-    }, {});
-  }
-
-  onChangeEnglish(text) {
-    this.setState({ english: text });
-  }
-
-  onChangeMeaning(text) {
-    this.setState({ meaning: text });
+  noDefFound() {
+    this.setState({ noDefinition: true });
   }
 
   clearState() {
-    this.setState({
+    const wordInfo = {
       english: '',
       meaning: '',
       gifUrl: '',
-      wordInfo: {
-        parts: []
-      },
+      parts: []
+    };
+
+    this.setState({
+      wordInfo,
       suggestedMeanings: [],
       isEnglishEntered: false,
       noSuggestedMeaning: false,
@@ -181,22 +196,20 @@ export default class CardCreator extends Component {
 
   render() {
     const {
-      english,
-      meaning,
       suggestedMeanings,
       wordInfo,
-      isEnglishEntered,
-      partsColors
+      isEnglishEntered
     } = this.state;
+    const { english, meaning, gifUrl } = wordInfo;
 
     return (
       <Card containerStyle={styles.Container}>
         { isEnglishEntered &&
           <GifGenerator
             english={english}
-            gifUrl={this.state.gifUrl}
+            gifUrl={gifUrl}
             loadingGif={this.state.loadingGif}
-            fetchGif={this.fetchGif.bind(this)}
+            fetchGif={this.fetchGif}
           />
         }
         {this.state.noDefinition &&
@@ -209,16 +222,16 @@ export default class CardCreator extends Component {
             label='New English Word'
             text={english}
             returnKeyType='search'
-            onChangeText={this.onChangeEnglish.bind(this)}
-            onSubmitEditing={this.onSubmitEnglish.bind(this)}
+            onChangeText={this.onChangeEnglish}
+            onSubmitEditing={this.onSubmitEnglish}
           />
           { isEnglishEntered &&
             <DictionaryIcon
               size={20}
               onPress={this.onDictionaryPress}
-              english={this.state.english}
+              english={english}
               containerStyle={styles.dictionaryIcon}
-              noDefFound={this.noDefFound.bind(this)}
+              noDefFound={this.noDefFound}
             />
           }
         </View>
@@ -233,7 +246,7 @@ export default class CardCreator extends Component {
               {suggestedMeanings.map((suggestedM, i) =>
                 <Button
                   key={i}
-                  onPress={() => this.setState({ meaning: suggestedM })}
+                  onPress={() => this.onChangeMeaning(suggestedM)}
                   containerViewStyle={styles.smallButtonContainer}
                   title={suggestedM}
                   buttonStyle={{
@@ -246,10 +259,10 @@ export default class CardCreator extends Component {
             <TextField
               label='The Meaning'
               text={meaning}
-              onChangeText={this.onChangeMeaning.bind(this)}
+              onChangeText={this.onChangeMeaning}
             />
             <View style={styles.partOfSpeechContainer}>
-              {this.state.parts.map((part, i) =>
+              {parts.map((part, i) =>
                 <Button
                   key={i}
                   onPress={() => this.onPartOfSpeechPress(part)}

@@ -15,6 +15,7 @@ export default class SwipableCards extends Component {
           renderCard={(cardData, i) => <FlashCard key={i} i={i} {...cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
           smoothTransition
+          onClickHandler={() => console.log('Clicked')}
         />
       </View>
     );
