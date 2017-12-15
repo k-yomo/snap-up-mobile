@@ -31,13 +31,14 @@ class DeckInfoPage extends Component {
   onViewableItemsChanged(info) {
     let viewableItemIndices = info.viewableItems.map(item => item.index);
     const topIndex = viewableItemIndices[0];
+    const extra = [1, 2, 3, 4, 5];
     const bottomIndex = viewableItemIndices[viewableItemIndices.length - 1];
-    if (topIndex > 5) {
-      viewableItemIndices = [...[1, 2, 3, 4, 5].map(num => topIndex - num), ...viewableItemIndices];
-    }
-    if (bottomIndex < 195) {
-      viewableItemIndices = [...viewableItemIndices, ...[1, 2, 3, 4, 5].map(num => num + bottomIndex)];
-    }
+      viewableItemIndices =
+      [
+        ...extra.map(num => topIndex - num),
+        ...viewableItemIndices,
+        ...extra.map(num => num + bottomIndex)
+      ];
     this.setState({ viewableItemIndices });
   }
 
@@ -72,7 +73,7 @@ class DeckInfoPage extends Component {
           }
 
           }
-          onEndReachedThreshold={50}
+          onEndReachedThreshold={100}
           onViewableItemsChanged={this.onViewableItemsChanged}
           keyExtractor={item => item.id}
           style={{ marginTop: 15 }}
