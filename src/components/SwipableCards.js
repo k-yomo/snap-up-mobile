@@ -14,6 +14,7 @@ import {
 } from 'react-native-elements';
 import SwipeCards from 'react-native-swipe-cards';
 import FlipCard from 'react-native-flip-card';
+import Tts from 'react-native-tts';
 import DictionaryIcon from './DictionaryIcon';
 import { partsColorsPair } from '../config/colors';
 
@@ -26,6 +27,7 @@ class FlashCard extends Component {
       gifUrl: '',
     };
   }
+
   onDictionaryPress(term) {
     NativeModules.ReferenceLibraryManager.showDefinitionForTerm(term, (hasDefinition) => {
       if (!hasDefinition) {
@@ -63,7 +65,7 @@ class FlashCard extends Component {
             raised
             size={20}
             name='volume-up'
-            onPress={() => this.onDictionaryPress(english)}
+            onPress={() => Tts.speak(english)}
             containerStyle={styles.dictionaryIcon}
           />
         </View>
@@ -83,6 +85,7 @@ class FlashCard extends Component {
               />
             )}
             <FlipCard
+              flip={false}
               style={{ flex: 1, borderWidth: 0, justifyContent: 'center' }}
             >
               <View style={{ flex: 1, borderWidth: 1, borderColor: '#CDCDCD' }}>
@@ -94,17 +97,19 @@ class FlashCard extends Component {
             </FlipCard>
           </View>
         </View>
-        <View style={{ flex: 1, width: null }}>
-          <Text style={{ color: '#EF5350', fontSize: 20, fontWeight: 'bold' }}>Examples</Text>
-          {examples && Object.values(examples).map((ex, i) =>
-            <Text
-              key={i}
-              style={styles.example}
-            >
-              {i + 1}. {ex}
-            </Text>
-          )}
-        </View>
+        {examples && examples.length > 0 &&
+          <View style={{ flex: 1, width: null }}>
+            <Text style={{ color: '#EF5350', fontSize: 20, fontWeight: 'bold' }}>Examples</Text>
+            {Object.values(examples).map((ex, i) =>
+              <Text
+                key={i}
+                style={styles.example}
+              >
+                {i + 1}. {ex}
+              </Text>
+            )}
+          </View>
+        }
         <Text style={styles.pageNumber}>{index + 1} / {total}</Text>
       </Card>
     );
@@ -199,6 +204,7 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   example: {
+    marginTop: 5,
     fontSize: 18,
     color: '#757575'
   }

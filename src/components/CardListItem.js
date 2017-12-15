@@ -28,7 +28,6 @@ export default class DeckListItem extends Component {
     this.animatedValue = new Animated.Value(0);
     this.animate = this.animate.bind(this);
     this.onDeleteCardPress = this.onDeleteCardPress.bind(this);
-    this.onLeftActionRelease = this.onLeftActionRelease.bind(this);
   }
 
   onDeleteCardPress() {
@@ -37,10 +36,6 @@ export default class DeckListItem extends Component {
     setTimeout(() => {
       this.deleteCard();
     }, 400);
-  }
-
-  onLeftActionRelease() {
-    Tts.speak('Hello, world!');
   }
 
   deleteCard() {

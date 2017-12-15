@@ -17,8 +17,7 @@ class DeckInfoPage extends Component {
     this.state = {
       isSwiping: false,
       isRefreshing: false,
-      isModalVisible: false,
-      uid: firebase.auth().currentUser.uid
+      isModalVisible: false
     };
     this.onSwipe = this.onSwipe.bind(this);
   }
@@ -35,7 +34,7 @@ class DeckInfoPage extends Component {
           data={this.props.deck.cards}
           ListHeaderComponent={() => (
             <CardCreator
-              uid={this.state.uid}
+              uid={this.props.uid}
               deckId={this.props.deck.id}
               dispatch={this.props.dispatch}
             />
@@ -45,7 +44,7 @@ class DeckInfoPage extends Component {
               key={item.id}
               card={item}
               deckId={this.props.deck.id}
-              uid={this.state.uid}
+              uid={this.props.uid}
               onSwipe={this.onSwipe}
               dispatch={this.props.dispatch}
               navigate={this.props.navigation.navigate}
@@ -60,7 +59,8 @@ class DeckInfoPage extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deck.id)
+  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deck.id),
+  uid: state.user.uid
 });
 
 export default connect(mapStateToProps)(DeckInfoPage);
