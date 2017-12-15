@@ -4,7 +4,6 @@ import {
   FlatList,
   View
 } from 'react-native';
-import firebase from 'react-native-firebase';
 import headerNavConfig from '../config/navigationOptions';
 import CardCreator from '../components/CardCreator';
 import CardListItem from '../components/CardListItem';
