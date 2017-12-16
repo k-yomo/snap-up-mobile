@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
   FlatList,
   View
 } from 'react-native';
@@ -44,37 +45,39 @@ class DeckInfoPage extends Component {
 
   render() {
     return (
-        <ScrollView scrollEnabled={false} stlye={{ flex: 1, backgroundColor: '#F9FAFC' }}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View stlye={{ flex: 1, backgroundColor: '#F9FAFC' }}>
           <CardCreator
             deckId={this.props.deck.id}
             dispatch={this.props.dispatch}
           />
-        <FlatList
-          scrollEnabled={!this.state.isSwiping}
-          data={this.props.deck.cards}
-          renderItem={({ item, index }) => {
-            if (this.state.viewableItemIndices.indexOf(index) < 0) {
-                return <View style={{ height: 65 }} />;
+          <FlatList
+            scrollEnabled={!this.state.isSwiping}
+            data={this.props.deck.cards}
+            renderItem={({ item, index }) => {
+              if (this.state.viewableItemIndices.indexOf(index) < 0) {
+                  return <View style={{ height: 65 }} />;
+              }
+              return (
+                <CardListItem
+                  key={item.id}
+                  card={item}
+                  deckId={this.props.deck.id}
+                  onSwipe={this.onSwipe}
+                  dispatch={this.props.dispatch}
+                  navigate={this.props.navigation.navigate}
+                />
+              );
             }
-            return (
-              <CardListItem
-                key={item.id}
-                card={item}
-                deckId={this.props.deck.id}
-                onSwipe={this.onSwipe}
-                dispatch={this.props.dispatch}
-                navigate={this.props.navigation.navigate}
-              />
-            );
-          }
 
-          }
-          onEndReachedThreshold={100}
-          onViewableItemsChanged={this.onViewableItemsChanged}
-          keyExtractor={item => item.id}
-          style={{ marginTop: 15 }}
-        />
-      </ScrollView>
+            }
+            onEndReachedThreshold={100}
+            onViewableItemsChanged={this.onViewableItemsChanged}
+            keyExtractor={item => item.id}
+            style={{ marginTop: 15 }}
+          />
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
