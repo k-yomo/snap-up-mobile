@@ -16,6 +16,8 @@ class StudyPage extends Component {
       <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
         <SwipableCards
           containerStyle={{ flex: 1, position: 'relative' }}
+          dispatch={this.props.dispatch}
+          record={this.props.record}
           cards={this.props.deck.cards.map((card, i) => ({
             ...card,
             index: i,
@@ -28,7 +30,8 @@ class StudyPage extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deckId)
+  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deckId),
+  record: state.record
 });
 
 export default connect(mapStateToProps)(StudyPage);

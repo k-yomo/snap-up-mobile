@@ -44,7 +44,7 @@ class DeckInfoPage extends Component {
 
   render() {
     return (
-        <ScrollView scrollEnabled={false} stlye={{ flex: 1, backgroundColor: '#F9FAFC'}}>
+        <ScrollView scrollEnabled={false} stlye={{ flex: 1, backgroundColor: '#F9FAFC' }}>
           <CardCreator
             deckId={this.props.deck.id}
             dispatch={this.props.dispatch}

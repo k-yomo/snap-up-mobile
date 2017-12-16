@@ -15,6 +15,7 @@ import {
 } from 'react-native-elements';
 import Swipeable from 'react-native-swipeable';
 import { deleteDeck } from '../actions/decks';
+import { startRecord } from '../actions/record';
 
 
 export default class DeckListItem extends Component {
@@ -53,6 +54,7 @@ export default class DeckListItem extends Component {
   }
 
   onLeftActionRelease(deckId) {
+    this.props.dispatch(startRecord(deckId));
     this.props.navigate('Study', { deckId });
   }
 

@@ -4,7 +4,7 @@ export default (state = {}, action) => {
     case 'START_RECORD':
       return { deckId: action.deckId, score: [] };
     case 'ADD_RECORD':
-      return { deckId: state.deckId, score: [action.result, ...state.score] };
+      return { deckId: state.deckId, score: [action.score, ...state.score] };
     case 'RESET_RECORD':
       return {};
     default:

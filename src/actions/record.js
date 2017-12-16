@@ -9,7 +9,14 @@ export const updateRecord = (score) => (dispatch, getState) => {
   const uid = getState().user.uid;
   const deckId = getState().record.deckId;
   const ref = firebase.firestore().doc(`users/${uid}/decks/${deckId}/cards/${score.cardId}`);
-  console.log(ref);
+  ref.get().then(doc => {
+    const proficiency = doc.data().proficiency;
+    if (score.know) {
+      ref.update({ proficiency: proficiency + 1 });
+    } else if (proficiency > 0) {
+      ref.update({ proficiency: proficiency - 1 });
+    }
+  });
   dispatch(addRecord(score));
 };
 

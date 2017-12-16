@@ -13,7 +13,7 @@ export default class NoMoreCards extends Component {
   render() {
     return (
       <View style={styles.noMoreCards}>
-        <Text>No more cards</Text>
+        {this.props.record.score.map((result) => <Text key={result.cardId}>{result.cardId}: {result.know ? '◯' : '×'}</Text>)}
       </View>
     );
   }
