@@ -41,7 +41,6 @@ class DecksPage extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
         <DeckCreator
-          uid={this.props.uid}
           dispatch={this.props.dispatch}
         />
         {this.props.decks.length > 0 &&
@@ -51,7 +50,6 @@ class DecksPage extends Component {
           renderItem={({ item, index }) => (
             <DeckListItem
               deck={item}
-              uid={this.props.uid}
               onSwipe={this.onSwipe}
               dispatch={this.props.dispatch}
               navigate={this.props.navigation.navigate}
@@ -67,8 +65,7 @@ class DecksPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  decks: state.decks,
-  uid: state.uid
+  decks: state.decks
 });
 
 export default connect(mapStateToProps)(DecksPage);

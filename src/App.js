@@ -19,7 +19,7 @@ class App extends Component {
       if (user) {
         this.setState({ loggedIn: true });
         this.props.dispatch(setUser(user.uid));
-        this.props.dispatch(fetchDecks(user.uid));
+        this.props.dispatch(fetchDecks());
       }
     });
   }

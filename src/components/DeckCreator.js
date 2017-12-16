@@ -26,7 +26,7 @@ export default class DeckCreater extends Component {
 
   onSubmitDeck() {
     if (this.state.deckTitle) {
-      this.props.dispatch(createDeck(this.props.uid, this.state.deckTitle));
+      this.props.dispatch(createDeck(this.state.deckTitle));
       this.setState({ deckTitle: '', animationOut: 'fadeOutDown', isModalVisible: false });
     }
   }

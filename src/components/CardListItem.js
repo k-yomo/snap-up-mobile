@@ -39,7 +39,7 @@ export default class DeckListItem extends Component {
   }
 
   deleteCard() {
-    this.props.dispatch(deleteCard(this.props.uid, this.props.deckId, this.props.card.id));
+    this.props.dispatch(deleteCard(this.props.deckId, this.props.card.id));
   }
 
   animate() {

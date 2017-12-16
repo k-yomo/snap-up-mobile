@@ -46,7 +46,6 @@ class DeckInfoPage extends Component {
     return (
         <ScrollView scrollEnabled={false} stlye={{ flex: 1, backgroundColor: '#F9FAFC'}}>
           <CardCreator
-            uid={this.props.uid}
             deckId={this.props.deck.id}
             dispatch={this.props.dispatch}
           />
@@ -62,7 +61,6 @@ class DeckInfoPage extends Component {
                 key={item.id}
                 card={item}
                 deckId={this.props.deck.id}
-                uid={this.props.uid}
                 onSwipe={this.onSwipe}
                 dispatch={this.props.dispatch}
                 navigate={this.props.navigation.navigate}
@@ -82,8 +80,7 @@ class DeckInfoPage extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deck.id),
-  uid: state.user.uid
+  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deck.id)
 });
 
 export default connect(mapStateToProps)(DeckInfoPage);

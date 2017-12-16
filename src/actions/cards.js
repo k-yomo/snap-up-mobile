@@ -19,7 +19,8 @@ const setCards = cards => ({
   cards
 });
 
-export const createCard = (uid, deckId, card) => dispatch => {
+export const createCard = (deckId, card) => (dispatch, getState) => {
+  const uid = getState().user.uid;
   const cardId = uuid();
   const ref = firebase.firestore().doc(`users/${uid}/decks/${deckId}/cards/${cardId}`);
   ref.set(card);
@@ -35,7 +36,8 @@ const addCard = (deckId, cardId, card) => ({
   }
 });
 
-export const deleteCard = (uid, deckId, cardId) => dispatch => {
+export const deleteCard = (deckId, cardId) => (dispatch, getState) => {
+  const uid = getState().user.uid;
   dispatch(removeCard(deckId, cardId));
   firebase.firestore().doc(`users/${uid}/decks/${deckId}/cards/${cardId}`).delete();
 };

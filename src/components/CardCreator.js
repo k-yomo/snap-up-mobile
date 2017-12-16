@@ -79,7 +79,7 @@ export default class CardCreator extends Component {
     };
 
     this.clearState();
-    this.props.dispatch(createCard(this.props.uid, this.props.deckId, newCard));
+    this.props.dispatch(createCard(this.props.deckId, newCard));
   }
 
   onPartOfSpeechPress(pressedPart) {
