@@ -1,5 +1,6 @@
 import firebase from 'react-native-firebase';
 import uuid from 'uuid';
+import moment from 'moment';
 
 export const fetchCards = (uid, deckId) => dispatch => {
   const ref = firebase.firestore().collection(`users/${uid}/decks/${deckId}/cards`);
@@ -22,6 +23,8 @@ const setCards = cards => ({
 export const createCard = (deckId, card) => (dispatch, getState) => {
   const uid = getState().user.uid;
   const cardId = uuid();
+  card.createdAt = moment().valueOf();
+  card.updatedAt = moment().valueOf();
   const ref = firebase.firestore().doc(`users/${uid}/decks/${deckId}/cards/${cardId}`);
   ref.set(card);
   dispatch(addCard(deckId, cardId, card));
@@ -31,8 +34,8 @@ const addCard = (deckId, cardId, card) => ({
   type: 'ADD_NEW_CARD',
   deckId,
   card: {
-    ...card,
-    id: cardId
+    id: cardId,
+    ...card
   }
 });
 
