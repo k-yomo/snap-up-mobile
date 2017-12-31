@@ -9,6 +9,7 @@ import {
 import headerNavConfig from '../config/navigationOptions';
 import CardCreator from '../components/CardCreator';
 import CardListItem from '../components/CardListItem';
+import sortCards from '../sort/cards';
 
 class DeckInfoPage extends Component {
   static navigationOptions = ({ navigation }) => ({ ...headerNavConfig, title: navigation.state.params.deck.title });
@@ -44,6 +45,7 @@ class DeckInfoPage extends Component {
   }
 
   render() {
+    console.log(this.props.deck.cards);
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
@@ -82,8 +84,11 @@ class DeckInfoPage extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  deck: state.decks.find((deck) => deck.id === props.navigation.state.params.deck.id)
-});
+const mapStateToProps = ({ decks, sortBy }, props) => {
+  const selectedDeck = decks.find((deck) => deck.id === props.navigation.state.params.deck.id);
+  return {
+    deck: { ...selectedDeck, cards: sortCards(selectedDeck.cards, sortBy) }
+  };
+};
 
 export default connect(mapStateToProps)(DeckInfoPage);
