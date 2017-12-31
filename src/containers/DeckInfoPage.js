@@ -46,7 +46,7 @@ class DeckInfoPage extends Component {
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View stlye={{ flex: 1, backgroundColor: '#F9FAFC' }}>
+        <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
           <CardCreator
             deckId={this.props.deck.id}
             dispatch={this.props.dispatch}
