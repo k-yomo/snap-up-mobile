@@ -7,17 +7,12 @@ export const fetchDecks = () => (dispatch, getState) => {
   deckRef.get().then(decksSnapShot => {
     const decks = [];
     decksSnapShot.forEach(deckDoc => {
-      const deck = deckDoc.data();
-      deck.id = deckDoc.id;
-
+      const deck = { id: deckDoc.id, ...deckDoc.data(), cards: [] };
       const cardsRef = firebase.firestore().collection(`users/${uid}/decks/${deck.id}/cards`);
       cardsRef.get().then(cardsSnapShot => {
-        deck.cards = [];
         if (cardsSnapShot.docs) {
           cardsSnapShot.docs.forEach(cardDoc => {
-            const card = cardDoc.data();
-            card.id = cardDoc.id;
-            deck.cards.push(card);
+            deck.cards.push({ id: cardDoc.id, ...cardDoc.data() });
           });
         }
       });
