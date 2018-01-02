@@ -52,6 +52,7 @@ class DecksPage extends Component {
               deck={item}
               onSwipe={this.onSwipe}
               dispatch={this.props.dispatch}
+              sortBy={this.props.sortBy}
               navigate={this.props.navigation.navigate}
               backgroundColor={this.setColor(this.props.decks.length, index)}
             />
@@ -64,8 +65,9 @@ class DecksPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  decks: state.decks
+const mapStateToProps = ({ decks, sortBy }) => ({
+  decks,
+  sortBy
 });
 
 export default connect(mapStateToProps)(DecksPage);
