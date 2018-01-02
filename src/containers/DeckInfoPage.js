@@ -7,9 +7,9 @@ import {
   View
 } from 'react-native';
 import headerNavConfig from '../config/navigationOptions';
-import CardCreator from '../components/CardCreator';
-import CardListItem from '../components/CardListItem';
-import SortButton from '../components/SortButton';
+import CardCreator from '../components/DeckInfo/CardCreator';
+import CardListItem from '../components/DeckInfo/CardListItem';
+import SortButton from '../components/DeckInfo/SortButton';
 import sortCards from '../sort/cards';
 import { sortByDate, sortByProficiency } from '../actions/sortBy';
 

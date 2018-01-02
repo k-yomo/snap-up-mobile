@@ -13,8 +13,8 @@ import {
 } from 'react-native-elements';
 import Swipeable from 'react-native-swipeable';
 import Tts from 'react-native-tts';
-import { deleteCard } from '../actions/cards';
-import { partsColorsPair } from '../config/colors';
+import { deleteCard } from '../../actions/cards';
+import { partsColorsPair } from '../../config/colors';
 
 export default class DeckListItem extends Component {
   constructor(props) {

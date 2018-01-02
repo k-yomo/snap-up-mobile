@@ -9,12 +9,12 @@ import {
   Button
 } from 'react-native-elements';
 import axios from 'axios';
-import TextField from './TextField';
-import { createCard } from '../actions/cards';
-import DictionaryIcon from './DictionaryIcon';
+import TextField from '../TextField';
+import { createCard } from '../../actions/cards';
+import DictionaryIcon from '../DictionaryIcon';
 import GifGenerator from './GifGenerator';
-import { partsColorsPair } from '../config/colors';
-import { X_MASHAPE_KEY, GIPHY_KEY } from '../../env';
+import { partsColorsPair } from '../../config/colors';
+import { X_MASHAPE_KEY, GIPHY_KEY } from '../../../env';
 
 const partConverter = {
   noun: 'N',
