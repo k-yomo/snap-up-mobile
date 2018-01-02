@@ -74,7 +74,6 @@ class DeckInfoPage extends Component {
   }
 
   render() {
-    console.log(this.props.sortBy);
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1, backgroundColor: '#F9FAFC' }}>
