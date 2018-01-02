@@ -6,10 +6,10 @@ import {
   FlatList,
   View
 } from 'react-native';
-import { Button } from 'react-native-elements';
 import headerNavConfig from '../config/navigationOptions';
 import CardCreator from '../components/CardCreator';
 import CardListItem from '../components/CardListItem';
+import SortButton from '../components/SortButton';
 import sortCards from '../sort/cards';
 import { sortByDate, sortByProficiency } from '../actions/sortBy';
 
@@ -18,20 +18,8 @@ class DeckInfoPage extends Component {
     ...headerNavConfig,
     title: navigation.state.params.deck.title,
     headerRight: (
-      <Button
-        buttonStyle={{
-          width: 62,
-          paddingTop: 8,
-          paddingRight: 3,
-          paddingBottom: 8,
-          paddingLeft: 3,
-          backgroundColor: null,
-          borderWidth: 1,
-          borderRadius: 5,
-          borderColor: 'rgba(244, 67, 54, 1.0)'
-         }}
-        textStyle={{ color: 'rgba(244, 67, 54, 1.0)' }}
-        title={navigation.state.params.sortBy === 'date' ? 'New' : 'Weak'}
+      <SortButton
+        sortBy={navigation.state.params.sortBy}
         onPress={navigation.state.params.changeSortBy}
       />
     )
@@ -108,9 +96,7 @@ class DeckInfoPage extends Component {
                   navigate={this.props.navigation.navigate}
                 />
               );
-            }
-
-            }
+            }}
             onEndReachedThreshold={100}
             onViewableItemsChanged={this.onViewableItemsChanged}
             keyExtractor={item => item.id}
