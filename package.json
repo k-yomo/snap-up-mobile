@@ -18,6 +18,7 @@
 		"react-native-flip-card": "^3.5.2",
 		"react-native-material-textfield": "^0.10.3",
 		"react-native-modal": "^4.1.1",
+		"react-native-sortable-listview": "^0.2.7",
 		"react-native-spinkit": "^1.1.1",
 		"react-native-swipe-cards": "^0.1.1",
 		"react-native-swipeable": "^0.6.0",
