@@ -39,16 +39,18 @@ const setDeck = (deck) => ({
 export const createDeck = (title) => (dispatch, getState) => {
   const uid = getState().user.uid;
   const deckId = uuid();
+  const index = getState().decks.length();
   const ref = firebase.firestore().doc(`users/${uid}/decks/${deckId}`);
-  ref.set({ title });
-  dispatch(addDeck(deckId, title));
+  ref.set({ title, index });
+  dispatch(addDeck(deckId, title, index));
 };
 
-const addDeck = (id, title) => ({
+const addDeck = (id, title, index) => ({
   type: 'ADD_NEW_DECK',
   deck: {
     id,
     title,
+    index,
     cards: []
   }
 });

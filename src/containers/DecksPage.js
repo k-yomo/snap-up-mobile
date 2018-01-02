@@ -8,6 +8,7 @@ import headerNavConfig from '../config/navigationOptions';
 import DeckListItem from '../components/Decks/DeckListItem';
 import DeckCreator from '../components/Decks/DeckCreator';
 import { deckColors } from '../config/colors';
+import sortDecks from '../sort/decks';
 
 class DecksPage extends Component {
   static navigationOptions = { ...headerNavConfig, title: 'Decks' };
@@ -66,7 +67,7 @@ class DecksPage extends Component {
 }
 
 const mapStateToProps = ({ decks, sortBy }) => ({
-  decks,
+  decks: sortDecks(decks),
   sortBy
 });
 
