@@ -1,5 +1,5 @@
 
-export default (state = 'proficiency', action) => {
+export default (state = 'date', action) => {
   switch (action.type) {
     case 'SORT_BY_DATE':
       return 'date';
