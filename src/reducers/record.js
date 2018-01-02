@@ -5,8 +5,6 @@ export default (state = {}, action) => {
       return { deckId: action.deckId, score: [] };
     case 'ADD_RECORD':
       return { deckId: state.deckId, score: [action.score, ...state.score] };
-    case 'RESET_RECORD':
-      return {};
     default:
       return state;
   }

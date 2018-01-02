@@ -26,7 +26,3 @@ const addRecord = (score) => ({
   type: 'ADD_RECORD',
   score
 });
-
-export const resetRecord = () => ({
-  type: 'RESET_RECORD'
-});
