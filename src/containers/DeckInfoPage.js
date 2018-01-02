@@ -39,7 +39,10 @@ class DeckInfoPage extends Component {
   }
 
   componentDidMount() {
-      this.props.navigation.setParams({ sortBy: this.props.sortBy, changeSortBy: this.changeSortBy });
+      this.props.navigation.setParams({
+        sortBy: this.props.sortBy,
+        changeSortBy: this.changeSortBy
+      });
     }
 
   onSwipe(isSwiping) {
