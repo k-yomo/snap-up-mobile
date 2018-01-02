@@ -2,23 +2,18 @@ import firebase from 'react-native-firebase';
 import uuid from 'uuid';
 import moment from 'moment';
 
-export const fetchCards = (uid, deckId) => dispatch => {
-  const ref = firebase.firestore().collection(`users/${uid}/decks/${deckId}/cards`);
-  ref.get().then(querySnapShot => {
-    const cards = [];
-    querySnapShot.forEach((doc) => {
-      const card = doc.data();
-      card.id = doc.id;
-      cards.push(card);
-    });
-    dispatch(setCards(cards));
+export const fetchCards = (uid, deckId) => {
+  const cardsRef = firebase.firestore().collection(`users/${uid}/decks/${deckId}/cards`);
+  const cards = [];
+  cardsRef.get().then(cardsSnapShot => {
+    if (cardsSnapShot.docs) {
+      cardsSnapShot.docs.forEach(cardDoc => {
+        cards.push({ id: cardDoc.id, ...cardDoc.data() });
+      });
+    }
   });
+  return cards;
 };
-
-const setCards = cards => ({
-  type: 'SET_CARDS',
-  cards
-});
 
 export const createCard = (deckId, card) => (dispatch, getState) => {
   const uid = getState().user.uid;

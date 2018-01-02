@@ -5,6 +5,13 @@ export default (state = defaultState, action) => {
   switch (action.type) {
     case 'SET_DECKS':
       return action.decks;
+    case 'SET_DECK':
+      return state.map(deck => {
+        if (deck.id === action.deck.id) {
+          return action.deck;
+        }
+        return deck;
+      });
     case 'ADD_NEW_DECK':
       return [action.deck, ...state];
     case 'REMOVE_DECK':

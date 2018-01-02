@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { fetchDeck } from '../../actions/decks';
 
 export default class NoMoreCards extends Component {
   constructor(props) {
@@ -33,6 +34,10 @@ export default class NoMoreCards extends Component {
     return this.props.record.score.reduce((total, result) => {
       return result.know ? total + 1 : total;
     }, 0);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(fetchDeck(this.props.record.deckId));
   }
 
   render() {
@@ -80,7 +85,7 @@ export default class NoMoreCards extends Component {
                     rotation={0}
                     fill={this.calculateProficiency(item.card.proficiency, item.know)}
                     prefill={0}
-                    tintColor={item.card.proficiency > 4 ? '#FF5722' : '#FFC107'}
+                    tintColor={item.card.proficiency >= 4 && item.know ? '#FF5722' : '#FFC107'}
                     backgroundColor="#DDD"
                   >
                     {(fill) =>

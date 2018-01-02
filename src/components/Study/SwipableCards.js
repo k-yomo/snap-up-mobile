@@ -38,7 +38,13 @@ export default class SwipableCards extends Component {
           cards={this.props.cards.filter((card, i) => this.state.viewableCardsIndices.includes(i))}
           stack
           renderCard={(cardData, i) => <FlashCard key={i} i={i} {...cardData} />}
-          renderNoMoreCards={() => <NoMoreCards record={this.props.record} cards={this.props.cards } />}
+          renderNoMoreCards={() =>
+            <NoMoreCards
+              record={this.props.record}
+              cards={this.props.cards}
+              dispatch={this.props.dispatch}
+            />
+          }
           smoothTransition
           handleYup={this.handleYup}
           handleNope={this.handleNope}
