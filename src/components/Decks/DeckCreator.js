@@ -6,7 +6,7 @@ import {
 import { Button } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { TextField } from 'react-native-material-textfield';
-import { createDeck } from '../actions/decks';
+import { createDeck } from '../../actions/decks';
 
 
 export default class DeckCreater extends Component {

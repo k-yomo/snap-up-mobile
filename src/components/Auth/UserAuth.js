@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import AuthForm from './AuthForm';
 
-const img = require('../images/background.png');
+const img = require('../../images/background.png');
 
 export default class UserAuth extends Component {
   constructor(props) {

@@ -13,11 +13,11 @@ import {
 } from 'react-native-elements';
 import FlipCard from 'react-native-flip-card';
 import Tts from 'react-native-tts';
-import DictionaryIcon from './DictionaryIcon';
-import { partsColorsPair } from '../config/colors';
+import DictionaryIcon from '../DictionaryIcon';
+import { partsColorsPair } from '../../config/colors';
 
 export default class FlashCard extends Component {
-  
+
   partsSort(obj) {
     const orderedArr = ['N', 'V', 'Adj', 'Adv', 'N/A'];
     return Object.keys(obj).sort((a, b) => orderedArr.indexOf(a) - orderedArr.indexOf(b));

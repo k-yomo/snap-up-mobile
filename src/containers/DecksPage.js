@@ -5,8 +5,8 @@ import {
   View
 } from 'react-native';
 import headerNavConfig from '../config/navigationOptions';
-import DeckListItem from '../components/DeckListItem';
-import DeckCreator from '../components/DeckCreator';
+import DeckListItem from '../components/Decks/DeckListItem';
+import DeckCreator from '../components/Decks/DeckCreator';
 import { deckColors } from '../config/colors';
 
 class DecksPage extends Component {

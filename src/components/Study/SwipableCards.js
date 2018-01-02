@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import SwipeCards from 'react-native-swipe-cards';
 import FlashCard from './FlashCard';
 import NoMoreCards from './NoMoreCards';
-import { updateRecord } from '../actions/record';
+import { updateRecord } from '../../actions/record';
 
 export default class SwipableCards extends Component {
   constructor(props) {

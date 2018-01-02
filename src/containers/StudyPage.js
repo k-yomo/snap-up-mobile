@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
 import headerNavConfig from '../config/navigationOptions';
-import SwipableCards from '../components/SwipableCards';
+import SwipableCards from '../components/Study/SwipableCards';
 
 
 class StudyPage extends Component {
