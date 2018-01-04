@@ -1,6 +1,7 @@
 import firebase from 'react-native-firebase';
 import uuid from 'uuid';
 import { fetchCards } from './cards';
+import { addDeckToOrder, deleteDeckFromOrder } from './deckOrder';
 
 export const fetchDecks = () => (dispatch, getState) => {
   const uid = getState().user.uid;
@@ -39,18 +40,17 @@ const setDeck = (deck) => ({
 export const createDeck = (title) => (dispatch, getState) => {
   const uid = getState().user.uid;
   const deckId = uuid();
-  const index = getState().decks.length();
   const ref = firebase.firestore().doc(`users/${uid}/decks/${deckId}`);
-  ref.set({ title, index });
-  dispatch(addDeck(deckId, title, index));
+  ref.set({ title });
+  dispatch(addDeck(deckId, title));
+  dispatch(addDeckToOrder(deckId));
 };
 
-const addDeck = (id, title, index) => ({
+const addDeck = (id, title) => ({
   type: 'ADD_NEW_DECK',
   deck: {
     id,
     title,
-    index,
     cards: []
   }
 });
@@ -59,6 +59,7 @@ export const deleteDeck = (deckId) => (dispatch, getState) => {
   const uid = getState().user.uid;
   firebase.firestore().doc(`users/${uid}/decks/${deckId}`).delete();
   dispatch(removeDeck(deckId));
+  dispatch(deleteDeckFromOrder(deckId));
 };
 
 const removeDeck = id => ({

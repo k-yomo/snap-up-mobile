@@ -5,6 +5,7 @@ import Router from './routes';
 import UserAuth from './components/Auth/UserAuth';
 import { setUser } from './actions/user';
 import { fetchDecks } from './actions/decks';
+import { fetchDeckOrder } from './actions/deckOrder';
 
 class App extends Component {
   constructor() {
@@ -20,6 +21,7 @@ class App extends Component {
         this.setState({ loggedIn: true });
         this.props.dispatch(setUser(user.uid));
         this.props.dispatch(fetchDecks());
+        this.props.dispatch(fetchDeckOrder());
       }
     });
   }

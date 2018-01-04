@@ -1,4 +1,4 @@
 
-export default (decks) => decks.sort((a, b) => (
-  a.index < b.index ? 1 : -1
+export default (decks, deckOrder) => decks.sort((a, b) => (
+  deckOrder.indexOf(a.id) > deckOrder.indexOf(b.id) ? 1 : -1
 ));
