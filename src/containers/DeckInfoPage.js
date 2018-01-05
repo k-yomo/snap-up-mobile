@@ -9,7 +9,7 @@ import {
 import headerNavConfig from '../config/navigationOptions';
 import CardCreator from '../components/DeckInfo/CardCreator';
 import CardListItem from '../components/DeckInfo/CardListItem';
-import SortButton from '../components/DeckInfo/SortButton';
+import HeaderRightButton from '../components/HeaderRightButton';
 import sortCards from '../sort/cards';
 import { sortByDate, sortByProficiency } from '../actions/sortBy';
 
@@ -18,8 +18,8 @@ class DeckInfoPage extends Component {
     ...headerNavConfig,
     title: navigation.state.params.deck.title,
     headerRight: (
-      <SortButton
-        sortBy={navigation.state.params.sortBy}
+      <HeaderRightButton
+        title={navigation.state.params.sortBy === 'date' ? 'New' : 'Weak'}
         onPress={navigation.state.params.changeSortBy}
       />
     )

@@ -8,7 +8,7 @@ export default (props) => (
   <Button
     buttonStyle={styles.buttonStyle}
     textStyle={styles.textStyle}
-    title={props.sortBy === 'date' ? 'New' : 'Weak'}
+    title={props.title}
     onPress={props.onPress}
   />
 );
