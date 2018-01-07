@@ -83,7 +83,7 @@ export default class DeckListItem extends Component {
     const leftContent = (
         <View style={styles.leftSwipeItem}>
           <Text
-            style={{ fontSize: 20, fontWeight: 'bold', color: this.state.leftItemColor, }}
+            style={{ fontSize: 20, fontWeight: 'bold', color: this.state.leftItemColor }}
           >
             Start
           </Text>
@@ -107,7 +107,6 @@ export default class DeckListItem extends Component {
       outputRange: [0, -75]
     });
     const { deck, onSwipe, backgroundColor } = this.props;
-
     return (
       <Animated.View
         style={{

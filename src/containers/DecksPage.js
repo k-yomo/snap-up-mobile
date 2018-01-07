@@ -68,6 +68,7 @@ class DecksPage extends Component {
         {params.isEditing ?
           <EditableDeckList
             decks={this.props.decks}
+            setColor={this.setColor}
             deckOrder={this.props.deckOrder}
           /> :
           this.props.decks.length > 0 &&
