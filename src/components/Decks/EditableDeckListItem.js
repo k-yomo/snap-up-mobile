@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   TouchableHighlight,
-  View,
-  Text
+  View
 } from 'react-native';
 import {
-  ListItem,
-  Icon
+  ListItem
 } from 'react-native-elements';
 
 export default class EditableDeckListItem extends Component {
@@ -17,7 +15,7 @@ export default class EditableDeckListItem extends Component {
       title: props.deck.title
     };
   }
-  
+
   render() {
     return (
       <TouchableHighlight
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: 0.7
+    opacity: 0.8
   },
   listItem: {
     flex: 1,

@@ -6,17 +6,17 @@ import EditableDeckListItem from './EditableDeckListItem';
 
 class EditableDeckList extends Component {
 
+  onRowMoved(e, order) {
+    order.splice(e.to, 0, order.splice(e.from, 1)[0]);
+    this.props.dispatch(updateDeckOrder(order));
+  }
+
   generateDecksOjbect(decks) {
     const decksObj = {};
     decks.forEach(deck => {
       decksObj[deck.id] = { id: deck.id, title: deck.title };
     });
     return decksObj;
-  }
-
-  onRowMoved(e, order) {
-    order.splice(e.to, 0, order.splice(e.from, 1)[0]);
-    this.props.dispatch(updateDeckOrder(order));
   }
 
   render() {
@@ -31,7 +31,7 @@ class EditableDeckList extends Component {
           <EditableDeckListItem
             deck={deck}
             dispatch={this.props.dispatch}
-            backgroundColor={this.props.setColor(decks.length, order.indexOf(deck.id))}
+            backgroundColor={this.props.setColor(this.props.decks.length, order.indexOf(deck.id))}
           />
         }
       />
