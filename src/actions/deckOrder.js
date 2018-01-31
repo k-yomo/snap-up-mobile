@@ -11,17 +11,18 @@ export const fetchDeckOrder = () => (dispatch, getState) => {
 export const addDeckToOrder = (deckId) => (dispatch, getState) => {
   const { deckOrder } = getState();
   deckOrder.unshift(deckId);
-  updateDeckOrder(deckOrder);
+  dispatch(updateDeckOrder(deckOrder));
 };
 
 export const deleteDeckFromOrder = (deletedDeckId) => (dispatch, getState) => {
   let { deckOrder } = getState();
   deckOrder = deckOrder.filter(deckId => deckId !== deletedDeckId);
-  updateDeckOrder(deckOrder);
+  dispatch(updateDeckOrder(deckOrder));
 };
 
 export const updateDeckOrder = (deckOrder) => (dispatch, getState) => {
   const { uid } = getState().user;
+  console.log(deckOrder);
   firebase.firestore().doc(`users/${uid}`).update({ deckOrder: deckOrder.join(',') });
   dispatch(setDeckOrder(deckOrder));
 };
