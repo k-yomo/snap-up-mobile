@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import firebase from 'react-native-firebase';
 import {
   TouchableWithoutFeedback,
   Keyboard,
@@ -12,6 +13,7 @@ import CardListItem from '../components/DeckInfo/CardListItem';
 import HeaderRightButton from '../components/HeaderRightButton';
 import sortCards from '../sort/cards';
 import { sortByDate, sortByProficiency } from '../actions/sortBy';
+import { addCard } from '../actions/cards';
 
 class DeckInfoPage extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -34,19 +36,30 @@ class DeckInfoPage extends Component {
       viewableItemIndices: []
     };
     this.onSwipe = this.onSwipe.bind(this);
+    this.onCollectionUpdate = this.onCollectionUpdate.bind(this);
     this.onViewableItemsChanged = this.onViewableItemsChanged.bind(this);
     this.changeSortBy = this.changeSortBy.bind(this);
   }
 
   componentDidMount() {
-      this.props.navigation.setParams({
-        sortBy: this.props.sortBy,
-        changeSortBy: this.changeSortBy
-      });
+    this.props.navigation.setParams({
+      sortBy: this.props.sortBy,
+      changeSortBy: this.changeSortBy
+    });
+    this.ref = firebase.firestore().collection(`users/${this.props.uid}/decks/${this.props.deck.id}/cards`);
+    this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
     }
 
   onSwipe(isSwiping) {
     this.setState({ isSwiping });
+  }
+
+  onCollectionUpdate(querySnapshot) {
+    querySnapshot.docs.forEach(card => {
+      if (!this.getAllCardIds(this.props.deck.cards).includes(card.id)) {
+        this.props.dispatch(addCard(this.props.deck.id, card.id, card.data()));
+      }
+    });
   }
 
   onViewableItemsChanged(info) {
@@ -61,6 +74,14 @@ class DeckInfoPage extends Component {
         ...extra.map(num => num + bottomIndex)
       ];
     this.setState({ viewableItemIndices });
+  }
+
+  getAllCardIds(cards) {
+    return cards.map(card => card.id);
+  }
+
+  componentWillunmount() {
+    this.unsubscribe();
   }
 
   changeSortBy() {
@@ -110,11 +131,12 @@ class DeckInfoPage extends Component {
   }
 }
 
-const mapStateToProps = ({ decks, sortBy }, props) => {
+const mapStateToProps = ({ decks, sortBy, user }, props) => {
   const selectedDeck = decks.find((deck) => deck.id === props.navigation.state.params.deck.id);
   return {
     deck: { ...selectedDeck, cards: sortCards(selectedDeck.cards, sortBy) },
-    sortBy
+    sortBy,
+    uid: user.uid
   };
 };
 

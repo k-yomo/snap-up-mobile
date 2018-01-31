@@ -32,7 +32,7 @@ export const fetchDeck = (deckId) => (dispatch, getState) => {
   });
 };
 
-const setDeck = (deck) => ({
+export const setDeck = (deck) => ({
   type: 'SET_DECK',
   deck
 });

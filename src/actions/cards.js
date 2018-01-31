@@ -22,10 +22,9 @@ export const createCard = (deckId, card) => (dispatch, getState) => {
   card.updatedAt = moment().valueOf();
   const ref = firebase.firestore().doc(`users/${uid}/decks/${deckId}/cards/${cardId}`);
   ref.set(card);
-  dispatch(addCard(deckId, cardId, card));
 };
 
-const addCard = (deckId, cardId, card) => ({
+export const addCard = (deckId, cardId, card) => ({
   type: 'ADD_NEW_CARD',
   deckId,
   card: {
